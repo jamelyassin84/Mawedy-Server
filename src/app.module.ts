@@ -1,3 +1,4 @@
+import { ClinicAccount } from './modules/clinic-account/clinic-account.entity'
 import { Clinic } from './modules/clinic/clinic.entity'
 import { Phone } from './modules/phones/phone.entity'
 import { Log } from './modules/logs/log.entity'
@@ -20,6 +21,11 @@ import { DevicesModule } from './modules/devices/devices.module'
 import { Device } from './modules/devices/device.entity'
 import { Email } from './modules/emails/email.entity'
 import { ClinicModule } from './modules/clinic/clinic.module'
+import { PatientModule } from './modules/patient/patient.module'
+import { DoctorModule } from './modules/doctor/doctor.module'
+import { ClinicAccountModule } from './modules/clinic-account/clinic-account.module'
+import { Patient } from './modules/patient/patient.entity'
+import { Doctor } from './modules/doctor/doctor.entity'
 @Module({
 	imports: [
 		ConfigModule.forRoot({ isGlobal: true }),
@@ -40,6 +46,9 @@ import { ClinicModule } from './modules/clinic/clinic.module'
 				Log,
 				Phone,
 				Clinic,
+				ClinicAccount,
+				Doctor,
+				Patient,
 			],
 			synchronize: true,
 		}),
@@ -51,6 +60,9 @@ import { ClinicModule } from './modules/clinic/clinic.module'
 		LogsModule,
 		DevicesModule,
 		ClinicModule,
+		PatientModule,
+		DoctorModule,
+		ClinicAccountModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

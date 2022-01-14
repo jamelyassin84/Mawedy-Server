@@ -1,3 +1,4 @@
+import { ClinicAccount } from './../clinic-account/clinic-account.entity'
 import { Clinic } from './../clinic/clinic.entity'
 import {
 	Column,
@@ -9,6 +10,8 @@ import {
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Admin } from '../admins/admin.entity'
+import { Doctor } from '../doctor/doctor.entity'
+import { Patient } from '../patient/patient.entity'
 
 @Entity()
 export class Device {
@@ -36,14 +39,14 @@ export class Device {
 	@ManyToOne(() => Clinic, (clinic) => clinic.id)
 	clinic: Clinic
 
-	// @ManyToOne(() => Admin, (admin) => admin.id)
-	// patient: Admin
+	@ManyToOne(() => Patient, (patient) => patient.id)
+	patient: Patient
 
-	// @ManyToOne(() => Admin, (admin) => admin.id)
-	// doctor: Admin
+	@ManyToOne(() => Doctor, (doctor) => doctor.id)
+	doctor: Doctor
 
-	// @ManyToOne(() => Admin, (admin) => admin.id)
-	// clinic_account: Admin
+	@ManyToOne(() => ClinicAccount, (clinicAccount) => clinicAccount.id)
+	ClinicAccount: ClinicAccount
 
 	@CreateDateColumn({
 		type: 'timestamp',

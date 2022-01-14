@@ -1,20 +1,34 @@
-import { Admin } from '../admins/admin.entity'
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()
-export class MawedyImages {
+export class Patient {
 	@PrimaryGeneratedColumn()
 	id: number
 
 	@Column()
-	order: number
+	type: 'Walk-in' | 'App Patient'
 
 	@Column()
-	url: string
+	first: string
 
-	@ManyToOne(() => Admin, (admin) => admin.id)
-	admin: Admin
+	@Column()
+	middle: string
+
+	@Column()
+	last: string
+
+	@Column()
+	ext: string
+
+	@Column()
+	address: string
+
+	@Column()
+	sex: string
+
+	@Column()
+	religion: string
 
 	@CreateDateColumn({
 		type: 'timestamp',
