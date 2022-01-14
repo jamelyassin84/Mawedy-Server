@@ -2,12 +2,13 @@ import { Roles } from './modules/roles/roles.entity'
 import { Module } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { AdminModule } from './modules/admin/admin.module'
+import { AdminModule } from './modules/admins/admin.module'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { RolesModule } from './modules/roles/roles.module'
 import { Connection } from 'typeorm'
-import { Admin } from './modules/admin/admin.entity'
+import { Admin } from './modules/admins/admin.entity'
+import { MawedyImagesModule } from './modules/mawedy-images/mawedy-images.module'
 @Module({
 	imports: [
 		ConfigModule.forRoot({ isGlobal: true }),
@@ -24,6 +25,7 @@ import { Admin } from './modules/admin/admin.entity'
 		}),
 		AdminModule,
 		RolesModule,
+		MawedyImagesModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

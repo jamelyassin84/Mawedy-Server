@@ -8,19 +8,13 @@ export class Admin {
 	id: number
 
 	@Column()
-	username: string
+	order: number
 
 	@Column()
-	password: string
+	url: string
 
-	@Column()
-	avatar: string
-
-	@Column()
-	isActive: boolean
-
-	@Column()
-	isLoggedIn: boolean
+	@ManyToOne(() => Admin, (admin) => admin.id)
+	admin: Admin
 
 	@CreateDateColumn({
 		type: 'timestamp',
@@ -34,7 +28,4 @@ export class Admin {
 		onUpdate: 'CURRENT_TIMESTAMP(6)',
 	})
 	updatedAt: Date
-
-	@ManyToOne(() => Roles, (role) => role.admin)
-	roles: Roles[]
 }
