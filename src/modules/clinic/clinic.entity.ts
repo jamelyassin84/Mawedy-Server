@@ -1,11 +1,5 @@
-import { Admin } from './../admins/admin.entity'
-import {
-	Column,
-	Entity,
-	ManyToOne,
-	OneToMany,
-	PrimaryGeneratedColumn,
-} from 'typeorm'
+import { Admin } from '../admin/admin.entity'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()

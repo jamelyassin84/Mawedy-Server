@@ -1,4 +1,4 @@
-import { Clinic } from './../clinic/clinic.entity'
+import { Clinic } from '../clinic/clinic.entity'
 import {
 	Column,
 	Entity,
@@ -7,27 +7,20 @@ import {
 	PrimaryGeneratedColumn,
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
-import { Admin } from '../admins/admin.entity'
+import { Admin } from '../admin/admin.entity'
 import { ClinicAccount } from '../clinic-account/clinic-account.entity'
-import { Doctor } from '../doctor/doctor.entity'
 import { Patient } from '../patient/patient.entity'
 
 @Entity()
-export class Phone {
+export class Log {
 	@PrimaryGeneratedColumn()
 	id: number
 
 	@Column()
-	userType: 'doctor' | 'patient' | 'clinic' | 'clinic_accounts' | 'admin'
+	role: string
 
 	@Column()
-	areaCode: number
-
-	@Column()
-	phone: number
-
-	@Column()
-	verificationCode: string
+	isActive: boolean
 
 	@ManyToOne(() => Admin, (admin) => admin.id)
 	admin: Admin
@@ -37,9 +30,6 @@ export class Phone {
 
 	@ManyToOne(() => Patient, (patient) => patient.id)
 	patient: Patient
-
-	@ManyToOne(() => Doctor, (doctor) => doctor.id)
-	doctor: Doctor
 
 	@ManyToOne(() => ClinicAccount, (clinicAccount) => clinicAccount.id)
 	ClinicAccount: ClinicAccount

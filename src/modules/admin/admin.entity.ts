@@ -1,12 +1,6 @@
-import { Clinic } from './../clinic/clinic.entity'
-import { Roles } from '../roles/roles.entity'
-import {
-	Column,
-	Entity,
-	ManyToOne,
-	OneToMany,
-	PrimaryGeneratedColumn,
-} from 'typeorm'
+import { Clinic } from '../clinic/clinic.entity'
+import { Roles } from '../role/roles.entity'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()

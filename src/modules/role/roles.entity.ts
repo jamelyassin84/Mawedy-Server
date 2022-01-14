@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
-import { Admin } from '../admins/admin.entity'
+import { Admin } from '../admin/admin.entity'
 
 @Entity()
 export class Roles {

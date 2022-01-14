@@ -1,5 +1,5 @@
-import { ClinicAccount } from './../clinic-account/clinic-account.entity'
-import { Clinic } from './../clinic/clinic.entity'
+import { ClinicAccount } from '../clinic-account/clinic-account.entity'
+import { Clinic } from '../clinic/clinic.entity'
 import {
 	Column,
 	Entity,
@@ -8,7 +8,7 @@ import {
 	PrimaryGeneratedColumn,
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
-import { Admin } from '../admins/admin.entity'
+import { Admin } from '../admin/admin.entity'
 import { Doctor } from '../doctor/doctor.entity'
 import { Patient } from '../patient/patient.entity'
 

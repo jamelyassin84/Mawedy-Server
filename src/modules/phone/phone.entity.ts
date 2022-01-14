@@ -1,37 +1,33 @@
-import { ClinicAccount } from './../clinic-account/clinic-account.entity'
-import { Clinic } from './../clinic/clinic.entity'
+import { Clinic } from '../clinic/clinic.entity'
 import {
 	Column,
 	Entity,
 	ManyToOne,
 	OneToMany,
-	OneToOne,
 	PrimaryGeneratedColumn,
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
-import { Admin } from '../admins/admin.entity'
+import { Admin } from '../admin/admin.entity'
+import { ClinicAccount } from '../clinic-account/clinic-account.entity'
 import { Doctor } from '../doctor/doctor.entity'
 import { Patient } from '../patient/patient.entity'
 
 @Entity()
-export class Device {
+export class Phone {
 	@PrimaryGeneratedColumn()
 	id: number
 
 	@Column()
-	device: string
+	userType: 'doctor' | 'patient' | 'clinic' | 'clinic_accounts' | 'admin'
 
 	@Column()
-	ip_address: string
+	areaCode: number
 
 	@Column()
-	mac_address: string
+	phone: number
 
 	@Column()
-	browser: string
-
-	@Column()
-	isActive: boolean
+	verificationCode: string
 
 	@ManyToOne(() => Admin, (admin) => admin.id)
 	admin: Admin
