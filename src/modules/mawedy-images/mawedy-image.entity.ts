@@ -14,7 +14,7 @@ export class MawedyImages {
 	url: string
 
 	@ManyToOne(() => Admin, (admin) => admin.id)
-	admin: Admin
+	encoder: Admin
 
 	@CreateDateColumn({
 		type: 'timestamp',

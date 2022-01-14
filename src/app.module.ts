@@ -1,3 +1,4 @@
+import { Clinic } from './modules/clinic/clinic.entity'
 import { Phone } from './modules/phones/phone.entity'
 import { Log } from './modules/logs/log.entity'
 import { MawedyImages } from './modules/mawedy-images/mawedy-image.entity'
@@ -18,6 +19,7 @@ import { LogsModule } from './modules/logs/logs.module'
 import { DevicesModule } from './modules/devices/devices.module'
 import { Device } from './modules/devices/device.entity'
 import { Email } from './modules/emails/email.entity'
+import { ClinicModule } from './modules/clinic/clinic.module'
 @Module({
 	imports: [
 		ConfigModule.forRoot({ isGlobal: true }),
@@ -29,7 +31,16 @@ import { Email } from './modules/emails/email.entity'
 			username: 'root',
 			password: '',
 			database: 'mawedy',
-			entities: [Admin, Roles, MawedyImages, Device, Email, Log, Phone],
+			entities: [
+				Admin,
+				Roles,
+				MawedyImages,
+				Device,
+				Email,
+				Log,
+				Phone,
+				Clinic,
+			],
 			synchronize: true,
 		}),
 		AdminModule,
@@ -39,6 +50,7 @@ import { Email } from './modules/emails/email.entity'
 		EmailsModule,
 		LogsModule,
 		DevicesModule,
+		ClinicModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

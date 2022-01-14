@@ -1,4 +1,11 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Clinic } from './../clinic/clinic.entity'
+import {
+	Column,
+	Entity,
+	ManyToOne,
+	OneToMany,
+	PrimaryGeneratedColumn,
+} from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Admin } from '../admins/admin.entity'
 
@@ -22,8 +29,8 @@ export class Phone {
 	@ManyToOne(() => Admin, (admin) => admin.id)
 	admin: Admin
 
-	// @ManyToOne(() => Admin, (admin) => admin.id)
-	// clinic: Admin
+	@ManyToOne(() => Clinic, (clinic) => clinic.id)
+	clinic: Clinic
 
 	// @ManyToOne(() => Admin, (admin) => admin.id)
 	// patient: Admin

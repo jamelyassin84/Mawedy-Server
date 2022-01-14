@@ -1,5 +1,4 @@
-import { Clinic } from './../clinic/clinic.entity'
-import { Roles } from '../roles/roles.entity'
+import { Admin } from './../admins/admin.entity'
 import {
 	Column,
 	Entity,
@@ -10,9 +9,24 @@ import {
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()
-export class Admin {
+export class Clinic {
 	@PrimaryGeneratedColumn()
 	id: number
+
+	@Column()
+	name: string
+
+	@Column()
+	address: string
+
+	@Column()
+	trade_license_number: number
+
+	@Column()
+	primary_device: string
+
+	@Column()
+	registeredVia: 'Web' | 'Sales' | 'Admin'
 
 	@Column()
 	username: string
@@ -24,16 +38,37 @@ export class Admin {
 	avatar: string
 
 	@Column()
+	description: string
+
+	@Column()
+	longitude: number
+
+	@Column()
+	latitude: number
+
+	@Column()
+	instagram: string
+
+	@Column()
+	google: string
+
+	@Column()
+	facebook: string
+
+	@Column()
+	apple: string
+
+	@Column()
+	isApproved: string
+
+	@Column()
 	isActive: boolean
 
 	@Column()
 	isLoggedIn: boolean
 
-	@OneToMany(() => Roles, (role) => role.admin)
-	roles: Roles[]
-
-	@OneToMany(() => Clinic, (clinic) => clinic.approver)
-	approvedClinics: Clinic[]
+	@OneToMany(() => Admin, (admin) => admin.id)
+	approver: Admin
 
 	@CreateDateColumn({
 		type: 'timestamp',

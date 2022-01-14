@@ -14,7 +14,7 @@ export class Roles {
 	isActive: boolean
 
 	@ManyToOne(() => Admin, (admin) => admin.id)
-	admin: Admin
+	admin: Admin[]
 
 	@CreateDateColumn({
 		type: 'timestamp',
