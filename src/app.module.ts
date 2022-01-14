@@ -1,3 +1,4 @@
+import { PatientAvatar } from './modules/patient-avatar/patient-avatar.enitity'
 import { ClinicMedicalServiceImage } from './modules/clinic-medical-service-image/clinic-medical-service-image.entity'
 import { ClinicTiming } from './modules/clinic-timings/clinic-timings.entity'
 import { ClinicServiceEntity } from './modules/clinic-service/clinic-service.entity'
@@ -74,6 +75,27 @@ import { ClinicRatingViaGoogle } from './modules/clinic-ratings-via-google/clini
 import { AppInbox } from './modules/mawedy-inbox/mawedy-inbox.entity'
 import { AppSession } from './modules/mawedy-session/mawedy-session.entity'
 import { AppTraffic } from './modules/mawedy-traffic/mawedy-traffic.entity'
+import { ClinicFollowUpCheckUpModule } from './modules/clinic-follow-up-check-up/clinic-follow-up-check-up.module'
+import { PatientAvatarModule } from './modules/patient-avatar/patient-avatar.module'
+import { PatientFavoritedClinicModule } from './modules/patient-favorited-clinic/patient-favorited-clinic.module'
+import { PatientSearchModule } from './modules/patient-search/patient-search.module'
+import { PatientBookingListModule } from './modules/patient-booking-list/patient-booking-list.module'
+import { PatientMedicalRecordModule } from './modules/patient-medical-record/patient-medical-record.module'
+import { PatientBookingFollowUpModule } from './modules/patient-booking-follow-up/patient-booking-follow-up.module'
+import { PatientsBookingListFilesModule } from './modules/patients-booking-list-files/patients-booking-list-files.module'
+import { DoctorRatingModule } from './modules/doctor-rating/doctor-rating.module'
+import { DoctorOverallRatingModule } from './modules/doctor-overall-rating/doctor-overall-rating.module'
+import { ClinicFollowUp } from './modules/clinic-follow-up-check-up/clinic-follow-up-check-up.entity'
+import { DoctorOverAllRating } from './modules/doctor-overall-rating/doctor-overall-rating.entity'
+import { DoctorRating } from './modules/doctor-rating/doctor-rating.entity'
+import { PatientBookingFollowUp } from './modules/patient-booking-follow-up/patient-booking-follow-up.entity'
+import { PatientBookingList } from './modules/patient-booking-list/patient-booking-list.entity'
+import { PatientFavoriteClinic } from './modules/patient-favorited-clinic/patient-favorited-clinic.entity'
+import { PatientMedicalRecord } from './modules/patient-medical-record/patient-medical-record.entity'
+import { PatientSearch } from './modules/patient-search/patient-search.entity'
+import { PatientBookingListFile } from './modules/patients-booking-list-files/patients-booking-list-files.entity'
+import { NotificationModule } from './modules/notification/notification.module'
+import { Notification } from './modules/notification/notification.entity'
 @Module({
 	imports: [
 		ConfigModule.forRoot({ isGlobal: true }),
@@ -121,6 +143,18 @@ import { AppTraffic } from './modules/mawedy-traffic/mawedy-traffic.entity'
 				AppInbox,
 				AppSession,
 				AppTraffic,
+				ClinicFollowUp,
+				DoctorOverAllRating,
+				DoctorRating,
+				ClinicFollowUp,
+				PatientBookingFollowUp,
+				PatientBookingList,
+				PatientFavoriteClinic,
+				PatientMedicalRecord,
+				PatientSearch,
+				PatientBookingListFile,
+				Notification,
+				PatientAvatar,
 			],
 			synchronize: true,
 		}),
@@ -159,6 +193,17 @@ import { AppTraffic } from './modules/mawedy-traffic/mawedy-traffic.entity'
 		MawedyInboxModule,
 		MawedyTrafficModule,
 		MawedySessionModule,
+		ClinicFollowUpCheckUpModule,
+		PatientAvatarModule,
+		PatientFavoritedClinicModule,
+		PatientSearchModule,
+		PatientBookingListModule,
+		PatientMedicalRecordModule,
+		PatientBookingFollowUpModule,
+		PatientsBookingListFilesModule,
+		DoctorRatingModule,
+		DoctorOverallRatingModule,
+		NotificationModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

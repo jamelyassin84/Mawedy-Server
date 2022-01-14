@@ -1,31 +1,18 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Clinic } from '../clinic/clinic.entity'
+import { Doctor } from '../doctor/doctor.entity'
 
 @Entity()
-export class ClinicSubscription {
+export class DoctorOverAllRating {
 	@PrimaryGeneratedColumn()
 	id: number
 
 	@Column()
-	subscription_type: 'app' | 'solution' | 'premium' | 'trial'
+	rating: number
 
-	@Column()
-	subscribedAt: Date
-
-	@Column()
-	validUntil: Date
-
-	@Column()
-	maxNumberOfAccounts: number
-
-	@Column()
-	numberOfAccounts: number
-
-	@Column()
-	price: number
-
-	@Column()
-	isActive: boolean
+	@ManyToOne(() => Doctor, (doctor) => doctor.id)
+	doctor: Doctor
 
 	@CreateDateColumn({
 		type: 'timestamp',

@@ -1,31 +1,29 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Clinic } from '../clinic/clinic.entity'
 
 @Entity()
-export class ClinicSubscription {
+export class Notification {
 	@PrimaryGeneratedColumn()
 	id: number
 
 	@Column()
-	subscription_type: 'app' | 'solution' | 'premium' | 'trial'
+	message: string
 
 	@Column()
-	subscribedAt: Date
+	fromType: NotificationType
 
 	@Column()
-	validUntil: Date
+	from: number
 
 	@Column()
-	maxNumberOfAccounts: number
+	toType: NotificationType
 
 	@Column()
-	numberOfAccounts: number
+	to: number
 
 	@Column()
-	price: number
-
-	@Column()
-	isActive: boolean
+	frontEndRedirectUrl: string
 
 	@CreateDateColumn({
 		type: 'timestamp',
@@ -40,3 +38,11 @@ export class ClinicSubscription {
 	})
 	updatedAt: Date
 }
+
+export type NotificationType =
+	| 'admin'
+	| 'clinic'
+	| 'patient'
+	| 'clinic_account'
+	| 'system'
+	| 'system'
