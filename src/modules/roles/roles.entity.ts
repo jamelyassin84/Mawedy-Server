@@ -1,25 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Admin } from '../admin/admin.entity'
 
 @Entity()
-export class Admin {
+export class Roles {
 	@PrimaryGeneratedColumn()
 	id: number
 
 	@Column()
-	username: string
-
-	@Column()
-	password: string
-
-	@Column()
-	avatar: string
+	role: string
 
 	@Column()
 	isActive: boolean
-
-	@Column()
-	isLoggedIn: boolean
 
 	@CreateDateColumn({
 		type: 'timestamp',
@@ -33,4 +25,7 @@ export class Admin {
 		onUpdate: 'CURRENT_TIMESTAMP(6)',
 	})
 	updatedAt: Date
+
+	@ManyToOne(() => Admin, (admin) => admin.id)
+	admin: Admin
 }
