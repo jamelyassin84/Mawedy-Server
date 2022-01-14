@@ -1,9 +1,9 @@
-import { Roles } from './../roles/roles.entity'
+import { Admin } from '../admins/admin.entity'
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()
-export class Admin {
+export class MawedyImages {
 	@PrimaryGeneratedColumn()
 	id: number
 

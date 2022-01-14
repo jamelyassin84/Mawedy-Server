@@ -1,3 +1,4 @@
+import { MawedyImages } from './modules/mawedy-images/mawedy-image.entity'
 import { Roles } from './modules/roles/roles.entity'
 import { Module } from '@nestjs/common'
 import { AppController } from './app.controller'
@@ -20,7 +21,7 @@ import { MawedyImagesModule } from './modules/mawedy-images/mawedy-images.module
 			username: 'root',
 			password: '',
 			database: 'mawedy',
-			entities: [Admin, Roles],
+			entities: [Admin, Roles, MawedyImages],
 			synchronize: true,
 		}),
 		AdminModule,
