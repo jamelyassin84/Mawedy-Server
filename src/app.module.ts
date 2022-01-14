@@ -1,3 +1,4 @@
+import { ClinicSubscription } from './modules/clinic-subscription/clinic-subscription.entity'
 import { ClinicAccount } from './modules/clinic-account/clinic-account.entity'
 import { Clinic } from './modules/clinic/clinic.entity'
 import { Phone } from './modules/phone/phone.entity'
@@ -26,6 +27,9 @@ import { DoctorModule } from './modules/doctor/doctor.module'
 import { ClinicAccountModule } from './modules/clinic-account/clinic-account.module'
 import { Patient } from './modules/patient/patient.entity'
 import { Doctor } from './modules/doctor/doctor.entity'
+import { ClinicSubscriptionsRevenueModule } from './modules/clinic-subscription-revenue/clinic-subscription-revenue.module'
+import { ClinicSubscriptionsModule } from './modules/clinic-subscription/clinic-subscription.module'
+import { ClinicSubscriptionRevenue } from './modules/clinic-subscription-revenue/clinic-subscription-revenue.entity'
 @Module({
 	imports: [
 		ConfigModule.forRoot({ isGlobal: true }),
@@ -49,6 +53,8 @@ import { Doctor } from './modules/doctor/doctor.entity'
 				ClinicAccount,
 				Doctor,
 				Patient,
+				ClinicSubscription,
+				ClinicSubscriptionRevenue,
 			],
 			synchronize: true,
 		}),
@@ -63,6 +69,8 @@ import { Doctor } from './modules/doctor/doctor.entity'
 		PatientModule,
 		DoctorModule,
 		ClinicAccountModule,
+		ClinicSubscriptionsModule,
+		ClinicSubscriptionsRevenueModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

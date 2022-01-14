@@ -4,18 +4,15 @@ import { ClinicSubscription } from '../clinic-subscription/clinic-subscription.e
 import { Clinic } from '../clinic/clinic.entity'
 
 @Entity()
-export class ClinicAccount {
+export class ClinicSubscriptionRevenue {
 	@PrimaryGeneratedColumn()
 	id: number
 
 	@Column()
-	name: string
+	amount: number
 
 	@Column()
-	isActive: boolean
-
-	@Column()
-	isLoggedIn: boolean
+	username: string
 
 	@ManyToOne(() => Clinic, (clinic) => clinic.id)
 	clinic: Clinic
