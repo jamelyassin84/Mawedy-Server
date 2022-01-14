@@ -23,7 +23,7 @@ import { AdminModule } from './modules/admin/admin.module'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { RolesModule } from './modules/role/roles.module'
-import { Connection } from 'typeorm'
+import { Connection, PrimaryGeneratedColumn } from 'typeorm'
 import { Admin } from './modules/admin/admin.entity'
 import { MawedyImagesModule } from './modules/mawedy-image/mawedy-image.module'
 import { PhonesModule } from './modules/phone/phone.module'
@@ -53,6 +53,27 @@ import { ClinicMedicalServiceImageModule } from './modules/clinic-medical-servic
 import { ClinicDoctorWorkingScheduleModule } from './modules/clinic-doctor-working-schedule/clinic-doctor-working-schedule.module'
 import { ClinicDepartmentDoctorModule } from './modules/clinic-department-doctor/clinic-department-doctor.module'
 import { ClinicDoctorsModule } from './modules/clinic-doctor/clinic-doctor.module'
+import { ClinicAvatarsModule } from './modules/clinic-avatar/clinic-avatar.module'
+import { ClinicPromotionModule } from './modules/clinic-promotion/clinic-promotion.module'
+import { ClinicPromotionPhotoModule } from './modules/clinic-promotion-photo/clinic-promotion-photo.module'
+import { MawedyInboxModule } from './modules/mawedy-inbox/mawedy-inbox.module'
+import { MawedyTrafficModule } from './modules/mawedy-traffic/mawedy-traffic.module'
+import { MawedySessionModule } from './modules/mawedy-session/mawedy-session.module'
+import { ClinicPromotionsDoctorsModule } from './modules/clinic-promotions-doctor/clinic-promotions-doctor.module'
+import { ClinicPromotionsAnalyticsModule } from './modules/clinic-promotions-analytic/clinic-promotion-analytic.module'
+import { ClinicAppointmentsModule } from './modules/clinic-appointment/clinic-appointment.module'
+import { ClinicRatingsViaGoogleModule } from './modules/clinic-ratings-via-google/clinic-ratings-via-google.module'
+import { ClinicMedicalServicesDoctorsModule } from './modules/clinic-medical-services-doctor/clinic-medical-services-doctor.module'
+import { ClinicAppointment } from './modules/clinic-appointment/clinic-appointment.entity'
+import { ClinicAvatar } from './modules/clinic-avatar/clinic-avatar.entity'
+import { ClinicPromotion } from './modules/clinic-promotion/clinic-promotion.entity'
+import { ClinicMedicalServiceDoctor } from './modules/clinic-medical-services-doctor/clinic-medical-services-doctor.entity'
+import { ClinicPromotionAnalytic } from './modules/clinic-promotions-analytic/clinic-promotion-analytic.entity'
+import { ClinicPromotionDoctor } from './modules/clinic-promotions-doctor/clinic-promotions-doctor.entity'
+import { ClinicRatingViaGoogle } from './modules/clinic-ratings-via-google/clinic-ratings-via-google.entity'
+import { AppInbox } from './modules/mawedy-inbox/mawedy-inbox.entity'
+import { AppSession } from './modules/mawedy-session/mawedy-session.entity'
+import { AppTraffic } from './modules/mawedy-traffic/mawedy-traffic.entity'
 @Module({
 	imports: [
 		ConfigModule.forRoot({ isGlobal: true }),
@@ -89,6 +110,17 @@ import { ClinicDoctorsModule } from './modules/clinic-doctor/clinic-doctor.modul
 				ClinicServiceEntity,
 				ClinicTiming,
 				ClinicMedicalServiceImage,
+				ClinicAppointment,
+				ClinicAvatar,
+				ClinicMedicalServiceDoctor,
+				ClinicPromotion,
+				PrimaryGeneratedColumn,
+				ClinicPromotionAnalytic,
+				ClinicPromotionDoctor,
+				ClinicRatingViaGoogle,
+				AppInbox,
+				AppSession,
+				AppTraffic,
 			],
 			synchronize: true,
 		}),
@@ -116,6 +148,17 @@ import { ClinicDoctorsModule } from './modules/clinic-doctor/clinic-doctor.modul
 		ClinicMedicalServiceImageModule,
 		ClinicDoctorWorkingScheduleModule,
 		ClinicDepartmentDoctorModule,
+		ClinicAvatarsModule,
+		ClinicPromotionModule,
+		ClinicPromotionPhotoModule,
+		ClinicPromotionsDoctorsModule,
+		ClinicPromotionsAnalyticsModule,
+		ClinicAppointmentsModule,
+		ClinicRatingsViaGoogleModule,
+		ClinicMedicalServicesDoctorsModule,
+		MawedyInboxModule,
+		MawedyTrafficModule,
+		MawedySessionModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

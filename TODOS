@@ -1,6 +1,7 @@
 Proper Naming Convention
 Update and Delete Cascades
 nullable columns
+export controller service and entity
 Swagger 
 Authentication 
 Request Admin Decorator
