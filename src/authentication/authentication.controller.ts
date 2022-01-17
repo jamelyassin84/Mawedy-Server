@@ -7,14 +7,8 @@ import { JwtAuthGuard } from './jwt-auth.guard'
 export class AuthenticationController {
 	constructor(private readonly authService: AuthService) {}
 
-	@Post('admin/login')
+	@Post('login')
 	async login(@Body() authLoginDto: AuthLoginDto) {
 		return this.authService.login(authLoginDto)
-	}
-
-	@UseGuards(JwtAuthGuard)
-	@Get('/test')
-	async test() {
-		return 'Success!'
 	}
 }

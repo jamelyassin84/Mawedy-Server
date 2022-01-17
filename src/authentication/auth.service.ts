@@ -1,8 +1,15 @@
+import { ClinicAccount } from './../modules/clinic-account/clinic-account.entity'
+import { Clinic } from './../modules/clinic/clinic.entity'
 import { Admin } from './../modules/admin/admin.entity'
-import { Injectable, UnauthorizedException } from '@nestjs/common'
+import {
+	BadRequestException,
+	Injectable,
+	UnauthorizedException,
+} from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { AdminService } from 'src/modules/admin/admin.service'
 import { AuthLoginDto } from './auth-login.dto'
+import { Patient } from 'src/modules/patient/patient.entity'
 
 @Injectable()
 export class AuthService {
@@ -11,25 +18,62 @@ export class AuthService {
 		private jwtService: JwtService,
 	) {}
 
-	async login(authLoginDto: AuthLoginDto) {
-		const user = await this.validateUser(authLoginDto)
-		const payload = {
-			userId: user.id,
+	async login(body: AuthLoginDto) {
+		let user: any
+		if (body.type === undefined) {
+			throw new BadRequestException('Type of user must be defined')
 		}
-
+		if (body.type === 'admin') {
+			user = await this.validateAdmin(body)
+		}
+		if (body.type === 'clinic') {
+			user = await this.validateClinic(body)
+		}
+		if (body.type === 'clinic-account') {
+			user = await this.validateClinicAccount(body)
+		}
+		if (body.type === 'patient') {
+			user = await this.validatePatient(body)
+		}
 		return {
-			access_token: this.jwtService.sign(payload),
+			user: user,
+			token: this.jwtService.sign({
+				userId: user.id,
+			}),
 		}
 	}
 
-	async validateUser(authLoginDto: AuthLoginDto): Promise<Admin> {
-		const { email, password } = authLoginDto
-
-		const user = await this.adminService.findByUsername(email)
+	async validateAdmin(body: AuthLoginDto): Promise<Admin> {
+		const { username, password } = body
+		const user = await this.adminService.findByUsername(username)
 		if (!(await user?.validatePassword(password))) {
-			throw new UnauthorizedException()
+			throw new UnauthorizedException('Username or password is incorrect')
 		}
-
 		return user
+	}
+
+	async validateClinic(body: AuthLoginDto): Promise<Clinic | any> {
+		// const user = await this.adminService.findByUsername(email)
+		// if (!(await user?.validatePassword(password))) {
+		// 	throw new UnauthorizedException()
+		// }
+		return {}
+	}
+
+	async validateClinicAccount(
+		body: AuthLoginDto,
+	): Promise<ClinicAccount | any> {
+		// const user = await this.adminService.findByUsername(email)
+		// if (!(await user?.validatePassword(password))) {
+		// 	throw new UnauthorizedException()
+		// }
+		return {}
+	}
+	async validatePatient(body: AuthLoginDto): Promise<Patient | any> {
+		// const user = await this.adminService.findByUsername(email)
+		// if (!(await user?.validatePassword(password))) {
+		// 	throw new UnauthorizedException()
+		// }
+		return {}
 	}
 }

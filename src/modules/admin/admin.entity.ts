@@ -29,10 +29,10 @@ export class Admin extends BaseEntity {
 	avatar: string
 
 	@Column()
-	isActive: boolean | false
+	isActive: boolean | true
 
 	@Column()
-	isLoggedIn: boolean | true
+	isLoggedIn: boolean | false
 
 	@OneToMany(() => Roles, (role) => role.admin)
 	roles: Roles[]

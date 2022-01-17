@@ -13,7 +13,9 @@ export class Roles {
 	@Column()
 	isActive: boolean
 
-	@ManyToOne(() => Admin, (admin) => admin.id)
+	@ManyToOne(() => Admin, (admin) => admin.id, {
+		cascade: true,
+	})
 	admin: Admin[]
 
 	@CreateDateColumn({

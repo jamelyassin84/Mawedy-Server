@@ -2,7 +2,6 @@ import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty } from 'class-validator'
 
 export class CreateAdminDto {
-	@ApiProperty()
 	id: number
 
 	@IsNotEmpty()
@@ -14,7 +13,7 @@ export class CreateAdminDto {
 	password: string
 
 	@ApiProperty()
-	avatar: string | null
+	avatar: string | null | undefined
 
 	@ApiProperty()
 	isActive: boolean | true

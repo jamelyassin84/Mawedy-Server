@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import {
+	Injectable,
+	NotFoundException,
+	ServiceUnavailableException,
+} from '@nestjs/common'
 import { CreateAdminDto } from './admin.dto'
 import { Admin } from './admin.entity'
 
@@ -10,44 +12,61 @@ export class AdminService {
 
 	async findAll(): Promise<Admin[]> {
 		const admin = await Admin.find()
-		admin.map((admin) => delete admin.password)
+		admin.forEach((admin) => delete admin.password)
 		return admin
 	}
 
 	async findOne(id: number): Promise<Admin> {
-		const admin = await Admin.findOne(id)
-		delete admin.password
-		return admin
+		try {
+			const admin = await Admin.findOneOrFail(id)
+			delete admin.password
+			return admin
+		} catch (error) {
+			throw new NotFoundException('User might be moved or deleted.')
+		}
 	}
 
-	async create(createAdminDto: CreateAdminDto) {
-		const admin = Admin.create(createAdminDto)
-		await admin.save()
-		delete admin.password
-		return admin
+	async create(body: CreateAdminDto): Promise<Admin> {
+		try {
+			const admin = Admin.create(body)
+			await admin.save()
+			delete admin.password
+			return admin
+		} catch (error) {
+			throw new ServiceUnavailableException(
+				'Something went wrong. Please try again',
+			)
+		}
 	}
 
-	async findByUsername(username: string) {
-		const user = await Admin.findOne({
+	async update(id: number, body: CreateAdminDto): Promise<Admin | any> {
+		try {
+			const admin = await Admin.update(id, body)
+			return admin
+		} catch (error) {
+			throw new NotFoundException(
+				'Unable to update user might be moved or deleted.',
+			)
+		}
+	}
+
+	async remove(id: number): Promise<Admin> {
+		try {
+			const admin = await Admin.findOneOrFail(id)
+			Admin.delete(id)
+			return admin
+		} catch (error) {
+			throw new NotFoundException(
+				'Unable to delete user might be moved or deleted.',
+			)
+		}
+	}
+
+	async findByUsername(username: string): Promise<Admin> {
+		return await Admin.findOneOrFail({
 			where: {
-				email: username,
+				username: username,
 			},
 		})
-		if (Object.keys(user).length === 0) {
-			return await Admin.findOne({
-				where: {
-					email: username,
-				},
-			})
-		}
-		return user
 	}
-
-	// async update(id: number, body: any): Promise<any> {
-	// 	return await Admin.update(body)
-	// }
-
-	// async remove(id: number): Promise<void> {
-	// 	await this.model.delete(id)
-	// }
 }
