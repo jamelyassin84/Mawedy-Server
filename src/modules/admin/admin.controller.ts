@@ -14,7 +14,13 @@ import { ROUTES } from '../../routes/routes'
 import { Admin } from './admin.entity'
 import { CreateAdminDto } from './admin.dto'
 import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard'
+import { ApiResponse, ApiTags } from '@nestjs/swagger'
 
+@ApiTags('ADMIN')
+@ApiResponse({
+	status: 201,
+	description: 'An admin has been successfully created.',
+})
 @Controller(resolveAPI(ROUTES.ADMIN))
 export class AdminController {
 	constructor(protected service: AdminService) {}
