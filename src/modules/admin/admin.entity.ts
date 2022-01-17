@@ -1,27 +1,38 @@
 import { Clinic } from '../clinic/clinic.entity'
 import { Roles } from '../role/roles.entity'
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {
+	BaseEntity,
+	BeforeInsert,
+	Column,
+	Entity,
+	OneToMany,
+	PrimaryGeneratedColumn,
+} from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
-
+import * as bcrypt from 'bcryptjs'
 @Entity()
-export class Admin {
+export class Admin extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 
-	@Column()
+	@Column({
+		nullable: true,
+	})
 	username: string
 
 	@Column()
 	password: string
 
-	@Column()
+	@Column({
+		nullable: true,
+	})
 	avatar: string
 
 	@Column()
-	isActive: boolean
+	isActive: boolean | false
 
 	@Column()
-	isLoggedIn: boolean
+	isLoggedIn: boolean | true
 
 	@OneToMany(() => Roles, (role) => role.admin)
 	roles: Roles[]
@@ -41,4 +52,13 @@ export class Admin {
 		onUpdate: 'CURRENT_TIMESTAMP(6)',
 	})
 	updatedAt: Date
+
+	@BeforeInsert()
+	async hashPassword() {
+		this.password = await bcrypt.hash(this.password, 8)
+	}
+
+	async validatePassword(password: string): Promise<boolean> {
+		return bcrypt.compare(password, this.password)
+	}
 }

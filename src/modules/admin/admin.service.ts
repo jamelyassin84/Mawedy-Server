@@ -1,33 +1,53 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
+import { CreateAdminDto } from './admin.dto'
 import { Admin } from './admin.entity'
 
 @Injectable()
 export class AdminService {
-	constructor(
-		@InjectRepository(Admin)
-		private model: Repository<Admin>,
-	) {}
+	constructor() {}
 
 	async findAll(): Promise<Admin[]> {
-		return this.model.find()
+		const admin = await Admin.find()
+		admin.map((admin) => delete admin.password)
+		return admin
 	}
 
-	async findOne(id: string): Promise<Admin> {
-		return this.model.findOne(id)
+	async findOne(id: number): Promise<Admin> {
+		const admin = await Admin.findOne(id)
+		delete admin.password
+		return admin
 	}
 
-	async create(body: any): Promise<any> {
-		// const admin = this.model.create(Admin,body)
-		return 'admin'
+	async create(createAdminDto: CreateAdminDto) {
+		const admin = Admin.create(createAdminDto)
+		await admin.save()
+		delete admin.password
+		return admin
 	}
 
-	async update(id: number, body: any): Promise<any> {
-		// return this.model.update(body)
+	async findByUsername(username: string) {
+		const user = await Admin.findOne({
+			where: {
+				email: username,
+			},
+		})
+		if (Object.keys(user).length === 0) {
+			return await Admin.findOne({
+				where: {
+					email: username,
+				},
+			})
+		}
+		return user
 	}
 
-	async remove(id: number): Promise<void> {
-		await this.model.delete(id)
-	}
+	// async update(id: number, body: any): Promise<any> {
+	// 	return await Admin.update(body)
+	// }
+
+	// async remove(id: number): Promise<void> {
+	// 	await this.model.delete(id)
+	// }
 }
