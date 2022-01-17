@@ -12,6 +12,9 @@ export class CreateAdminDto {
 	@ApiProperty()
 	phone?: string
 
+	@ApiProperty()
+	areaCode?: string
+
 	@IsNotEmpty()
 	@ApiProperty()
 	role?: AdminRoles

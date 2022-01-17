@@ -1,3 +1,4 @@
+import { PhonesService } from './../phone/phone.service'
 import { UserType } from './../../authentication/auth-login.dto'
 import { EmailsService } from './../email/email.service'
 import {
@@ -14,6 +15,7 @@ export class AdminService {
 	constructor(
 		protected roleService: RolesService,
 		protected emailService: EmailsService,
+		protected phoneService: PhonesService,
 	) {}
 
 	async findAll(): Promise<Admin[]> {
@@ -37,15 +39,18 @@ export class AdminService {
 			await admin.save()
 			await this.roleService.create({
 				admin: admin as any,
-				role: body.role as AdminRoles,
+				...body,
 				isActive: true,
 			})
 			await this.emailService.create({
+				...body,
 				admin: admin,
-				role: body.role as UserType,
-				userType: body.role as UserType,
 				isActive: true,
-			})
+			}),
+				await this.phoneService.create({
+					...body,
+					admin: admin,
+				})
 			return await Admin.findOne({
 				where: { id: admin.id },
 				relations: ['roles', 'emails', 'phones'],

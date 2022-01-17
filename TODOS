@@ -1,8 +1,7 @@
-Update and Delete Cascades
-nullable columns
-export controller service and entity
-Swagger 
-Authentication 
+Validation
+
+
+
 Request Admin Decorator
 Request Clinic Decorator
 Request ClinicAccount Decorator

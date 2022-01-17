@@ -1,5 +1,6 @@
 import { Clinic } from '../clinic/clinic.entity'
 import {
+	BaseEntity,
 	Column,
 	Entity,
 	ManyToOne,
@@ -13,7 +14,7 @@ import { Doctor } from '../doctor/doctor.entity'
 import { Patient } from '../patient/patient.entity'
 
 @Entity()
-export class Phone {
+export class Phone extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 
@@ -27,7 +28,7 @@ export class Phone {
 	phone: number
 
 	@Column()
-	verificationCode: string
+	verificationCode: string | null
 
 	@ManyToOne(() => Admin, (admin) => admin.id, {
 		onDelete: 'CASCADE',

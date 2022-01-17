@@ -21,7 +21,6 @@ import {
 	ApiTags,
 } from '@nestjs/swagger'
 
-@ApiTags('Admin')
 @ApiBearerAuth()
 @ApiHeaders([
 	{
@@ -29,6 +28,7 @@ import {
 		description: 'Authorization',
 	},
 ])
+@ApiTags('Admins')
 @Controller(resolveAPI(ROUTES.ADMIN))
 export class AdminController {
 	constructor(protected service: AdminService) {}
@@ -46,7 +46,7 @@ export class AdminController {
 	}
 
 	@Post()
-	@UseGuards(JwtAuthGuard)
+	// @UseGuards(JwtAuthGuard)
 	create(@Body() createAdminDto: CreateAdminDto): Promise<Admin> {
 		return this.service.create(createAdminDto)
 	}

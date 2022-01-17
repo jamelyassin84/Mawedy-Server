@@ -1,24 +1,23 @@
+import { ClinicAccount } from './../clinic-account/clinic-account.entity'
+import { Clinic } from './../clinic/clinic.entity'
 import { UserType } from './../../authentication/auth-login.dto'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty } from 'class-validator'
 import { Admin } from '../admin/admin.entity'
-import { Clinic } from '../clinic/clinic.entity'
-import { ClinicAccount } from '../clinic-account/clinic-account.entity'
 import { Doctor } from '../doctor/doctor.entity'
 import { Patient } from '../patient/patient.entity'
 
-export class EmailDto {
-	@IsNotEmpty()
-	@ApiProperty()
-	role: UserType
-
+export class PhoneDto {
 	@IsNotEmpty()
 	@ApiProperty()
 	userType: UserType
 
 	@IsNotEmpty()
 	@ApiProperty()
-	email: string
+	phone: string
+
+	@ApiProperty()
+	areaCode: string | 971
 
 	@ApiProperty()
 	isActive: boolean | true
