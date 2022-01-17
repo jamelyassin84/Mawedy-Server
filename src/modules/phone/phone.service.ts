@@ -20,7 +20,7 @@ export class PhonesService {
 			const phone = await Phone.findOneOrFail(id)
 			return phone
 		} catch (error) {
-			throw new NotFoundException('User might be moved or deleted.')
+			throw new NotFoundException('Phone might be moved or deleted.')
 		}
 	}
 
@@ -42,7 +42,7 @@ export class PhonesService {
 			return phone
 		} catch (error) {
 			throw new NotFoundException(
-				'Unable to update user might be moved or deleted.',
+				'Unable to update phone might be moved or deleted.',
 			)
 		}
 	}
@@ -53,7 +53,7 @@ export class PhonesService {
 			return phone
 		} catch (error) {
 			throw new NotFoundException(
-				'Unable to delete user might be moved or deleted.',
+				'Unable to delete phone might be moved or deleted.',
 			)
 		}
 	}

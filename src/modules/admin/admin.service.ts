@@ -1,3 +1,4 @@
+import { DevicesService } from './../device/device.service'
 import { PhonesService } from './../phone/phone.service'
 import { UserType } from './../../authentication/auth-login.dto'
 import { EmailsService } from './../email/email.service'
@@ -9,6 +10,7 @@ import {
 import { RolesService } from '../role/roles.service'
 import { AdminRoles, CreateAdminDto } from './admin.dto'
 import { Admin } from './admin.entity'
+import { Device } from '../device/device.entity'
 
 @Injectable()
 export class AdminService {
@@ -16,6 +18,7 @@ export class AdminService {
 		protected roleService: RolesService,
 		protected emailService: EmailsService,
 		protected phoneService: PhonesService,
+		protected deviceService: DevicesService,
 	) {}
 
 	async findAll(): Promise<Admin[]> {
@@ -37,23 +40,18 @@ export class AdminService {
 		try {
 			const admin = Admin.create(body) as any
 			await admin.save()
-			await this.roleService.create({
+			const data = {
 				admin: admin as any,
 				...body,
 				isActive: true,
-			})
-			await this.emailService.create({
-				...body,
-				admin: admin,
-				isActive: true,
-			}),
-				await this.phoneService.create({
-					...body,
-					admin: admin,
-				})
+			}
+			await this.roleService.create(data)
+			await this.emailService.create(data)
+			await this.phoneService.create(data)
+			await this.deviceService.create(data)
 			return await Admin.findOne({
 				where: { id: admin.id },
-				relations: ['roles', 'emails', 'phones'],
+				relations: ['roles', 'emails', 'phones', 'devices'],
 			})
 		} catch (error) {
 			throw new ServiceUnavailableException(

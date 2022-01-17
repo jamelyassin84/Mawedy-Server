@@ -1,3 +1,4 @@
+import { DevicesModule } from './../device/device.module'
 import { PhonesModule } from './../phone/phone.module'
 import { EmailsModule } from './../email/email.module'
 import { Module } from '@nestjs/common'
@@ -6,7 +7,7 @@ import { AdminController } from './admin.controller'
 import { RolesModule } from '../role/roles.module'
 
 @Module({
-	imports: [RolesModule, EmailsModule, PhonesModule],
+	imports: [RolesModule, EmailsModule, PhonesModule, DevicesModule],
 	controllers: [AdminController],
 	providers: [AdminService],
 	exports: [AdminService],

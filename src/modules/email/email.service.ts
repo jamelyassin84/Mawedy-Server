@@ -20,7 +20,7 @@ export class EmailsService {
 			const email = await Email.findOneOrFail(id)
 			return email
 		} catch (error) {
-			throw new NotFoundException('User might be moved or deleted.')
+			throw new NotFoundException('Email might be moved or deleted.')
 		}
 	}
 
@@ -42,7 +42,7 @@ export class EmailsService {
 			return email
 		} catch (error) {
 			throw new NotFoundException(
-				'Unable to update user might be moved or deleted.',
+				'Unable to update email might be moved or deleted.',
 			)
 		}
 	}
@@ -53,7 +53,7 @@ export class EmailsService {
 			return email
 		} catch (error) {
 			throw new NotFoundException(
-				'Unable to delete user might be moved or deleted.',
+				'Unable to delete email might be moved or deleted.',
 			)
 		}
 	}

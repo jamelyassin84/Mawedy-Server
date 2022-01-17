@@ -20,7 +20,7 @@ import {
 	ApiResponse,
 	ApiTags,
 } from '@nestjs/swagger'
-
+import { RealIP } from 'nestjs-real-ip'
 @ApiBearerAuth()
 @ApiHeaders([
 	{
@@ -47,8 +47,11 @@ export class AdminController {
 
 	@Post()
 	// @UseGuards(JwtAuthGuard)
-	create(@Body() createAdminDto: CreateAdminDto): Promise<Admin> {
-		return this.service.create(createAdminDto)
+	create(
+		@Body() createAdminDto: CreateAdminDto,
+		@RealIP() ipAddress: string,
+	): Promise<Admin> {
+		return this.service.create({ ...createAdminDto, ipAddress: ipAddress })
 	}
 
 	@Patch(':id')

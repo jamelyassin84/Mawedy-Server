@@ -12,6 +12,7 @@ import {
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import * as bcrypt from 'bcryptjs'
 import { Email } from '../email/email.entity'
+import { Device } from '../device/device.entity'
 @Entity()
 export class Admin extends BaseEntity {
 	@PrimaryGeneratedColumn()
@@ -50,6 +51,11 @@ export class Admin extends BaseEntity {
 		cascade: true,
 	})
 	phones?: Phone[]
+
+	@OneToMany(() => Device, (device) => device.admin, {
+		cascade: true,
+	})
+	devices?: Device[]
 
 	@OneToMany(() => Clinic, (clinic) => clinic.approver, {
 		cascade: true,

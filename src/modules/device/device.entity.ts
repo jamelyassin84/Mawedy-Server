@@ -1,41 +1,58 @@
 import { ClinicAccount } from '../clinic-account/clinic-account.entity'
 import { Clinic } from '../clinic/clinic.entity'
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+	BaseEntity,
+	Column,
+	Entity,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+} from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Admin } from '../admin/admin.entity'
 import { Doctor } from '../doctor/doctor.entity'
 import { Patient } from '../patient/patient.entity'
 
 @Entity()
-export class Device {
+export class Device extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 
 	@Column()
-	device: string
+	device: string | null
 
 	@Column()
-	ip_address: string
+	ipAddress: string | null
 
 	@Column()
-	mac_address: string
+	macAddress: string | null
 
 	@Column()
-	browser: string
+	browser: string | null
 
 	@Column()
-	isActive: boolean
+	isActive: boolean | true
 
-	@ManyToOne(() => Admin, (admin) => admin.id)
+	@Column()
+	isLoggedIn: boolean | true
+
+	@ManyToOne(() => Admin, (admin) => admin.id, {
+		onDelete: 'CASCADE',
+	})
 	admin: Admin
 
-	@ManyToOne(() => Clinic, (clinic) => clinic.id)
+	@ManyToOne(() => Clinic, (clinic) => clinic.id, {
+		onDelete: 'CASCADE',
+	})
 	clinic: Clinic
 
-	@ManyToOne(() => Patient, (patient) => patient.id)
+	@ManyToOne(() => Patient, (patient) => patient.id, {
+		onDelete: 'CASCADE',
+	})
 	patient: Patient
 
-	@ManyToOne(() => Doctor, (doctor) => doctor.id)
+	@ManyToOne(() => Doctor, (doctor) => doctor.id, {
+		onDelete: 'CASCADE',
+	})
 	doctor: Doctor
 
 	@ManyToOne(() => ClinicAccount, (clinicAccount) => clinicAccount.id)

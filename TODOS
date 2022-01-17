@@ -1,6 +1,8 @@
 Validation
-
-
+Default Value
+Soft Delete 
+Create Many 
+Paginate
 
 Request Admin Decorator
 Request Clinic Decorator
