@@ -1,6 +1,4 @@
-import { Clinic } from '../clinic/clinic.entity'
-import { Roles } from '../role/roles.entity'
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()

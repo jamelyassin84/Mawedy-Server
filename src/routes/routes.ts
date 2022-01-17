@@ -1,7 +1,7 @@
 export enum ROUTES {
-	// LOGIN,
-	// REGISTER,
+	AUTH = 'auth',
 	ADMIN = 'admin',
+	ROLES = 'roles',
 	// CLINIC,
 	// CLINIC_ACCOUNT,
 	// CLINIC_APPOINTMENT,
@@ -25,5 +25,5 @@ export enum ROUTES {
 }
 
 export const resolveAPI = (route: ROUTES) => {
-	return `api/${route}`
+	return `${route}`
 }

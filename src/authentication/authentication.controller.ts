@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common'
+import { resolveAPI } from './../routes/routes'
+import { Body, Controller, Post } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { AuthLoginDto } from './auth-login.dto'
 import { AuthService } from './auth.service'
+import { ROUTES } from '../routes/routes'
 
-@Controller('auth')
+@Controller(resolveAPI(ROUTES.AUTH))
 @ApiTags('AUTH')
 export class AuthenticationController {
 	constructor(private readonly authService: AuthService) {}

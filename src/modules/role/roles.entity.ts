@@ -1,14 +1,21 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+	BaseEntity,
+	Column,
+	Entity,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+} from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { AdminRoles } from '../admin/admin.dto'
 import { Admin } from '../admin/admin.entity'
 
 @Entity()
-export class Roles {
+export class Role extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 
 	@Column()
-	role: string
+	role: AdminRoles
 
 	@Column()
 	isActive: boolean
@@ -16,7 +23,7 @@ export class Roles {
 	@ManyToOne(() => Admin, (admin) => admin.id, {
 		cascade: true,
 	})
-	admin: Admin[]
+	admin: Admin
 
 	@CreateDateColumn({
 		type: 'timestamp',

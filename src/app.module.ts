@@ -16,9 +16,8 @@ import { Clinic } from './modules/clinic/clinic.entity'
 import { Phone } from './modules/phone/phone.entity'
 import { Log } from './modules/log/log.entity'
 import { MawedyImages } from './modules/mawedy-image/mawedy-image.entity'
-import { Roles } from './modules/role/roles.entity'
+import { Role } from './modules/role/roles.entity'
 import { Module } from '@nestjs/common'
-import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { AdminModule } from './modules/admin/admin.module'
 import { ConfigModule } from '@nestjs/config'
@@ -100,7 +99,7 @@ import { AuthenticationModule } from './authentication/authentication.module'
 
 const entities = [
 	Admin,
-	Roles,
+	Role,
 	MawedyImages,
 	Device,
 	Email,

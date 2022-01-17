@@ -14,19 +14,27 @@ import { ROUTES } from '../../routes/routes'
 import { Admin } from './admin.entity'
 import { CreateAdminDto } from './admin.dto'
 import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard'
-import { ApiResponse, ApiTags } from '@nestjs/swagger'
+import {
+	ApiBearerAuth,
+	ApiHeaders,
+	ApiResponse,
+	ApiTags,
+} from '@nestjs/swagger'
 
 @ApiTags('ADMIN')
-@ApiResponse({
-	status: 201,
-	description: 'An admin has been successfully created.',
-})
+@ApiBearerAuth()
+@ApiHeaders([
+	{
+		name: 'token',
+		description: 'Authorization',
+	},
+])
 @Controller(resolveAPI(ROUTES.ADMIN))
 export class AdminController {
 	constructor(protected service: AdminService) {}
 
 	@Get()
-	@UseGuards(JwtAuthGuard)
+	// @UseGuards(JwtAuthGuard)
 	async findAll(): Promise<Admin[]> {
 		return this.service.findAll()
 	}

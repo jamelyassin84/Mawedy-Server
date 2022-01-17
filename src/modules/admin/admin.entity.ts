@@ -1,5 +1,5 @@
 import { Clinic } from '../clinic/clinic.entity'
-import { Roles } from '../role/roles.entity'
+import { Role } from '../role/roles.entity'
 import {
 	BaseEntity,
 	BeforeInsert,
@@ -34,8 +34,8 @@ export class Admin extends BaseEntity {
 	@Column()
 	isLoggedIn: boolean | false
 
-	@OneToMany(() => Roles, (role) => role.admin)
-	roles: Roles[]
+	@OneToMany(() => Role, (role) => role.admin)
+	roles: Role[]
 
 	@OneToMany(() => Clinic, (clinic) => clinic.approver)
 	approvedClinics: Clinic[]

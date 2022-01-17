@@ -1,14 +1,7 @@
 import { ClinicServiceEntity } from './../clinic-service/clinic-service.entity'
 import { ClinicMedicalService } from './../clinic-medical-service/clinic-medical-service.entity'
 import { Clinic } from '../clinic/clinic.entity'
-import { Roles } from '../role/roles.entity'
-import {
-	Column,
-	Entity,
-	ManyToOne,
-	OneToMany,
-	PrimaryGeneratedColumn,
-} from 'typeorm'
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Doctor } from '../doctor/doctor.entity'
 import { ClinicDepartment } from '../clinic-department/clinic-department.enitiy'

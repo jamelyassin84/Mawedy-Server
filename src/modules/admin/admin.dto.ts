@@ -6,6 +6,14 @@ export class CreateAdminDto {
 
 	@IsNotEmpty()
 	@ApiProperty()
+	email: string
+
+	@IsNotEmpty()
+	@ApiProperty()
+	role: AdminRoles
+
+	@IsNotEmpty()
+	@ApiProperty()
 	username: string
 
 	@IsNotEmpty()
@@ -21,3 +29,5 @@ export class CreateAdminDto {
 	@ApiProperty()
 	isLoggedIn: boolean | false
 }
+
+export type AdminRoles = 'super' | 'admin' | 'staff'

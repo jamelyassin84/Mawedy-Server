@@ -3,23 +3,23 @@ import {
 	NotFoundException,
 	ServiceUnavailableException,
 } from '@nestjs/common'
-import { CreateAdminDto } from './admin.dto'
+import { RolesService } from '../role/roles.service'
+import { AdminRoles, CreateAdminDto } from './admin.dto'
 import { Admin } from './admin.entity'
 
 @Injectable()
 export class AdminService {
-	constructor() {}
+	constructor(protected roleService: RolesService) {}
 
 	async findAll(): Promise<Admin[]> {
-		const admin = await Admin.find()
-		admin.forEach((admin) => delete admin.password)
-		return admin
+		const admins = await Admin.find({ relations: ['roles'] })
+		admins.forEach((admin) => delete admin.password)
+		return admins
 	}
 
 	async findOne(id: number): Promise<Admin> {
 		try {
 			const admin = await Admin.findOneOrFail(id)
-			delete admin.password
 			return admin
 		} catch (error) {
 			throw new NotFoundException('User might be moved or deleted.')
@@ -30,8 +30,15 @@ export class AdminService {
 		try {
 			const admin = Admin.create(body)
 			await admin.save()
-			delete admin.password
-			return admin
+			await this.roleService.create({
+				admin: admin,
+				role: body.email as AdminRoles,
+				isActive: true,
+			})
+			return await Admin.findOne({
+				where: { id: admin.id },
+				relations: ['roles'],
+			})
 		} catch (error) {
 			throw new ServiceUnavailableException(
 				'Something went wrong. Please try again',
