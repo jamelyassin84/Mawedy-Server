@@ -29,19 +29,29 @@ export class Phone {
 	@Column()
 	verificationCode: string
 
-	@ManyToOne(() => Admin, (admin) => admin.id)
+	@ManyToOne(() => Admin, (admin) => admin.id, {
+		onDelete: 'CASCADE',
+	})
 	admin: Admin
 
-	@ManyToOne(() => Clinic, (clinic) => clinic.id)
+	@ManyToOne(() => Clinic, (clinic) => clinic.id, {
+		onDelete: 'CASCADE',
+	})
 	clinic: Clinic
 
-	@ManyToOne(() => Patient, (patient) => patient.id)
+	@ManyToOne(() => Patient, (patient) => patient.id, {
+		onDelete: 'CASCADE',
+	})
 	patient: Patient
 
-	@ManyToOne(() => Doctor, (doctor) => doctor.id)
+	@ManyToOne(() => Doctor, (doctor) => doctor.id, {
+		onDelete: 'CASCADE',
+	})
 	doctor: Doctor
 
-	@ManyToOne(() => ClinicAccount, (clinicAccount) => clinicAccount.id)
+	@ManyToOne(() => ClinicAccount, (clinicAccount) => clinicAccount.id, {
+		onDelete: 'CASCADE',
+	})
 	ClinicAccount: ClinicAccount
 
 	@CreateDateColumn({

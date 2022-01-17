@@ -6,15 +6,19 @@ export class CreateAdminDto {
 
 	@IsNotEmpty()
 	@ApiProperty()
-	email: string
+	email?: string
 
 	@IsNotEmpty()
 	@ApiProperty()
-	role: AdminRoles
+	phone?: string
 
 	@IsNotEmpty()
 	@ApiProperty()
-	username: string
+	role?: AdminRoles
+
+	@IsNotEmpty()
+	@ApiProperty()
+	username?: string
 
 	@IsNotEmpty()
 	@ApiProperty()
@@ -24,10 +28,10 @@ export class CreateAdminDto {
 	avatar: string | null | undefined
 
 	@ApiProperty()
-	isActive: boolean | true
+	isActive?: boolean | true
 
 	@ApiProperty()
-	isLoggedIn: boolean | false
+	isLoggedIn?: boolean | false
 }
 
 export type AdminRoles = 'super' | 'admin' | 'staff'

@@ -6,7 +6,7 @@ import { AuthService } from './auth.service'
 import { ROUTES } from '../routes/routes'
 
 @Controller(resolveAPI(ROUTES.AUTH))
-@ApiTags('AUTH')
+@ApiTags('Auth')
 export class AuthenticationController {
 	constructor(private readonly authService: AuthService) {}
 

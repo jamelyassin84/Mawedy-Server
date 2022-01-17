@@ -2,6 +2,7 @@ export enum ROUTES {
 	AUTH = 'auth',
 	ADMIN = 'admin',
 	ROLES = 'roles',
+	EMAILS = 'emails',
 	// CLINIC,
 	// CLINIC_ACCOUNT,
 	// CLINIC_APPOINTMENT,

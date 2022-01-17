@@ -10,6 +10,7 @@ import { JwtService } from '@nestjs/jwt'
 import { AdminService } from 'src/modules/admin/admin.service'
 import { AuthLoginDto } from './auth-login.dto'
 import { Patient } from 'src/modules/patient/patient.entity'
+import { UserType } from './auth-login.dto'
 
 @Injectable()
 export class AuthService {
@@ -20,20 +21,20 @@ export class AuthService {
 
 	async login(body: AuthLoginDto) {
 		let user: any
-		if (body.type === undefined) {
-			throw new BadRequestException('Type of user must be defined')
-		}
 		if (body.type === 'admin') {
 			user = await this.validateAdmin(body)
 		}
 		if (body.type === 'clinic') {
 			user = await this.validateClinic(body)
 		}
-		if (body.type === 'clinic-account') {
+		if (body.type === 'clinic-accounts') {
 			user = await this.validateClinicAccount(body)
 		}
 		if (body.type === 'patient') {
 			user = await this.validatePatient(body)
+		}
+		if (Object.keys(user).length === 0) {
+			throw new BadRequestException('Please specify type of Mawedy User.')
 		}
 		return {
 			user: user,

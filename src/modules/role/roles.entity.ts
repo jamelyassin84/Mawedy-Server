@@ -21,7 +21,7 @@ export class Role extends BaseEntity {
 	isActive: boolean
 
 	@ManyToOne(() => Admin, (admin) => admin.id, {
-		cascade: true,
+		onDelete: 'CASCADE',
 	})
 	admin: Admin
 

@@ -15,4 +15,9 @@ export class AuthLoginDto {
 	type: UserType
 }
 
-export type UserType = 'admin' | 'clinic' | 'clinic-account' | 'patient'
+export type UserType =
+	| 'doctor'
+	| 'patient'
+	| 'clinic'
+	| 'clinic-accounts'
+	| 'admin'

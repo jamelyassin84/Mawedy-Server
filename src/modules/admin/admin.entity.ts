@@ -1,3 +1,4 @@
+import { Phone } from './../phone/phone.entity'
 import { Clinic } from '../clinic/clinic.entity'
 import { Role } from '../role/roles.entity'
 import {
@@ -10,6 +11,7 @@ import {
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import * as bcrypt from 'bcryptjs'
+import { Email } from '../email/email.entity'
 @Entity()
 export class Admin extends BaseEntity {
 	@PrimaryGeneratedColumn()
@@ -18,7 +20,7 @@ export class Admin extends BaseEntity {
 	@Column({
 		nullable: true,
 	})
-	username: string
+	username?: string
 
 	@Column()
 	password: string
@@ -26,19 +28,33 @@ export class Admin extends BaseEntity {
 	@Column({
 		nullable: true,
 	})
-	avatar: string
+	avatar?: string
 
 	@Column()
-	isActive: boolean | true
+	isActive?: boolean | true
 
 	@Column()
-	isLoggedIn: boolean | false
+	isLoggedIn?: boolean | false
 
-	@OneToMany(() => Role, (role) => role.admin)
-	roles: Role[]
+	@OneToMany(() => Role, (role) => role.admin, {
+		cascade: true,
+	})
+	roles?: Role[]
 
-	@OneToMany(() => Clinic, (clinic) => clinic.approver)
-	approvedClinics: Clinic[]
+	@OneToMany(() => Email, (email) => email.admin, {
+		cascade: true,
+	})
+	emails?: Email[]
+
+	@OneToMany(() => Phone, (phone) => phone.admin, {
+		cascade: true,
+	})
+	phones?: Phone[]
+
+	@OneToMany(() => Clinic, (clinic) => clinic.approver, {
+		cascade: true,
+	})
+	approvedClinics?: Clinic[]
 
 	@CreateDateColumn({
 		type: 'timestamp',

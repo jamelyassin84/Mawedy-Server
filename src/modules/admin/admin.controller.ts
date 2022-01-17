@@ -21,7 +21,7 @@ import {
 	ApiTags,
 } from '@nestjs/swagger'
 
-@ApiTags('ADMIN')
+@ApiTags('Admin')
 @ApiBearerAuth()
 @ApiHeaders([
 	{
@@ -34,7 +34,7 @@ export class AdminController {
 	constructor(protected service: AdminService) {}
 
 	@Get()
-	// @UseGuards(JwtAuthGuard)
+	@UseGuards(JwtAuthGuard)
 	async findAll(): Promise<Admin[]> {
 		return this.service.findAll()
 	}

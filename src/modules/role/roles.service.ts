@@ -20,7 +20,7 @@ export class RolesService {
 			const role = await Role.findOneOrFail(id)
 			return role
 		} catch (error) {
-			throw new NotFoundException('User might be moved or deleted.')
+			throw new NotFoundException('The Role might be moved or deleted.')
 		}
 	}
 
@@ -28,7 +28,6 @@ export class RolesService {
 		try {
 			const role = Role.create(body)
 			await role.save()
-			console.log(body)
 			return role
 		} catch (error) {
 			throw new ServiceUnavailableException(
@@ -43,7 +42,7 @@ export class RolesService {
 			return role
 		} catch (error) {
 			throw new NotFoundException(
-				'Unable to update user might be moved or deleted.',
+				'Unable to update role might be moved or deleted.',
 			)
 		}
 	}
@@ -54,7 +53,7 @@ export class RolesService {
 			return role
 		} catch (error) {
 			throw new NotFoundException(
-				'Unable to delete user might be moved or deleted.',
+				'Unable to delete role might be moved or deleted.',
 			)
 		}
 	}

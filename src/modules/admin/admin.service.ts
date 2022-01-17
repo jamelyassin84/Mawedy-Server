@@ -1,3 +1,5 @@
+import { UserType } from './../../authentication/auth-login.dto'
+import { EmailsService } from './../email/email.service'
 import {
 	Injectable,
 	NotFoundException,
@@ -9,7 +11,10 @@ import { Admin } from './admin.entity'
 
 @Injectable()
 export class AdminService {
-	constructor(protected roleService: RolesService) {}
+	constructor(
+		protected roleService: RolesService,
+		protected emailService: EmailsService,
+	) {}
 
 	async findAll(): Promise<Admin[]> {
 		const admins = await Admin.find({ relations: ['roles'] })
@@ -26,18 +31,24 @@ export class AdminService {
 		}
 	}
 
-	async create(body: CreateAdminDto): Promise<Admin> {
+	async create(body: CreateAdminDto | any): Promise<Admin> {
 		try {
-			const admin = Admin.create(body)
+			const admin = Admin.create(body) as any
 			await admin.save()
 			await this.roleService.create({
+				admin: admin as any,
+				role: body.role as AdminRoles,
+				isActive: true,
+			})
+			await this.emailService.create({
 				admin: admin,
-				role: body.email as AdminRoles,
+				role: body.role as UserType,
+				userType: body.role as UserType,
 				isActive: true,
 			})
 			return await Admin.findOne({
 				where: { id: admin.id },
-				relations: ['roles'],
+				relations: ['roles', 'emails', 'phones'],
 			})
 		} catch (error) {
 			throw new ServiceUnavailableException(
@@ -46,7 +57,7 @@ export class AdminService {
 		}
 	}
 
-	async update(id: number, body: CreateAdminDto): Promise<Admin | any> {
+	async update(id: number, body: CreateAdminDto | any): Promise<Admin | any> {
 		try {
 			const admin = await Admin.update(id, body)
 			return admin
