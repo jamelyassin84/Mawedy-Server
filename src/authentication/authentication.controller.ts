@@ -1,3 +1,4 @@
+import { RealIP } from 'nestjs-real-ip';
 import { resolveAPI } from './../routes/routes'
 import { Body, Controller, Post } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
@@ -11,7 +12,10 @@ export class AuthenticationController {
 	constructor(private readonly authService: AuthService) {}
 
 	@Post('login')
-	async login(@Body() authLoginDto: AuthLoginDto) {
-		return this.authService.login(authLoginDto)
+	async login(
+		@Body() authLoginDto: AuthLoginDto,
+		@RealIP() ipAddress: string,
+	) {
+		return this.authService.login({...authLoginDto,ipAddress:ipAddress})
 	}
 }

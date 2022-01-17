@@ -18,7 +18,6 @@ export class AdminService {
 		protected roleService: RolesService,
 		protected emailService: EmailsService,
 		protected phoneService: PhonesService,
-		protected deviceService: DevicesService,
 	) {}
 
 	async findAll(): Promise<Admin[]> {
@@ -48,7 +47,6 @@ export class AdminService {
 			await this.roleService.create(data)
 			await this.emailService.create(data)
 			await this.phoneService.create(data)
-			await this.deviceService.create(data)
 			return await Admin.findOne({
 				where: { id: admin.id },
 				relations: ['roles', 'emails', 'phones', 'devices'],

@@ -5,6 +5,7 @@ export enum ROUTES {
 	EMAILS = 'emails',
 	PHONES = 'phones',
 	DEVICES = 'Devices',
+	CLINICS = 'Clinics',
 	// CLINIC,
 	// CLINIC_ACCOUNT,
 	// CLINIC_APPOINTMENT,

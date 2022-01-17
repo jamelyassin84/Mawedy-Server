@@ -3,7 +3,6 @@ import { IsEmail, IsNotEmpty } from 'class-validator'
 
 export class AuthLoginDto {
 	@ApiProperty()
-	@IsEmail()
 	username: string | undefined
 
 	@ApiProperty()
@@ -11,8 +10,10 @@ export class AuthLoginDto {
 	password: string
 
 	@ApiProperty()
-	@IsEmail()
+	@IsNotEmpty()
 	type: UserType
+
+	ipAddress: string
 }
 
 export type UserType =

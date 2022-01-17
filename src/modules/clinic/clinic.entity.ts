@@ -1,9 +1,23 @@
+import { Phone } from './../phone/phone.entity'
 import { Admin } from '../admin/admin.entity'
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {
+	BaseEntity,
+	BeforeInsert,
+	Column,
+	Entity,
+	ManyToOne,
+	OneToMany,
+	OneToOne,
+	PrimaryGeneratedColumn,
+} from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import * as bcrypt from 'bcryptjs'
+import { Role } from '../role/roles.entity'
+import { Email } from '../email/email.entity'
+import { Device } from '../device/device.entity'
 
 @Entity()
-export class Clinic {
+export class Clinic extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 
@@ -14,10 +28,7 @@ export class Clinic {
 	address: string
 
 	@Column()
-	trade_license_number: number
-
-	@Column()
-	primary_device: string
+	tradeLicenseNumber: number
 
 	@Column()
 	registeredVia: 'Web' | 'Sales' | 'Admin'
@@ -61,8 +72,25 @@ export class Clinic {
 	@Column()
 	isLoggedIn: boolean
 
-	@OneToMany(() => Admin, (admin) => admin.id)
-	approver: Admin
+	@ManyToOne(() => Clinic, (clinic) => clinic.approver, {
+		onDelete: 'CASCADE',
+	})
+	approver: Clinic
+
+	@OneToMany(() => Email, (email) => email.clinic, {
+		cascade: true,
+	})
+	emails?: Email[]
+
+	@OneToMany(() => Phone, (phone) => phone.clinic, {
+		cascade: true,
+	})
+	phones?: Phone[]
+
+	@OneToMany(() => Device, (device) => device.clinic, {
+		cascade: true,
+	})
+	devices?: Device[]
 
 	@CreateDateColumn({
 		type: 'timestamp',
@@ -76,4 +104,13 @@ export class Clinic {
 		onUpdate: 'CURRENT_TIMESTAMP(6)',
 	})
 	updatedAt: Date
+
+	@BeforeInsert()
+	async hashPassword() {
+		this.password = await bcrypt.hash(this.password, 8)
+	}
+
+	async validatePassword(password: string): Promise<boolean> {
+		return bcrypt.compare(password, this.password)
+	}
 }

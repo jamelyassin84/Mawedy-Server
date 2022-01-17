@@ -47,20 +47,14 @@ export class AdminController {
 
 	@Post()
 	// @UseGuards(JwtAuthGuard)
-	create(
-		@Body() createAdminDto: CreateAdminDto,
-		@RealIP() ipAddress: string,
-	): Promise<Admin> {
-		return this.service.create({ ...createAdminDto, ipAddress: ipAddress })
+	create(@Body() body: CreateAdminDto): Promise<Admin> {
+		return this.service.create(body)
 	}
 
 	@Patch(':id')
 	@UseGuards(JwtAuthGuard)
-	async update(
-		@Param() param,
-		@Body() createAdminDto: CreateAdminDto,
-	): Promise<Admin> {
-		return this.service.update(param.id, createAdminDto)
+	async update(@Param() param, @Body() body: CreateAdminDto): Promise<Admin> {
+		return this.service.update(param.id, body)
 	}
 
 	@Delete(':id')

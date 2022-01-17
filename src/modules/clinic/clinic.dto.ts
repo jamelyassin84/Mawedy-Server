@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty } from 'class-validator'
+import { Admin } from '../admin/admin.entity'
 
-export class CreateAdminDto {
+export class ClinicDto {
 	@IsNotEmpty()
 	@ApiProperty()
 	email?: string
@@ -28,11 +29,49 @@ export class CreateAdminDto {
 	@ApiProperty()
 	avatar: string | null | undefined
 
+	@IsNotEmpty()
+	@ApiProperty()
+	tradeLicenseNumber: string
+
+	@IsNotEmpty()
+	@ApiProperty()
+	address: string
+
+	@ApiProperty()
+	description?: string
+
+	@ApiProperty()
+	longitude?: string
+
+	@ApiProperty()
+	latitude?: string
+
+	@ApiProperty()
+	instagram?: string
+
+	@ApiProperty()
+	google?: string
+
+	@ApiProperty()
+	facebook?: string
+
+	@ApiProperty()
+	apple?: string
+
+	@ApiProperty()
+	isApproved: boolean | false
+
+	@IsNotEmpty()
+	@ApiProperty()
+	registeredVia?: 'Web' | 'Sales' | 'Admin'
+
 	@ApiProperty()
 	isActive?: boolean | true
 
 	@ApiProperty()
 	isLoggedIn?: boolean | false
+
+	approver: Admin
 }
 
 export type AdminRoles = 'super' | 'admin' | 'staff'
