@@ -1,3 +1,5 @@
+import { PhonesService } from './../phone/phone.service'
+import { EmailsService } from './../email/email.service'
 import { ClinicAccountDto } from './clinic-account.dto'
 
 import {
@@ -6,14 +8,19 @@ import {
 	ServiceUnavailableException,
 } from '@nestjs/common'
 import { ClinicAccount } from './clinic-account.entity'
+import { DevicesService } from '../device/device.service'
 
 @Injectable()
 export class ClinicAccountService {
-	constructor() {}
+	constructor(
+		protected emailService: EmailsService,
+		protected phoneService: PhonesService,
+		protected deviceService: DevicesService,
+	) {}
 
 	async findAll(): Promise<ClinicAccount[]> {
 		const clinicAccounts = await ClinicAccount.find({
-			relations: ['roles'],
+			relations: ['emails', 'phones', 'devices'],
 		})
 		return clinicAccounts
 	}
@@ -38,9 +45,12 @@ export class ClinicAccountService {
 				...body,
 				isActive: true,
 			}
+			await this.emailService.create(data)
+			await this.phoneService.create(data)
+			await this.deviceService.create(data)
 			return await ClinicAccount.findOne({
 				where: { id: clinicAccount.id },
-				relations: ['roles', 'emails', 'phones', 'devices'],
+				relations: ['emails', 'phones', 'devices'],
 			})
 		} catch (error) {
 			throw new ServiceUnavailableException(

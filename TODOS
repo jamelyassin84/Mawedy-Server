@@ -21,6 +21,9 @@ Request Clinic Decorator
 Request ClinicAccount Decorator
 Request Patient Decorator
 
+
+Create All Controllers
+
 Twilio 
 Mail Gun 
 Stripe

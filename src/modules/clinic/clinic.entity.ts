@@ -15,6 +15,7 @@ import * as bcrypt from 'bcryptjs'
 import { Role } from '../role/roles.entity'
 import { Email } from '../email/email.entity'
 import { Device } from '../device/device.entity'
+import { ClinicAccount } from '../clinic-account/clinic-account.entity'
 
 @Entity()
 export class Clinic extends BaseEntity {
@@ -91,6 +92,11 @@ export class Clinic extends BaseEntity {
 		cascade: true,
 	})
 	devices?: Device[]
+
+	@OneToMany(() => ClinicAccount, (clinicAccount) => clinicAccount.clinic, {
+		cascade: true,
+	})
+	clinicAccounts?: ClinicAccount[]
 
 	@CreateDateColumn({
 		type: 'timestamp',

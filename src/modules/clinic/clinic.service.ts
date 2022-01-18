@@ -18,8 +18,15 @@ export class ClinicService {
 	) {}
 
 	async findAll(): Promise<Clinic[]> {
-		const clinics = await Clinic.find({ relations: ['roles'] })
-		clinics.forEach((clinic) => delete clinic.password)
+		const clinics = await Clinic.find({
+			relations: [
+				'approver',
+				'emails',
+				'phones',
+				'devices',
+				'clinicAccounts',
+			],
+		})
 		return clinics
 	}
 
@@ -48,7 +55,13 @@ export class ClinicService {
 			await this.deviceService.create(data)
 			return await Clinic.findOne({
 				where: { id: clinic.id },
-				relations: ['approver', 'emails', 'phones', 'devices'],
+				relations: [
+					'approver',
+					'emails',
+					'phones',
+					'devices',
+					'clinicAccounts',
+				],
 			})
 		} catch (error) {
 			throw new ServiceUnavailableException(
