@@ -3,7 +3,7 @@ import { IsNotEmpty } from 'class-validator'
 import { BaseEntity } from 'typeorm'
 import { Clinic } from '../clinic/clinic.entity'
 
-export class ClinicFileDto extends BaseEntity {
+export class ClinicFollowUpDto extends BaseEntity {
 	@IsNotEmpty()
 	@ApiProperty()
 	doctorId?: number

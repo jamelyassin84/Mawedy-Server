@@ -3,7 +3,7 @@ import { IsNotEmpty } from 'class-validator'
 import { Clinic } from '../clinic/clinic.entity'
 import { Doctor } from '../doctor/doctor.entity'
 
-export class ClinicWorkingScheduleDto {
+export class ClinicDoctorWorkingScheduleDto {
 	@IsNotEmpty()
 	@ApiProperty()
 	day: Day
