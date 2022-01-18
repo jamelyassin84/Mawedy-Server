@@ -5,11 +5,11 @@ import { Doctor } from '../doctor/doctor.entity'
 
 export class ClinicDepartmentDoctorDto {
 	@ApiProperty()
-	isActive?: boolean
+	isActive?: boolean = true
 
-	@ApiProperty()
 	clinic?: Clinic
 
+	@IsNotEmpty()
 	@ApiProperty()
-	doctor?: Doctor
+	doctorId?: number
 }

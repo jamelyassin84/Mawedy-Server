@@ -1,6 +1,6 @@
 import { UserType } from './../../authentication/auth-login.dto'
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNotEmpty } from 'class-validator'
+import { isBoolean, IsDefined, IsNotEmpty } from 'class-validator'
 import { Admin } from '../admin/admin.entity'
 import { Clinic } from '../clinic/clinic.entity'
 import { ClinicAccount } from '../clinic-account/clinic-account.entity'
@@ -9,19 +9,22 @@ import { Patient } from '../patient/patient.entity'
 
 export class EmailDto {
 	@IsNotEmpty()
+	@IsDefined()
 	@ApiProperty()
-	role: UserType
+	role: UserType | null = null
 
 	@IsNotEmpty()
+	@IsDefined()
 	@ApiProperty()
-	userType: UserType
+	userType: UserType | null = null
 
 	@IsNotEmpty()
+	@IsDefined()
 	@ApiProperty()
 	email: string
 
 	@ApiProperty()
-	isActive: boolean | true
+	isActive: boolean = true
 
 	@ApiProperty()
 	admin: Admin | null

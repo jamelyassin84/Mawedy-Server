@@ -8,31 +8,31 @@ export class CreateAdminDto {
 
 	@IsNotEmpty()
 	@ApiProperty()
-	phone?: string
+	phone: number
 
 	@ApiProperty()
-	areaCode?: string
-
-	@IsNotEmpty()
-	@ApiProperty()
-	role?: AdminRoles
+	areaCode?: number = 971
 
 	@IsNotEmpty()
 	@ApiProperty()
-	username?: string
+	role?: AdminRoles = 'staff'
+
+	@IsNotEmpty()
+	@ApiProperty()
+	username: string
 
 	@IsNotEmpty()
 	@ApiProperty()
 	password: string
 
 	@ApiProperty()
-	avatar: string | null | undefined
+	avatar: string | null = null
 
 	@ApiProperty()
-	isActive?: boolean | true
+	isActive?: boolean = true
 
 	@ApiProperty()
-	isLoggedIn?: boolean | false
+	isLoggedIn?: boolean = false
 }
 
 export type AdminRoles = 'super' | 'admin' | 'staff'

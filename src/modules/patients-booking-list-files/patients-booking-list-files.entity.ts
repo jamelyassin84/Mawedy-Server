@@ -1,3 +1,4 @@
+import { PatientBookingList } from './../patient-booking-list/patient-booking-list.entity'
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Clinic } from '../clinic/clinic.entity'
@@ -6,6 +7,15 @@ import { Clinic } from '../clinic/clinic.entity'
 export class PatientBookingListFile {
 	@PrimaryGeneratedColumn()
 	id: number
+
+	@Column()
+	url: string
+
+	@ManyToOne(
+		() => PatientBookingList,
+		(patientBookingList) => patientBookingList.id,
+	)
+	patientBookingList: PatientBookingList
 
 	@CreateDateColumn({
 		type: 'timestamp',

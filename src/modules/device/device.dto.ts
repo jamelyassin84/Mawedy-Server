@@ -1,4 +1,3 @@
-import { UserType } from './../../authentication/auth-login.dto'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty } from 'class-validator'
 import { Admin } from '../admin/admin.entity'
@@ -8,39 +7,37 @@ import { Doctor } from '../doctor/doctor.entity'
 import { Patient } from '../patient/patient.entity'
 
 export class DeviceDto {
+	@IsNotEmpty()
 	@ApiProperty()
-	device: string | null
+	device: string | null = null
 
+	@IsNotEmpty()
 	@ApiProperty()
-	ipAddress: string | null
+	ipAddress: string | null = null
 
+	@IsNotEmpty()
 	@ApiProperty()
-	macAddress: string | null
+	macAddress: string | null = null
 
+	@IsNotEmpty()
 	@ApiProperty()
-	browserAddress: string | null
+	browserAddress: string | null = null
 
+	@IsNotEmpty()
 	@ApiProperty()
-	email: string | null
+	isActive: boolean = true
 
+	@IsNotEmpty()
 	@ApiProperty()
-	isActive: boolean | true
+	isLoggedIn: boolean = true
 
-	@ApiProperty()
-	isLoggedIn: boolean | true
+	admin?: Admin | null = null
 
-	@ApiProperty()
-	admin: Admin | null
+	clinic?: Clinic | null = null
 
-	@ApiProperty()
-	clinic: Clinic | null
+	doctor?: Doctor | null = null
 
-	@ApiProperty()
-	doctor: Doctor | null
+	patient?: Patient | null = null
 
-	@ApiProperty()
-	patient: Patient | null
-
-	@ApiProperty()
-	clinicAccount: ClinicAccount | null
+	clinicAccount?: ClinicAccount | null = null
 }

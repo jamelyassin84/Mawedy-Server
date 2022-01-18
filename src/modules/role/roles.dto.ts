@@ -1,17 +1,18 @@
 import { Admin } from './../admin/admin.entity'
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNotEmpty } from 'class-validator'
+import { IsDefined, IsNotEmpty, IsNotEmptyObject } from 'class-validator'
 import { AdminRoles } from '../admin/admin.dto'
 
 export class RoleDto {
 	@IsNotEmpty()
+	@IsNotEmptyObject()
+	@IsDefined()
 	@ApiProperty()
 	admin: Admin
 
-	@IsNotEmpty()
 	@ApiProperty()
-	role: AdminRoles
+	role: AdminRoles = 'staff'
 
 	@ApiProperty()
-	isActive: boolean | true
+	isActive: boolean = true
 }

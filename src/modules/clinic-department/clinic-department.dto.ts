@@ -5,11 +5,10 @@ import { Clinic } from '../clinic/clinic.entity'
 export class ClinicDepartmentDto {
 	@IsNotEmpty()
 	@ApiProperty()
-	name?: string
+	name: string
 
 	@ApiProperty()
-	isActive?: boolean
+	isActive: boolean = true
 
-	@ApiProperty()
 	clinic?: Clinic
 }

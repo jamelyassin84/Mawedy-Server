@@ -15,6 +15,9 @@ export class PatientBookingList {
 	@Column()
 	has_result: boolean
 
+	@Column()
+	referenceNumber: number
+
 	@ManyToOne(() => Doctor, (doctor) => doctor.id)
 	doctor: Doctor
 

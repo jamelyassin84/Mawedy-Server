@@ -1,34 +1,35 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNotEmpty } from 'class-validator'
+import { IsDefined, IsNotEmpty } from 'class-validator'
 import { BaseEntity } from 'typeorm'
 
 export class PatientDto extends BaseEntity {
 	@IsNotEmpty()
+	@IsDefined()
 	@ApiProperty()
-	type: PatientType
+	type: PatientType = 'app'
 
 	@ApiProperty()
 	@IsNotEmpty()
+	@IsDefined()
 	first: string
 
 	@ApiProperty()
 	@IsNotEmpty()
+	@IsDefined()
 	middle: string
 
 	@ApiProperty()
 	@IsNotEmpty()
+	@IsDefined()
 	last: string
 
 	@ApiProperty()
-	@IsNotEmpty()
 	ext: string
 
 	@ApiProperty()
-	@IsNotEmpty()
 	address: string
 
 	@ApiProperty()
-	@IsNotEmpty()
 	sex: 'M' | 'F'
 
 	@ApiProperty()

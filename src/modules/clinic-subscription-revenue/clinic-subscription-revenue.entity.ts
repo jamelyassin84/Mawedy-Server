@@ -11,9 +11,6 @@ export class ClinicSubscriptionRevenue {
 	@Column()
 	amount: number
 
-	@Column()
-	username: string
-
 	@ManyToOne(() => Clinic, (clinic) => clinic.id)
 	clinic: Clinic
 

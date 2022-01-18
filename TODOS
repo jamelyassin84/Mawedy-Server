@@ -1,20 +1,30 @@
+Create Dto
+Add Dto
+Extends BaseAPI
+Add Service  
+Add Controller
+Build Super Admin
+Integrate Front End
+
+JWT Logout
+
 Validation
 API Optional Parameter
 Default Value
-Soft Delete 
-Create Many 
+Soft Delete
+Create Many
 Paginate
 File Upload (Single, Multiple)
 File Route
 Image Route
-Create Multiple File Route 
-Create Multiple Image Route 
+Create Multiple File Route
+Create Multiple Image Route
 Gateway
 Interceptor
 Notifications
-ADMIN GUARD 
+ADMIN GUARD
 CLINIC GUARD
-CLINIC ACCOUNT GUARD 
+CLINIC ACCOUNT GUARD
 PATIENT GUARD
 
 Request Admin Decorator
@@ -22,9 +32,8 @@ Request Clinic Decorator
 Request ClinicAccount Decorator
 Request Patient Decorator
 
-
 Create All Controllers
 
-Twilio 
-Mail Gun 
+Twilio
+Mail Gun
 Stripe

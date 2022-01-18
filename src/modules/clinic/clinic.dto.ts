@@ -12,15 +12,11 @@ export class ClinicDto {
 	phone?: string
 
 	@ApiProperty()
-	areaCode?: string
+	areaCode?: number = 971
 
 	@IsNotEmpty()
 	@ApiProperty()
-	role?: AdminRoles
-
-	@IsNotEmpty()
-	@ApiProperty()
-	username?: string
+	username: string
 
 	@IsNotEmpty()
 	@ApiProperty()
@@ -31,47 +27,44 @@ export class ClinicDto {
 
 	@IsNotEmpty()
 	@ApiProperty()
-	tradeLicenseNumber: string
+	tradeLicenseNumber: string = null
+
+	@ApiProperty()
+	address: string | null = null
+
+	@ApiProperty()
+	description?: string | null = null
+
+	@ApiProperty()
+	longitude?: number | null = null
+
+	@ApiProperty()
+	latitude?: number | null = null
+
+	@ApiProperty()
+	instagram?: string | null = null
+
+	@ApiProperty()
+	google?: string | null = null
+
+	@ApiProperty()
+	facebook?: string | null = null
+
+	@ApiProperty()
+	apple?: string | null = null
+
+	@ApiProperty()
+	isApproved: boolean = false
 
 	@IsNotEmpty()
 	@ApiProperty()
-	address: string
+	registeredVia?: 'web' | 'app'
 
 	@ApiProperty()
-	description?: string
+	isActive?: boolean = true
 
 	@ApiProperty()
-	longitude?: string
-
-	@ApiProperty()
-	latitude?: string
-
-	@ApiProperty()
-	instagram?: string
-
-	@ApiProperty()
-	google?: string
-
-	@ApiProperty()
-	facebook?: string
-
-	@ApiProperty()
-	apple?: string
-
-	@ApiProperty()
-	isApproved: boolean | false
-
-	@IsNotEmpty()
-	@ApiProperty()
-	registeredVia?: 'Web' | 'Sales' | 'Admin'
-
-	@ApiProperty()
-	isActive?: boolean | true
-
-	@ApiProperty()
-	isLoggedIn?: boolean | false
+	isLoggedIn?: boolean = false
 
 	approver: Admin
 }
-
-export type AdminRoles = 'super' | 'admin' | 'staff'

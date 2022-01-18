@@ -2,6 +2,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Clinic } from '../clinic/clinic.entity'
 import { Doctor } from '../doctor/doctor.entity'
+import { Patient } from '../patient/patient.entity'
 
 @Entity()
 export class DoctorRating {
@@ -16,6 +17,9 @@ export class DoctorRating {
 
 	@ManyToOne(() => Clinic, (clinic) => clinic.id)
 	clinic: Clinic
+
+	@ManyToOne(() => Patient, (patient) => patient.id)
+	patient: Patient
 
 	@CreateDateColumn({
 		type: 'timestamp',

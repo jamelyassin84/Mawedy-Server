@@ -7,10 +7,10 @@ export class ClinicSubscriptionDto {
 	name: string
 
 	@ApiProperty()
-	isActive?: boolean
+	isActive?: boolean = true
 
 	@ApiProperty()
-	isLoggedIn?: boolean
+	isLoggedIn?: boolean = false
 
 	@ApiProperty()
 	subscriptionType: SubscriptionType
@@ -22,16 +22,13 @@ export class ClinicSubscriptionDto {
 	validUntil: Date
 
 	@ApiProperty()
-	numberOfAccounts: number
+	numberOfAccounts: number = 2
 
 	@ApiProperty()
-	price: number
+	price: number = 0
 
 	@ApiProperty()
-	currency: string | 'AED'
-
-	@ApiProperty()
-	maxNumberOfAccounts: number
+	currency: string = 'AED'
 }
 
 export type SubscriptionType = 'trial' | 'solution' | 'app' | 'premium'

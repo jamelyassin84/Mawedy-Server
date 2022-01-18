@@ -2,14 +2,18 @@ import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty } from 'class-validator'
 import { Clinic } from '../clinic/clinic.entity'
 
-export class ClinicServiceEntity {
+export class ClinicAnalyticDto {
 	@IsNotEmpty()
 	@ApiProperty()
-	name: string
+	reached: boolean = false
 
 	@IsNotEmpty()
 	@ApiProperty()
-	isActive: boolean = true
+	viewed: boolean = false
+
+	@IsNotEmpty()
+	@ApiProperty()
+	doctorId: number
 
 	clinic?: Clinic
 }
