@@ -8,6 +8,7 @@ export enum ROUTES {
 	CLINICS = 'clinics',
 	CLINIC_SUBSCRIPTIONS = 'clinic-subscriptions',
 	CLINIC_ACCOUNTS = 'clinic-accounts',
+	CLINIC_APPOINTMENTS = 'clinic-appointments',
 	PATIENTS = 'patients',
 	// CLINIC_APPOINTMENT,
 	// CLINIC_AVATAR,

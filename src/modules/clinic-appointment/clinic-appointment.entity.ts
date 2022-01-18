@@ -1,11 +1,19 @@
+import { PatientBookingList } from './../patient-booking-list/patient-booking-list.entity'
 import { Clinic } from '../clinic/clinic.entity'
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+	BaseEntity,
+	Column,
+	Entity,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+} from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Patient } from '../patient/patient.entity'
 import { Doctor } from '../doctor/doctor.entity'
+import { ClinicPromotion } from '../clinic-promotion/clinic-promotion.entity'
 
 @Entity()
-export class ClinicAppointment {
+export class ClinicAppointment extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 
@@ -25,13 +33,10 @@ export class ClinicAppointment {
 	comments: string
 
 	@Column()
-	status: 'canceled' | 'attended' | null
+	status: AppointmentStatus
 
 	@Column()
 	booking_reference: string
-
-	@Column()
-	appointment_date: Date
 
 	@ManyToOne(() => Clinic, (clinic) => clinic.id)
 	clinic: Clinic
@@ -42,11 +47,11 @@ export class ClinicAppointment {
 	@ManyToOne(() => Doctor, (doctor) => doctor.id)
 	doctor: Doctor
 
-	// @ManyToOne(() => Doctor, (bookingList) => bookingList.id)
-	// bookingList: Doctor
+	@ManyToOne(() => Doctor, (bookingList) => bookingList.id)
+	bookingList: PatientBookingList
 
-	// @ManyToOne(() => Doctor, (clinicPromotion) => clinicPromotion.id)
-	// clinicPromotion: Doctor
+	@ManyToOne(() => Doctor, (clinicPromotion) => clinicPromotion.id)
+	clinicPromotion: ClinicPromotion
 
 	@CreateDateColumn({
 		type: 'timestamp',
@@ -61,3 +66,5 @@ export class ClinicAppointment {
 	})
 	updatedAt: Date
 }
+
+export type AppointmentStatus = 'canceled' | 'attended' | null
