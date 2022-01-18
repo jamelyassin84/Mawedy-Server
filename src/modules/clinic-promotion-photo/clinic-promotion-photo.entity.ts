@@ -1,9 +1,15 @@
 import { ClinicPromotion } from './../clinic-promotion/clinic-promotion.entity'
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+	BaseEntity,
+	Column,
+	Entity,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+} from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()
-export class ClinicPromotionPhoto {
+export class ClinicPromotionPhoto extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 

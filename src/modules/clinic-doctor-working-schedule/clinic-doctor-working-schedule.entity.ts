@@ -1,10 +1,16 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+	BaseEntity,
+	Column,
+	Entity,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+} from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Clinic } from '../clinic/clinic.entity'
 import { Doctor } from '../doctor/doctor.entity'
 
 @Entity()
-export class ClinicDoctorWorkingSchedule {
+export class ClinicDoctorWorkingSchedule extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 

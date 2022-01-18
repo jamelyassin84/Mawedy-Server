@@ -1,10 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Clinic } from '../clinic/clinic.entity'
 import { Patient } from '../patient/patient.entity'
 
 @Entity()
-export class PatientFavoriteClinic {
+export class PatientFavoriteClinic extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 

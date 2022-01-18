@@ -1,9 +1,8 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
-import { Clinic } from '../clinic/clinic.entity'
 
 @Entity()
-export class Notification {
+export class Notification extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 

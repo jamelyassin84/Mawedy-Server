@@ -1,13 +1,19 @@
 import { ClinicServiceEntity } from './../clinic-service/clinic-service.entity'
 import { ClinicMedicalService } from './../clinic-medical-service/clinic-medical-service.entity'
 import { Clinic } from '../clinic/clinic.entity'
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+	BaseEntity,
+	Column,
+	Entity,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+} from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Doctor } from '../doctor/doctor.entity'
 import { ClinicDepartment } from '../clinic-department/clinic-department.enitiy'
 
 @Entity()
-export class ClinicMedicalServiceDoctor {
+export class ClinicMedicalServiceDoctor extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 

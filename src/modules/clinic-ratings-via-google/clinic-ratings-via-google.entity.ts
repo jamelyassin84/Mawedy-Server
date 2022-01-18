@@ -1,9 +1,15 @@
 import { Clinic } from '../clinic/clinic.entity'
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+	BaseEntity,
+	Column,
+	Entity,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+} from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()
-export class ClinicRatingViaGoogle {
+export class ClinicRatingViaGoogle extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 

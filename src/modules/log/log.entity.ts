@@ -1,5 +1,6 @@
 import { Clinic } from '../clinic/clinic.entity'
 import {
+	BaseEntity,
 	Column,
 	Entity,
 	ManyToOne,
@@ -12,7 +13,7 @@ import { ClinicAccount } from '../clinic-account/clinic-account.entity'
 import { Patient } from '../patient/patient.entity'
 
 @Entity()
-export class Log {
+export class Log extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 
