@@ -22,8 +22,8 @@ import { ClinicDepartmentDoctorService } from './clinic-department-doctor.servic
 		description: 'Authorization',
 	},
 ])
-@ApiTags('Clinic Appointments')
-@Controller(resolveAPI(ROUTES.CLINIC_APPOINTMENTS))
+@ApiTags('Clinic Department Doctors')
+@Controller(resolveAPI(ROUTES.CLINIC_DEPARTMENT_DOCTORS))
 export class ClinicDepartmentDoctorController {
 	constructor(private readonly service: ClinicDepartmentDoctorService) {}
 

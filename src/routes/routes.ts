@@ -13,6 +13,7 @@ export enum ROUTES {
 	CLINIC_AVATARS = 'clinic-avatars',
 	CLINIC_DEPARTMENT = 'clinic-department',
 	CLINIC_DEPARTMENT_DOCTORS = 'clinic-department-doctors',
+	CLINIC_DOCTORS = 'clinic-doctors',
 }
 
 export const resolveAPI = (route: ROUTES) => {
