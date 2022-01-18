@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty } from 'class-validator'
 import { Clinic } from '../clinic/clinic.entity'
 
-export class ClinicPatientDto {
+export class ClinicPromotionDto {
 	@IsNotEmpty()
 	@ApiProperty()
 	startAt: Date

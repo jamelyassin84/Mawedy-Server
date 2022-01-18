@@ -7,8 +7,11 @@ export enum ROUTES {
 	DEVICES = 'device',
 	CLINICS = 'clinic',
 	CLINIC_SUBSCRIPTIONS = 'clinic-subscription',
+	CLINIC_PROMOTIONS = 'clinic-promotion',
+	CLINIC_PROMOTIONS_PHOTOS = 'clinic-promotion-photo',
 	CLINIC_ACCOUNTS = 'clinic-account',
 	CLINIC_APPOINTMENTS = 'clinic-appointment',
+	CLINIC_PATIENTS = 'clinic-patient',
 	PATIENTS = 'patient',
 	CLINIC_AVATARS = 'clinic-avatar',
 	CLINIC_FILES = 'clinic-file',
@@ -18,6 +21,7 @@ export enum ROUTES {
 	CLINIC_DOCTORS = 'clinic-doctor',
 	CLINIC_MEDICAL_SERVICES = 'clinic-medical=service',
 	CLINIC_MEDICAL_SERVICES_IMAGES = 'clinic-medical=service-image',
+	CLINIC_MEDICAL_SERVICES_DOCTORS = 'clinic-medical=service-doctor',
 	CLINIC_DOCTORS_WORKING_SCHEDULES = 'clinic-doctors-working-schedule',
 }
 
