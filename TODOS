@@ -3,8 +3,24 @@ Default Value
 Soft Delete 
 Create Many 
 Paginate
+File Upload (Single, Multiple)
+File Route
+Image Route
+Create Multiple File Route 
+Create Multiple Image Route 
+Gateway
+Interceptor
+
+ADMIN GUARD 
+CLINIC GUARD
+CLINIC ACCOUNT GUARD 
+PATIENT GUARD
 
 Request Admin Decorator
 Request Clinic Decorator
 Request ClinicAccount Decorator
 Request Patient Decorator
+
+Twilio 
+Mail Gun 
+Stripe

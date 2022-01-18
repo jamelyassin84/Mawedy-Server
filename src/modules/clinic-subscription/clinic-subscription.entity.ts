@@ -1,13 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()
-export class ClinicSubscription {
+export class ClinicSubscription extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 
 	@Column()
-	subscription_type: 'app' | 'solution' | 'premium' | 'trial'
+	subscriptionType: 'app' | 'solution' | 'premium' | 'trial'
 
 	@Column()
 	subscribedAt: Date
@@ -23,6 +23,9 @@ export class ClinicSubscription {
 
 	@Column()
 	price: number
+
+	@Column()
+	currency: string | 'AED'
 
 	@Column()
 	isActive: boolean

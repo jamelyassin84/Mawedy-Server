@@ -14,13 +14,7 @@ import { ROUTES } from '../../routes/routes'
 import { Admin } from './admin.entity'
 import { CreateAdminDto } from './admin.dto'
 import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard'
-import {
-	ApiBearerAuth,
-	ApiHeaders,
-	ApiResponse,
-	ApiTags,
-} from '@nestjs/swagger'
-import { RealIP } from 'nestjs-real-ip'
+import { ApiBearerAuth, ApiHeaders, ApiTags } from '@nestjs/swagger'
 @ApiBearerAuth()
 @ApiHeaders([
 	{
