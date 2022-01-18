@@ -6,9 +6,12 @@ export enum ROUTES {
 	PHONES = 'phone',
 	DEVICES = 'device',
 	LOGS = 'log',
+	NOTIFICATIONS = 'notification',
 
 	APP_IMAGES = 'app-images',
 	APP_INBOX = 'app-inbox',
+	APP_SESSIONS = 'app-session',
+	APP_TRAFFICS = 'app-traffic',
 
 	CLINICS = 'clinic',
 	CLINIC_SERVICES = 'clinic-service',
@@ -40,6 +43,8 @@ export enum ROUTES {
 	DOCTOR_OVERALL_RATING = 'doctor-overall-rating',
 
 	PATIENTS = 'patient',
+	PATIENT_AVATARS = 'patient-avatar',
+	PATIENT_BOOKING_FOLLOWUPS = 'patient-booking-followup',
 }
 
 export const resolveAPI = (route: ROUTES) => {
