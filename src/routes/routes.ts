@@ -43,8 +43,13 @@ export enum ROUTES {
 	DOCTOR_OVERALL_RATING = 'doctor-overall-rating',
 
 	PATIENTS = 'patient',
+	PATIENT_MEDICAL_RECORDS = 'patient-medical-record',
+	PATIENT_BOOKING_LISTS = 'patient-booking-list',
+	PATIENT_BOOKING_LISTS_FILES = 'patient-booking-list-files',
 	PATIENT_AVATARS = 'patient-avatar',
+	PATIENT_SEARCHES = 'patient-searches',
 	PATIENT_BOOKING_FOLLOWUPS = 'patient-booking-followup',
+	PATIENT_FAVORITE_CLINIC = 'patient-favorite-clinic',
 }
 
 export const resolveAPI = (route: ROUTES) => {

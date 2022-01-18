@@ -1,7 +1,7 @@
 import { PatientBookingList } from './../patient-booking-list/patient-booking-list.entity'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsDefined, IsNotEmpty } from 'class-validator'
-export class PatientBookingLstFileDto {
+export class PatientBookingListFileDto {
 	@IsNotEmpty()
 	@IsDefined()
 	@ApiProperty()
