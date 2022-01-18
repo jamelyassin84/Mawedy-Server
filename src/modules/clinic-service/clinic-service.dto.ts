@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty } from 'class-validator'
 import { Clinic } from '../clinic/clinic.entity'
 
-export class ClinicServiceEntity {
+export class ClinicServiceEntityDto {
 	@IsNotEmpty()
 	@ApiProperty()
 	name: string
