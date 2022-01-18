@@ -6,13 +6,16 @@ export enum ROUTES {
 	PHONES = 'phone',
 	DEVICES = 'device',
 	CLINICS = 'clinic',
+	CLINIC_RATINGS = 'clinic-rating',
+	CLINIC_RATINGS_VIA_GOOGLE = 'clinic-rating-via-google',
 	CLINIC_SUBSCRIPTIONS = 'clinic-subscription',
 	CLINIC_PROMOTIONS = 'clinic-promotion',
+	CLINIC_PROMOTIONS_ANALYTICS = 'clinic-promotion-analytic',
+	CLINIC_PROMOTIONS_DOCTORS = 'clinic-promotion-doctor',
 	CLINIC_PROMOTIONS_PHOTOS = 'clinic-promotion-photo',
 	CLINIC_ACCOUNTS = 'clinic-account',
 	CLINIC_APPOINTMENTS = 'clinic-appointment',
 	CLINIC_PATIENTS = 'clinic-patient',
-	PATIENTS = 'patient',
 	CLINIC_AVATARS = 'clinic-avatar',
 	CLINIC_FILES = 'clinic-file',
 	CLINIC_FOLLOW_UP_CHECK_UPS = 'clinic-follow-up-check-up',
@@ -23,6 +26,7 @@ export enum ROUTES {
 	CLINIC_MEDICAL_SERVICES_IMAGES = 'clinic-medical=service-image',
 	CLINIC_MEDICAL_SERVICES_DOCTORS = 'clinic-medical=service-doctor',
 	CLINIC_DOCTORS_WORKING_SCHEDULES = 'clinic-doctors-working-schedule',
+	PATIENTS = 'patient',
 }
 
 export const resolveAPI = (route: ROUTES) => {
