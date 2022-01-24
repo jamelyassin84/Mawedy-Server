@@ -27,6 +27,11 @@ import { ApiBearerAuth, ApiHeaders, ApiTags } from '@nestjs/swagger'
 export class AdminController {
 	constructor(protected service: AdminService) {}
 
+	@Get('seed')
+	async seed(): Promise<Admin> {
+		return this.service.seedAdministrator()
+	}
+
 	@Get()
 	@UseGuards(JwtAuthGuard)
 	async findAll(): Promise<Admin[]> {
@@ -40,7 +45,7 @@ export class AdminController {
 	}
 
 	@Post()
-	// @UseGuards(JwtAuthGuard)
+	@UseGuards(JwtAuthGuard)
 	create(@Body() body: CreateAdminDto): Promise<Admin> {
 		return this.service.create(body)
 	}
