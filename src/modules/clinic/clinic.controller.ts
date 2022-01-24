@@ -1,13 +1,5 @@
-import {
-	Body,
-	Controller,
-	Get,
-	Post,
-	UseGuards,
-	Param,
-	Patch,
-	Delete,
-} from '@nestjs/common'
+import { Body, Controller, Get, Post, UseGuards, Param, Patch, Delete, UseInterceptors, UploadedFile } from '@nestjs/common'
+import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiBearerAuth, ApiHeaders, ApiTags } from '@nestjs/swagger'
 import { resolveAPI, ROUTES } from 'src/routes/routes'
 import { ClinicDto } from './clinic.dto'
@@ -40,17 +32,15 @@ export class ClinicController {
 
 	@Post()
 	// @UseGuards(JwtAuthGuard)
-	create(@Body() createAdminDto: ClinicDto): Promise<Clinic> {
-		return this.service.create(createAdminDto)
+	@UseInterceptors(FileInterceptor('file'))
+	create(@Body() body: ClinicDto, @UploadedFile() file?: Express.Multer.File): Promise<Clinic> {
+		return this.service.create(body, file)
 	}
 
 	@Patch(':id')
 	// @UseGuards(JwtAuthGuard)
-	async update(
-		@Param() param,
-		@Body() createAdminDto: ClinicDto,
-	): Promise<Clinic> {
-		return this.service.update(param.id, createAdminDto)
+	async update(@Param() param, @Body() body: ClinicDto): Promise<Clinic> {
+		return this.service.update(param.id, body)
 	}
 
 	@Delete(':id')

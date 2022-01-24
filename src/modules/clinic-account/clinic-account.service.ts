@@ -5,6 +5,7 @@ import { ClinicAccountDto } from './clinic-account.dto'
 import { Injectable, NotFoundException, ServiceUnavailableException } from '@nestjs/common'
 import { ClinicAccount } from './clinic-account.entity'
 import { DevicesService } from '../device/device.service'
+import { MulterModule } from '@nestjs/platform-express'
 
 @Injectable()
 export class ClinicAccountService {

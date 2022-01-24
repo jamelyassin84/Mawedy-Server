@@ -1,15 +1,6 @@
 import { Phone } from './../phone/phone.entity'
 import { Admin } from '../admin/admin.entity'
-import {
-	BaseEntity,
-	BeforeInsert,
-	Column,
-	Entity,
-	ManyToOne,
-	OneToMany,
-	OneToOne,
-	PrimaryGeneratedColumn,
-} from 'typeorm'
+import { BaseEntity, BeforeInsert, Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import * as bcrypt from 'bcryptjs'
 import { Role } from '../role/roles.entity'

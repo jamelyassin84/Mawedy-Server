@@ -6,6 +6,7 @@ import { Injectable, NotFoundException, ServiceUnavailableException } from '@nes
 import { Clinic } from './clinic.entity'
 import { ClinicDto } from './clinic.dto'
 import { ClinicSubscriptionsService } from '../clinic-subscription/clinic-subscription.service'
+import { MulterModule } from '@nestjs/platform-express'
 
 @Injectable()
 export class ClinicService {
@@ -33,7 +34,10 @@ export class ClinicService {
 		}
 	}
 
-	async create(body: ClinicDto | any): Promise<Clinic> {
+	async create(body: ClinicDto | any, file: any): Promise<Clinic> {
+		MulterModule.register({
+			dest: './uploads/clinic-files',
+		})
 		try {
 			const clinic = Clinic.create(body) as any
 			await clinic.save()
