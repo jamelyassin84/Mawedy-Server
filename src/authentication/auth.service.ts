@@ -48,7 +48,7 @@ export class AuthService {
 		this.logDevice(body.type, user)
 		return {
 			user: user,
-			token: this.jwtService.sign(user),
+			token: this.jwtService.sign(user.username),
 		}
 	}
 
@@ -56,9 +56,12 @@ export class AuthService {
 		const { username, password } = body
 
 		const admin = await this.adminService.findByUsername(username)
+		if (!admin) {
+			throw new UnauthorizedException('Username is incorrect')
+		}
 
 		if (!(await admin?.validatePassword(password))) {
-			throw new UnauthorizedException('Username or password is incorrect')
+			throw new UnauthorizedException('Password is incorrect')
 		}
 
 		return admin

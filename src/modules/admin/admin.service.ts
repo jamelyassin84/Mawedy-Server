@@ -82,7 +82,7 @@ export class AdminService {
 	}
 
 	async findByUsername(username: string): Promise<Admin> {
-		return await Admin.findOneOrFail({
+		return await Admin.findOne({
 			where: {
 				username: username,
 			},
