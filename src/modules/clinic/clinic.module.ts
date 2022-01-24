@@ -1,3 +1,4 @@
+import { ClinicSubscriptionsModule } from './../clinic-subscription/clinic-subscription.module'
 import { ClinicAccountModule } from './../clinic-account/clinic-account.module'
 import { PhonesModule } from './../phone/phone.module'
 import { EmailsModule } from './../email/email.module'
@@ -14,6 +15,8 @@ import { DevicesModule } from '../device/device.module'
 		EmailsModule,
 		PhonesModule,
 		DevicesModule,
+		ClinicSubscriptionsModule,
+		ClinicAccountModule,
 	],
 	controllers: [ClinicController],
 	providers: [ClinicService],

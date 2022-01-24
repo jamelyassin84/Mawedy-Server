@@ -20,7 +20,7 @@ export class ClinicDto {
 
 	@IsNotEmpty()
 	@ApiProperty()
-	password: string
+	password?: string | null = null
 
 	@ApiProperty()
 	avatar: string | null | undefined
@@ -65,6 +65,12 @@ export class ClinicDto {
 
 	@ApiProperty()
 	isLoggedIn?: boolean = false
+
+	@ApiProperty()
+	message: string | null = null
+
+	@ApiProperty()
+	isRead: boolean = false
 
 	approver: Admin
 }

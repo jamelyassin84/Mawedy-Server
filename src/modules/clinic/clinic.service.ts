@@ -1,13 +1,11 @@
+import { ClinicAccountService } from './../clinic-account/clinic-account.service'
 import { DevicesService } from './../device/device.service'
 import { PhonesService } from './../phone/phone.service'
 import { EmailsService } from './../email/email.service'
-import {
-	Injectable,
-	NotFoundException,
-	ServiceUnavailableException,
-} from '@nestjs/common'
+import { Injectable, NotFoundException, ServiceUnavailableException } from '@nestjs/common'
 import { Clinic } from './clinic.entity'
 import { ClinicDto } from './clinic.dto'
+import { ClinicSubscriptionsService } from '../clinic-subscription/clinic-subscription.service'
 
 @Injectable()
 export class ClinicService {
@@ -15,17 +13,13 @@ export class ClinicService {
 		protected emailService: EmailsService,
 		protected phoneService: PhonesService,
 		protected deviceService: DevicesService,
+		protected clinicSubscriptionsService: ClinicSubscriptionsService,
+		private clinicAccountService: ClinicAccountService,
 	) {}
 
 	async findAll(): Promise<Clinic[]> {
 		const clinics = await Clinic.find({
-			relations: [
-				'approver',
-				'emails',
-				'phones',
-				'devices',
-				'clinicAccounts',
-			],
+			relations: ['approver', 'emails', 'phones', 'devices', 'clinicAccounts', 'clinicSubscription'],
 		})
 		return clinics
 	}
@@ -35,9 +29,7 @@ export class ClinicService {
 			const clinic = await Clinic.findOneOrFail(id)
 			return clinic
 		} catch (error) {
-			throw new NotFoundException(
-				'This Clinic might be moved or deleted.',
-			)
+			throw new NotFoundException('This Clinic might be moved or deleted.')
 		}
 	}
 
@@ -53,20 +45,31 @@ export class ClinicService {
 			await this.emailService.create(data)
 			await this.phoneService.create(data)
 			await this.deviceService.create(data)
+			let clinicSubscription: any
+			for (let user of body.users) {
+				clinicSubscription = await this.clinicSubscriptionsService.create({
+					name: user.name,
+					subscriptionType: body.subscriptionType,
+					subscribedAt: Date.now(),
+					validUntil: this.clinicSubscriptionsService.resolveNextMonth(Date.now()),
+					numberOfAccounts: this.clinicSubscriptionsService.resolveSubscription(body.subscriptionType),
+					maxNumberOfAccounts: this.clinicSubscriptionsService.resolveSubscription(body.subscriptionType),
+					price: this.clinicSubscriptionsService.resolvePrice(body.subscriptionType),
+					currency: 'AED',
+				})
+				await this.clinicAccountService.create({
+					name: user.name,
+					clinic: clinic,
+					clinicSubscription: clinicSubscription,
+				})
+			}
+
 			return await Clinic.findOne({
 				where: { id: clinic.id },
-				relations: [
-					'approver',
-					'emails',
-					'phones',
-					'devices',
-					'clinicAccounts',
-				],
+				relations: ['approver', 'emails', 'phones', 'devices', 'clinicAccounts'],
 			})
 		} catch (error) {
-			throw new ServiceUnavailableException(
-				'Something went wrong. Please try again',
-			)
+			throw new Error(error)
 		}
 	}
 
@@ -75,9 +78,7 @@ export class ClinicService {
 			const clinic = await Clinic.update(id, body)
 			return clinic
 		} catch (error) {
-			throw new NotFoundException(
-				'Unable to update clinic might be moved or deleted.',
-			)
+			throw new NotFoundException('Unable to update clinic might be moved or deleted.')
 		}
 	}
 
@@ -87,9 +88,7 @@ export class ClinicService {
 			Clinic.delete(id)
 			return clinic
 		} catch (error) {
-			throw new NotFoundException(
-				'Unable to delete clinic might be moved or deleted.',
-			)
+			throw new NotFoundException('Unable to delete clinic might be moved or deleted.')
 		}
 	}
 
@@ -101,9 +100,7 @@ export class ClinicService {
 				},
 			})
 		} catch (error) {
-			throw new NotFoundException(
-				'This Clinic might be moved or deleted.',
-			)
+			throw new NotFoundException('This Clinic might be moved or deleted.')
 		}
 	}
 }

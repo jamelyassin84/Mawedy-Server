@@ -38,7 +38,7 @@ export class Clinic extends BaseEntity {
 	username: string
 
 	@Column()
-	password: string
+	password?: string | null = null
 
 	@Column()
 	avatar: string
@@ -72,6 +72,12 @@ export class Clinic extends BaseEntity {
 
 	@Column()
 	isLoggedIn: boolean
+
+	@Column()
+	message: string | null = null
+
+	@Column()
+	isRead: boolean = false
 
 	@ManyToOne(() => Clinic, (clinic) => clinic.approver, {
 		onDelete: 'CASCADE',

@@ -10,11 +10,11 @@ export class ClinicAccountDto extends BaseEntity {
 	name: string
 
 	@ApiProperty()
-	isActive: boolean = true
+	isActive?: boolean = true
 
 	@ApiProperty()
-	isLoggedIn: boolean = false
+	isLoggedIn?: boolean = false
 
 	clinic: Clinic
-	ClinicSubscription: ClinicSubscription
+	clinicSubscription: ClinicSubscription
 }
