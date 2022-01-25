@@ -1,6 +1,20 @@
-import { Body, Controller, Get, Post, UseGuards, Param, Patch, Delete, UseInterceptors, UploadedFile } from '@nestjs/common'
-import { FileInterceptor } from '@nestjs/platform-express'
+import { editFileName, imageFileFilter } from './../../helpers/helpers'
+import {
+	Body,
+	Controller,
+	Get,
+	Post,
+	UseGuards,
+	Param,
+	Patch,
+	Delete,
+	UseInterceptors,
+	UploadedFile,
+	UploadedFiles,
+} from '@nestjs/common'
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express'
 import { ApiBearerAuth, ApiHeaders, ApiTags } from '@nestjs/swagger'
+import { diskStorage } from 'multer'
 import { resolveAPI, ROUTES } from 'src/routes/routes'
 import { ClinicDto } from './clinic.dto'
 import { Clinic } from './clinic.entity'
@@ -30,11 +44,21 @@ export class ClinicController {
 		return this.service.findOne(+id)
 	}
 
-	@Post()
-	// @UseGuards(JwtAuthGuard)
-	@UseInterceptors(FileInterceptor('file'))
-	create(@Body() body: ClinicDto, @UploadedFile() file?: Express.Multer.File): Promise<Clinic> {
-		return this.service.create(body, file)
+	@Post() //TODO App Guard
+	@UseInterceptors(
+		FilesInterceptor('files[]', 20, {
+			storage: diskStorage({
+				destination: './public/uploads/clinic-files/',
+				filename: editFileName,
+			}),
+			fileFilter: imageFileFilter,
+		}),
+	)
+	create(
+		@Body() body: ClinicDto,
+		@UploadedFiles() files: Express.Multer.File[],
+	): Promise<Clinic> {
+		return this.service.create(body, files)
 	}
 
 	@Patch(':id')

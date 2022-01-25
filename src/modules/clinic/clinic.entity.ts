@@ -1,6 +1,17 @@
+import { ClinicFile } from './../clinic-file/clinic-file.entity'
+import { ClinicSubscription } from './../clinic-subscription/clinic-subscription.entity'
 import { Phone } from './../phone/phone.entity'
 import { Admin } from '../admin/admin.entity'
-import { BaseEntity, BeforeInsert, Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+	BaseEntity,
+	BeforeInsert,
+	Column,
+	Entity,
+	ManyToOne,
+	OneToMany,
+	OneToOne,
+	PrimaryGeneratedColumn,
+} from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import * as bcrypt from 'bcryptjs'
 import { Role } from '../role/roles.entity'
@@ -56,16 +67,13 @@ export class Clinic extends BaseEntity {
 	apple: string
 
 	@Column()
-	isApproved: string
+	isApproved: boolean = false
 
 	@Column()
 	isActive: boolean
 
 	@Column()
 	isLoggedIn: boolean
-
-	@Column()
-	message: string | null = null
 
 	@Column()
 	isRead: boolean = false
@@ -79,6 +87,11 @@ export class Clinic extends BaseEntity {
 		cascade: true,
 	})
 	emails?: Email[]
+
+	@OneToMany(() => ClinicFile, (clinicFile) => clinicFile.clinic, {
+		cascade: true,
+	})
+	clinicFile?: ClinicFile[]
 
 	@OneToMany(() => Phone, (phone) => phone.clinic, {
 		cascade: true,

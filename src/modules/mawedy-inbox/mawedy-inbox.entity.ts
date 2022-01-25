@@ -16,7 +16,9 @@ export class AppInbox extends BaseEntity {
 	@Column()
 	message: string
 
-	@ManyToOne(() => Clinic, (clinic) => clinic.id)
+	@ManyToOne(() => Clinic, (clinic) => clinic.id, {
+		onDelete: 'CASCADE',
+	})
 	clinic: Clinic
 
 	@CreateDateColumn({

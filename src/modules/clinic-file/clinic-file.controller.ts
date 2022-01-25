@@ -8,6 +8,7 @@ import {
 	Param,
 	Patch,
 	Post,
+	Res,
 	UseGuards,
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiHeaders, ApiTags } from '@nestjs/swagger'
@@ -27,12 +28,6 @@ import { ClinicFilesService } from './clinic-file.service'
 export class ClinicFilesController {
 	constructor(private readonly service: ClinicFilesService) {}
 
-	@Get()
-	@UseGuards(JwtAuthGuard)
-	async findAll(): Promise<ClinicFile[]> {
-		return this.service.findAll()
-	}
-
 	@Get(':id')
 	@UseGuards(JwtAuthGuard)
 	findOne(@Param('id') id: string): Promise<ClinicFile> {
@@ -43,15 +38,6 @@ export class ClinicFilesController {
 	// @UseGuards(JwtAuthGuard)
 	create(@Body() body: ClinicFileDto): Promise<ClinicFile> {
 		return this.service.create(body)
-	}
-
-	@Patch(':id')
-	@UseGuards(JwtAuthGuard)
-	async update(
-		@Param() param,
-		@Body() body: ClinicFileDto,
-	): Promise<ClinicFile> {
-		return this.service.update(param.id, body)
 	}
 
 	@Delete(':id')

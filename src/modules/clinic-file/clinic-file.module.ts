@@ -5,5 +5,6 @@ import { ClinicFilesController } from './clinic-file.controller'
 @Module({
 	controllers: [ClinicFilesController],
 	providers: [ClinicFilesService],
+	exports: [ClinicFilesService],
 })
 export class ClinicFilesModule {}

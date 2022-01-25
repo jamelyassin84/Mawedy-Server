@@ -1,5 +1,12 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import {
+	BaseEntity,
+	Column,
+	Entity,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+} from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Clinic } from '../clinic/clinic.entity'
 
 @Entity()
 export class ClinicSubscription extends BaseEntity {
@@ -35,6 +42,11 @@ export class ClinicSubscription extends BaseEntity {
 		default: () => 'CURRENT_TIMESTAMP(6)',
 	})
 	createdAt: Date
+
+	@ManyToOne(() => Clinic, (clinic) => clinic.id, {
+		onDelete: 'CASCADE',
+	})
+	clinic: Clinic
 
 	@UpdateDateColumn({
 		type: 'timestamp',
