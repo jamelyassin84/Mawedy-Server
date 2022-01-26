@@ -25,32 +25,23 @@ import { AppInbox } from './mawedy-inbox.entity'
 @Controller(resolveAPI(ROUTES.APP_INBOX))
 export class MawedyInboxController {
 	constructor(private readonly service: MawedyInboxService) {}
-	@Get()
-	@UseGuards(JwtAuthGuard)
+
+	@Get() //TODO: APP GUARD
 	async findAll(): Promise<AppInbox[]> {
 		return this.service.findAll()
 	}
 
-	@Get(':id')
-	@UseGuards(JwtAuthGuard)
+	@Get(':id') //TODO: APP GUARD
 	findOne(@Param('id') id: string): Promise<AppInbox> {
 		return this.service.findOne(+id)
 	}
 
-	@Post()
-	// @UseGuards(JwtAuthGuard)
-	create(@Body() body: AppInboxDto): Promise<AppInbox> {
-		return this.service.create(body)
-	}
-
-	@Patch(':id')
-	@UseGuards(JwtAuthGuard)
+	@Patch(':id') //TODO: APP GUARD
 	async update(@Param() param, @Body() body: AppInboxDto): Promise<AppInbox> {
 		return this.service.update(param.id, body)
 	}
 
-	@Delete(':id')
-	@UseGuards(JwtAuthGuard)
+	@Delete(':id') //TODO: APP GUARD
 	async remove(@Param() param): Promise<AppInbox> {
 		return this.service.remove(+param.id)
 	}

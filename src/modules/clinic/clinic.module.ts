@@ -4,7 +4,7 @@ import { ClinicSubscriptionsModule } from './../clinic-subscription/clinic-subsc
 import { ClinicAccountModule } from './../clinic-account/clinic-account.module'
 import { PhonesModule } from './../phone/phone.module'
 import { EmailsModule } from './../email/email.module'
-import { Module } from '@nestjs/common'
+import { forwardRef, Module } from '@nestjs/common'
 import { ClinicService } from './clinic.service'
 import { ClinicController } from './clinic.controller'
 import { RolesModule } from '../role/roles.module'

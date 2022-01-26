@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsDefined, isDefined, IsNotEmpty } from 'class-validator'
 import { Admin } from '../admin/admin.entity'
+import { Clinic } from '../clinic/clinic.entity'
 
 export class AppInboxDto {
 	@IsNotEmpty()
@@ -8,5 +9,9 @@ export class AppInboxDto {
 	@ApiProperty()
 	message: string
 
-	clinic?: Admin
+	@ApiProperty()
+	isRead: boolean = false
+
+	clinic?: Clinic
+	admin?: Admin
 }

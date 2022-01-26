@@ -31,7 +31,7 @@ export class Clinic extends BaseEntity {
 	address: string
 
 	@Column()
-	tradeLicenseNumber: number
+	tradeLicenseNumber: string
 
 	@Column()
 	registeredVia: 'Web' | 'Sales' | 'Admin'
@@ -76,7 +76,7 @@ export class Clinic extends BaseEntity {
 	isLoggedIn: boolean
 
 	@Column()
-	isRead: boolean = false
+	email: string
 
 	@ManyToOne(() => Clinic, (clinic) => clinic.approver, {
 		onDelete: 'CASCADE',
