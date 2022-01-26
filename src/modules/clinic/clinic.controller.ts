@@ -1,3 +1,4 @@
+import { ClinicFilesService } from './../clinic-file/clinic-file.service'
 import { editFileName, imageFileFilter } from './../../helpers/helpers'
 import {
 	Body,
@@ -30,21 +31,26 @@ import { ClinicService } from './clinic.service'
 @ApiTags('Clinics')
 @Controller(resolveAPI(ROUTES.CLINICS))
 export class ClinicController {
-	constructor(private readonly service: ClinicService) {}
+	constructor(
+		private readonly service: ClinicService,
+		private readonly fileService: ClinicFilesService,
+	) {}
 
-	@Get()
-	// @UseGuards(JwtAuthGuard)
+	@Get() //TODO: ADMIN GUARD
 	async findAll(): Promise<Clinic[]> {
 		return this.service.findAll()
 	}
 
-	@Get(':id')
-	// @UseGuards(JwtAuthGuard)
+	@Get(':id') //TODO: ADMIN GUARD
 	findOne(@Param('id') id: string): Promise<Clinic> {
 		return this.service.findOne(+id)
 	}
 
 	@Post() //TODO App Guard
+	create(@Body() body: ClinicDto): Promise<Clinic> {
+		return this.service.create(body)
+	}
+
 	@UseInterceptors(
 		FilesInterceptor('files[]', 20, {
 			storage: diskStorage({
@@ -54,21 +60,20 @@ export class ClinicController {
 			fileFilter: imageFileFilter,
 		}),
 	)
-	create(
-		@Body() body: ClinicDto,
+	@Post('files') //TODO App Guard
+	async uploadClinicFiles(
+		@Body() body: any,
 		@UploadedFiles() files: Express.Multer.File[],
-	): Promise<Clinic> {
-		return this.service.create(body, files)
+	): Promise<void> {
+		this.fileService.uploadClinicFiles(body, files)
 	}
 
-	@Patch(':id')
-	// @UseGuards(JwtAuthGuard)
+	@Patch(':id') //TODO: ADMIN GUARD
 	async update(@Param() param, @Body() body: ClinicDto): Promise<Clinic> {
 		return this.service.update(param.id, body)
 	}
 
-	@Delete(':id')
-	// @UseGuards(JwtAuthGuard)
+	@Delete(':id') //TODO: ADMIN GUARD
 	async remove(@Param() param): Promise<Clinic> {
 		return this.service.remove(+param.id)
 	}

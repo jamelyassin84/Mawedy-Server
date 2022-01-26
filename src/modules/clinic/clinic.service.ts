@@ -63,10 +63,7 @@ export class ClinicService {
 		}
 	}
 
-	async create(
-		body: ClinicDto | any,
-		files: Express.Multer.File[],
-	): Promise<Clinic | any> {
+	async create(body: ClinicDto | any): Promise<Clinic | any> {
 		if (await this.emailService.checkIfEmailExist(body.email)) {
 			throw new ForbiddenException('The email you entered already exist')
 		}
@@ -91,14 +88,6 @@ export class ClinicService {
 				clinic: clinic,
 				message: body.message,
 			})
-
-			for (let file of files) {
-				await this.clinicFilesService.create({
-					clinic: clinic,
-					name: 'trade-license',
-					url: process.env.CLINIC_FILES + file.filename,
-				})
-			}
 
 			let clinicSubscription: ClinicSubscription
 
@@ -134,7 +123,7 @@ export class ClinicService {
 				})
 			}
 
-			return this.findOne(clinic.id)
+			return await this.findOne(clinic.id)
 		} catch (error) {
 			throw new Error(error)
 		}

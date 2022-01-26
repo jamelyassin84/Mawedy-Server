@@ -12,5 +12,6 @@ export class ClinicFileDto {
 	@ApiProperty()
 	url: string
 
-	clinic?: Clinic
+	@ApiProperty()
+	clinicID: number
 }

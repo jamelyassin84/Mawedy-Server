@@ -75,4 +75,5 @@ export class ClinicDto {
 	files: FormData[]
 
 	approver: Admin
+	users: any[]
 }

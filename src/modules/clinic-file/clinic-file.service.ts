@@ -5,6 +5,7 @@ import {
 	NotFoundException,
 	ServiceUnavailableException,
 } from '@nestjs/common'
+import { Clinic } from '../clinic/clinic.entity'
 
 @Injectable()
 export class ClinicFilesService {
@@ -25,10 +26,25 @@ export class ClinicFilesService {
 			await data.save()
 			return data
 		} catch (error) {
-			// throw new ServiceUnavailableException(
-			// 	'Something went wrong. Please try again',
-			// )
-			console.log(error)
+			throw new ServiceUnavailableException(
+				'Something went wrong. Please try again',
+			)
+		}
+	}
+
+	async uploadClinicFiles(
+		body: any,
+		files: Express.Multer.File[] = [],
+	): Promise<void> {
+		for (let file of files) {
+			await this.create({
+				clinic: body.id,
+				name: file.filename,
+				url:
+					process.env.PUBLIC_PATH +
+					process.env.CLINIC_DIR +
+					file.filename,
+			})
 		}
 	}
 
