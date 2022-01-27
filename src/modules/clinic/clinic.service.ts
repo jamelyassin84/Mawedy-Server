@@ -159,7 +159,7 @@ export class ClinicService {
 			})
 		} catch (error) {
 			throw new NotFoundException(
-				'This Clinic might be moved or deleted.',
+				'There are no clinics associated with this username.',
 			)
 		}
 	}
