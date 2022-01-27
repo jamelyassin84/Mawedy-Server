@@ -88,11 +88,6 @@ export class Clinic extends BaseEntity {
 	})
 	emails?: Email[]
 
-	@OneToMany(() => ClinicFile, (clinicFile) => clinicFile.clinic, {
-		cascade: true,
-	})
-	clinicFile?: ClinicFile[]
-
 	@OneToMany(() => Phone, (phone) => phone.clinic, {
 		cascade: true,
 	})
@@ -103,10 +98,15 @@ export class Clinic extends BaseEntity {
 	})
 	devices?: Device[]
 
-	@OneToMany(() => ClinicAccount, (clinicAccount) => clinicAccount.clinic, {
+	@OneToMany(() => ClinicAccount, (account) => account.clinic, {
 		cascade: true,
 	})
 	clinicAccounts?: ClinicAccount[]
+
+	@OneToMany(() => ClinicFile, (file) => file.clinic, {
+		cascade: true,
+	})
+	files?: ClinicFile[]
 
 	@CreateDateColumn({
 		type: 'timestamp',

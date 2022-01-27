@@ -27,7 +27,6 @@ export class ClinicService {
 		protected clinicSubscriptionsService: ClinicSubscriptionsService,
 		private clinicAccountService: ClinicAccountService,
 		private inboxService: MawedyInboxService,
-		private clinicFilesService: ClinicFilesService,
 	) {}
 
 	async findAll(): Promise<Clinic[]> {
@@ -40,6 +39,9 @@ export class ClinicService {
 				'clinicAccounts',
 				'clinicSubscription',
 			],
+			order: {
+				createdAt: 'DESC',
+			},
 		})
 		return clinics
 	}
@@ -53,6 +55,7 @@ export class ClinicService {
 					'phones',
 					'devices',
 					'clinicAccounts',
+					'files',
 				],
 			})
 		} catch (error) {
@@ -164,5 +167,12 @@ export class ClinicService {
 				'This Clinic might be moved or deleted.',
 			)
 		}
+	}
+
+	async read(id: number) {
+		const inbox = await this.inboxService.update(id, {
+			isRead: true,
+		})
+		console.log(inbox)
 	}
 }

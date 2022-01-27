@@ -77,4 +77,9 @@ export class ClinicController {
 	async remove(@Param() param): Promise<Clinic> {
 		return this.service.remove(+param.id)
 	}
+
+	@Get(':id/read') //TODO: ADMIN GUARD
+	async read(@Param() param): Promise<void> {
+		this.service.read(+param.id)
+	}
 }
