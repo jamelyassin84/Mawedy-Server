@@ -25,8 +25,8 @@ export class ClinicTiming extends BaseEntity {
 	@Column()
 	isAlwaysOpen: boolean
 
-	@ManyToOne(() => Clinic, (clinic) => clinic.id)
-	clinic: Clinic
+	@Column()
+	clinicId: number
 
 	@CreateDateColumn({
 		type: 'timestamp',

@@ -1,7 +1,6 @@
+import { ClinicTiming } from './../clinic-timings/clinic-timings.entity'
 import { ClinicFile } from './../clinic-file/clinic-file.entity'
-import { ClinicSubscription } from './../clinic-subscription/clinic-subscription.entity'
 import { Phone } from './../phone/phone.entity'
-import { Admin } from '../admin/admin.entity'
 import {
 	BaseEntity,
 	BeforeInsert,
@@ -14,10 +13,10 @@ import {
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import * as bcrypt from 'bcryptjs'
-import { Role } from '../role/roles.entity'
 import { Email } from '../email/email.entity'
 import { Device } from '../device/device.entity'
 import { ClinicAccount } from '../clinic-account/clinic-account.entity'
+import { ClinicAvatar } from '../clinic-avatar/clinic-avatar.entity'
 
 @Entity()
 export class Clinic extends BaseEntity {
@@ -107,6 +106,16 @@ export class Clinic extends BaseEntity {
 		cascade: true,
 	})
 	files?: ClinicFile[]
+
+	@OneToMany(() => ClinicAvatar, (photo) => photo.clinic, {
+		cascade: true,
+	})
+	photos?: ClinicAvatar[]
+
+	@OneToMany(() => ClinicTiming, (timing) => timing.clinicId, {
+		cascade: true,
+	})
+	clinicTimings?: ClinicTiming[]
 
 	@CreateDateColumn({
 		type: 'timestamp',

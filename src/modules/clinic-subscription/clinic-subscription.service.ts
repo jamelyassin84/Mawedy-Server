@@ -1,6 +1,13 @@
-import { ClinicSubscriptionDto, SubscriptionType } from './clinic-subscription.dto'
+import {
+	ClinicSubscriptionDto,
+	SubscriptionType,
+} from './clinic-subscription.dto'
 import { ClinicSubscription } from './clinic-subscription.entity'
-import { Injectable, NotFoundException, ServiceUnavailableException } from '@nestjs/common'
+import {
+	Injectable,
+	NotFoundException,
+	ServiceUnavailableException,
+} from '@nestjs/common'
 
 @Injectable()
 export class ClinicSubscriptionsService {
@@ -15,14 +22,20 @@ export class ClinicSubscriptionsService {
 
 	async findOne(id: number): Promise<ClinicSubscription> {
 		try {
-			const clinicSubscription = await ClinicSubscription.findOneOrFail(id)
+			const clinicSubscription = await ClinicSubscription.findOneOrFail(
+				id,
+			)
 			return clinicSubscription
 		} catch (error) {
-			throw new NotFoundException('ClinicSubscription might be moved or deleted.')
+			throw new NotFoundException(
+				'ClinicSubscription might be moved or deleted.',
+			)
 		}
 	}
 
-	async create(body: ClinicSubscriptionDto | any): Promise<ClinicSubscription> {
+	async create(
+		body: ClinicSubscriptionDto | any,
+	): Promise<ClinicSubscription> {
 		try {
 			const clinicSubscription = ClinicSubscription.create(body) as any
 			await clinicSubscription.save()
@@ -32,22 +45,31 @@ export class ClinicSubscriptionsService {
 		}
 	}
 
-	async update(id: number, body: ClinicSubscriptionDto | any): Promise<ClinicSubscription | any> {
+	async update(
+		id: number,
+		body: ClinicSubscriptionDto | any,
+	): Promise<ClinicSubscription | any> {
 		try {
 			const clinicSubscription = await ClinicSubscription.update(id, body)
 			return clinicSubscription
 		} catch (error) {
-			throw new NotFoundException('Unable to update clinic account might be moved or deleted.')
+			throw new NotFoundException(
+				'Unable to update clinic account might be moved or deleted.',
+			)
 		}
 	}
 
 	async remove(id: number): Promise<ClinicSubscription> {
 		try {
-			const clinicSubscription = await ClinicSubscription.findOneOrFail(id)
+			const clinicSubscription = await ClinicSubscription.findOneOrFail(
+				id,
+			)
 			ClinicSubscription.delete(id)
 			return clinicSubscription
 		} catch (error) {
-			throw new NotFoundException('Unable to delete clinic account might be moved or deleted.')
+			throw new NotFoundException(
+				'Unable to delete clinic account might be moved or deleted.',
+			)
 		}
 	}
 

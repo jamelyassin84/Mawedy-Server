@@ -1,3 +1,4 @@
+import { ClinicTimingsModule } from './../clinic-timings/clinic-timings.module'
 import { ClinicFilesModule } from './../clinic-file/clinic-file.module'
 import { MawedyInboxModule } from './../mawedy-inbox/mawedy-inbox.module'
 import { ClinicSubscriptionsModule } from './../clinic-subscription/clinic-subscription.module'
@@ -25,6 +26,7 @@ import { MulterModule } from '@nestjs/platform-express'
 		ClinicAccountModule,
 		MawedyInboxModule,
 		ClinicFilesModule,
+		ClinicTimingsModule,
 	],
 	controllers: [ClinicController],
 	providers: [ClinicService],

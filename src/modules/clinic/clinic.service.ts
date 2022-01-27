@@ -1,3 +1,5 @@
+import { ClinicTiming } from './../clinic-timings/clinic-timings.entity'
+import { ClinicTimingsService } from './../clinic-timings/clinic-timings.service'
 import { MawedyInboxService } from './../mawedy-inbox/mawedy-inbox.service'
 import { ClinicSubscription } from './../clinic-subscription/clinic-subscription.entity'
 import { ClinicAccountService } from './../clinic-account/clinic-account.service'
@@ -12,6 +14,7 @@ import {
 import { Clinic } from './clinic.entity'
 import { ClinicDto } from './clinic.dto'
 import { ClinicSubscriptionsService } from '../clinic-subscription/clinic-subscription.service'
+import { getConnection } from 'typeorm'
 
 @Injectable()
 export class ClinicService {
@@ -22,6 +25,7 @@ export class ClinicService {
 		protected clinicSubscriptionsService: ClinicSubscriptionsService,
 		private clinicAccountService: ClinicAccountService,
 		private inboxService: MawedyInboxService,
+		private clinicTimingService: ClinicTimingsService,
 	) {}
 
 	async findAll(): Promise<Clinic[]> {
@@ -43,7 +47,7 @@ export class ClinicService {
 
 	async findOne(id: number): Promise<Clinic> {
 		try {
-			return await Clinic.findOne(id, {
+			const clinic = await Clinic.findOne(id, {
 				relations: [
 					'approver',
 					'emails',
@@ -51,8 +55,17 @@ export class ClinicService {
 					'devices',
 					'clinicAccounts',
 					'files',
+					'photos',
 				],
 			})
+
+			const timing = await ClinicTiming.find({
+				where: {
+					clinicId: clinic.id,
+				},
+			})
+
+			return Object.assign(clinic, { clinicTimings: timing })
 		} catch (error) {
 			console.log(error)
 			throw new NotFoundException(
@@ -129,12 +142,31 @@ export class ClinicService {
 
 	async update(id: number, body: ClinicDto | any): Promise<Clinic | any> {
 		try {
+			delete body.emails
+			delete body.clinicAccounts
+			delete body.devices
+			delete body.files
+			delete body.phones
+			delete body.photos
+
+			await getConnection().query(
+				`DELETE FROM clinic_timing WHERE  clinicID = ${body.id}`,
+			)
+
+			for (let timing of body.clinicTimings) {
+				await this.clinicTimingService.create(
+					Object.assign(timing, { clinicId: body.id }),
+				)
+			}
+			delete body.clinicTimings
+
 			const clinic = await Clinic.update(id, body)
 			return clinic
 		} catch (error) {
-			throw new NotFoundException(
-				'Unable to update clinic might be moved or deleted.',
-			)
+			console.log(error)
+			// throw new NotFoundException(
+			// 	'Unable to update clinic might be moved or deleted.',
+			// )
 		}
 	}
 
@@ -163,6 +195,10 @@ export class ClinicService {
 			)
 		}
 	}
+
+	// findSubscription(subscriptionType: SubscriptionType): Promise<Clinic> {
+	// 	return
+	// }
 
 	async read(id: number) {
 		await this.inboxService.update(id, {
