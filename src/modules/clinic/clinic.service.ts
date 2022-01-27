@@ -1,4 +1,3 @@
-import { ClinicFilesService } from './../clinic-file/clinic-file.service'
 import { MawedyInboxService } from './../mawedy-inbox/mawedy-inbox.service'
 import { ClinicSubscription } from './../clinic-subscription/clinic-subscription.entity'
 import { ClinicAccountService } from './../clinic-account/clinic-account.service'
@@ -6,17 +5,13 @@ import { DevicesService } from './../device/device.service'
 import { PhonesService } from './../phone/phone.service'
 import { EmailsService } from './../email/email.service'
 import {
-	BadRequestException,
 	ForbiddenException,
 	Injectable,
 	NotFoundException,
-	ServiceUnavailableException,
-	UnauthorizedException,
 } from '@nestjs/common'
 import { Clinic } from './clinic.entity'
 import { ClinicDto } from './clinic.dto'
 import { ClinicSubscriptionsService } from '../clinic-subscription/clinic-subscription.service'
-import { MulterModule } from '@nestjs/platform-express'
 
 @Injectable()
 export class ClinicService {
@@ -170,9 +165,17 @@ export class ClinicService {
 	}
 
 	async read(id: number) {
-		const inbox = await this.inboxService.update(id, {
+		await this.inboxService.update(id, {
 			isRead: true,
 		})
-		console.log(inbox)
+	}
+
+	async activate(id: number) {
+		//TODO:Add Approver
+		await this.update(id, {
+			isApproved: true,
+		})
+		//TODO:Generate Password
+		//TODO:send email
 	}
 }

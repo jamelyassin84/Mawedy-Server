@@ -74,12 +74,19 @@ export class ClinicController {
 	}
 
 	@Delete(':id') //TODO: ADMIN GUARD
-	async remove(@Param() param): Promise<Clinic> {
+	async remove(@Param() param: { id: number }): Promise<Clinic> {
 		return this.service.remove(+param.id)
 	}
 
-	@Get(':id/read') //TODO: ADMIN GUARD
-	async read(@Param() param): Promise<void> {
-		this.service.read(+param.id)
+	@Post('read') //TODO: ADMIN GUARD
+	async read(@Body() param: { id: number }): Promise<boolean> {
+		this.service.read(param.id)
+		return true
+	}
+
+	@Post('activate') //TODO: ADMIN GUARD
+	async activate(@Body() param): Promise<boolean> {
+		this.service.activate(param.id)
+		return true
 	}
 }
