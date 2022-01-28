@@ -8,6 +8,7 @@ import {
 	Param,
 	Patch,
 	Post,
+	Res,
 	UploadedFiles,
 	UseGuards,
 	UseInterceptors,
@@ -19,6 +20,8 @@ import { ClinicAvatar } from './clinic-avatar.entity'
 import { ClinicAvatarDto } from './clinic-avatar.dto'
 import { FilesInterceptor } from '@nestjs/platform-express'
 import { diskStorage } from 'multer'
+import { Observable, of } from 'rxjs'
+import { join } from 'path/posix'
 @ApiBearerAuth()
 @ApiHeaders([
 	{
@@ -79,5 +82,14 @@ export class ClinicAvatarsController {
 		@UploadedFiles() files: Express.Multer.File[],
 	): Promise<void> {
 		this.service.upload(body, files)
+	}
+
+	@Get('photo/:path')
+	getPhoto(@Param('path') path, @Res() res): Observable<Object> {
+		return of(
+			res.sendFile(
+				join(process.cwd(), `/public/uploads/clinic/avatars/${path}`),
+			),
+		)
 	}
 }

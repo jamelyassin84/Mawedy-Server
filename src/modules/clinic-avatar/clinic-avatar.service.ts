@@ -68,7 +68,10 @@ export class ClinicAvatarsService {
 		for (let file of files) {
 			await this.create({
 				clinic: body.id,
-				avatar: file.filename,
+				avatar:
+					process.env.API_URL +
+					'clinic-avatar/photo/' +
+					file.filename,
 			})
 		}
 	}
