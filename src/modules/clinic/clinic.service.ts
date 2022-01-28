@@ -75,7 +75,7 @@ export class ClinicService {
 		}
 	}
 
-	async create(body: ClinicDto | any): Promise<Clinic | any> {
+	async create(body: any): Promise<Clinic | any> {
 		if (await this.emailService.checkIfEmailExist(body.email)) {
 			throw new ForbiddenException('The email you entered already exist')
 		}
@@ -141,13 +141,14 @@ export class ClinicService {
 		}
 	}
 
-	async update(id: number, body: ClinicDto | any): Promise<Clinic | any> {
+	async update(id: number, body: any): Promise<Clinic | any> {
 		try {
 			delete body.emails
 			delete body.clinicAccounts
 			delete body.devices
 			delete body.files
 			delete body.phones
+			delete body.avatar
 			delete body.photos
 
 			await getConnection().query(

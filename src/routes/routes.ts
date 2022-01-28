@@ -28,7 +28,7 @@ export enum ROUTES {
 	CLINIC_TIMINGS = 'clinic-timings',
 	CLINIC_PATIENTS = 'clinic-patient',
 	CLINIC_AVATARS = 'clinic-avatar',
-	CLINIC_PHOTOS = 'clinic-avatar',
+	CLINIC_PHOTOS = 'clinic-photo',
 	CLINIC_FILES = 'clinic-file',
 	CLINIC_FOLLOW_UP_CHECK_UPS = 'clinic-follow-up-check-up',
 	CLINIC_DEPARTMENT = 'clinic-department',

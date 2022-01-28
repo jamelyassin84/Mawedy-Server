@@ -5,7 +5,6 @@ import {
 	Controller,
 	Get,
 	Post,
-	UseGuards,
 	Param,
 	Patch,
 	Delete,
@@ -13,14 +12,12 @@ import {
 	UploadedFile,
 	UploadedFiles,
 } from '@nestjs/common'
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express'
+import { FilesInterceptor } from '@nestjs/platform-express'
 import { ApiBearerAuth, ApiHeaders, ApiTags } from '@nestjs/swagger'
 import { diskStorage } from 'multer'
 import { resolveAPI, ROUTES } from 'src/routes/routes'
-import { ClinicDto } from './clinic.dto'
 import { Clinic } from './clinic.entity'
 import { ClinicService } from './clinic.service'
-import { ClinicAvatarsService } from '../clinic-avatar/clinic-avatar.service'
 
 @ApiBearerAuth()
 @ApiHeaders([
@@ -48,7 +45,7 @@ export class ClinicController {
 	}
 
 	@Post() //TODO App Guard
-	create(@Body() body: ClinicDto): Promise<Clinic> {
+	create(@Body() body: any): Promise<Clinic> {
 		return this.service.create(body)
 	}
 
@@ -70,7 +67,7 @@ export class ClinicController {
 	}
 
 	@Patch(':id') //TODO: ADMIN GUARD
-	async update(@Param() param, @Body() body: ClinicDto): Promise<Clinic> {
+	async update(@Param() param, @Body() body: any): Promise<Clinic> {
 		return this.service.update(param.id, body)
 	}
 

@@ -3,6 +3,7 @@ import {
 	NotFoundException,
 	ServiceUnavailableException,
 } from '@nestjs/common'
+import { ROUTES } from 'src/routes/routes'
 import { ClinicAvatarDto } from './clinic-avatar.dto'
 import { ClinicAvatar } from './clinic-avatar.entity'
 
@@ -26,7 +27,7 @@ export class ClinicAvatarsService {
 		}
 	}
 
-	async create(body: ClinicAvatarDto | any): Promise<ClinicAvatar> {
+	async create(body: any): Promise<ClinicAvatar> {
 		try {
 			const data = ClinicAvatar.create(body) as any
 			await data.save()
@@ -38,10 +39,7 @@ export class ClinicAvatarsService {
 		}
 	}
 
-	async update(
-		id: number,
-		body: ClinicAvatarDto | any,
-	): Promise<ClinicAvatar | any> {
+	async update(id: number, body: any): Promise<ClinicAvatar | any> {
 		try {
 			const data = await ClinicAvatar.update(id, body)
 			return data
@@ -70,7 +68,8 @@ export class ClinicAvatarsService {
 				clinic: body.id,
 				avatar:
 					process.env.API_URL +
-					'clinic-avatar/photo/' +
+					ROUTES.CLINIC_AVATARS +
+					'/photo/' +
 					file.filename,
 			})
 		}
