@@ -13,14 +13,14 @@ export class ClinicDepartment extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 
-	@ManyToOne(() => Clinic, (clinic) => clinic.id)
-	clinic: Clinic
-
 	@Column()
 	name: string
 
 	@Column()
 	isActive: boolean
+
+	@Column()
+	clinicId?: number
 
 	@CreateDateColumn({
 		type: 'timestamp',

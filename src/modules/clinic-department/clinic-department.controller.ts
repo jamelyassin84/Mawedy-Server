@@ -22,7 +22,7 @@ import { ClinicDepartment } from './clinic-department.enitiy'
 	},
 ])
 @ApiTags('Clinic Departments')
-@Controller(resolveAPI(ROUTES.CLINIC_APPOINTMENTS))
+@Controller(resolveAPI(ROUTES.CLINIC_DEPARTMENT))
 export class ClinicDepartmentsController {
 	constructor(private readonly service: ClinicDepartmentsService) {}
 
@@ -33,7 +33,6 @@ export class ClinicDepartmentsController {
 	}
 
 	@Get(':id')
-	@UseGuards(JwtAuthGuard)
 	findOne(@Param('id') id: string): Promise<ClinicDepartment> {
 		return this.service.findOne(+id)
 	}
@@ -45,7 +44,6 @@ export class ClinicDepartmentsController {
 	}
 
 	@Patch(':id')
-	@UseGuards(JwtAuthGuard)
 	async update(
 		@Param() param,
 		@Body() body: ClinicDepartmentDto,
@@ -54,8 +52,12 @@ export class ClinicDepartmentsController {
 	}
 
 	@Delete(':id')
-	@UseGuards(JwtAuthGuard)
 	async remove(@Param() param): Promise<ClinicDepartment> {
 		return this.service.remove(+param.id)
+	}
+
+	@Get('clinic/:id')
+	async getDepartmentByClinic(@Param() param): Promise<ClinicDepartment[]> {
+		return this.service.getDepartmentByClinic(+param.id)
 	}
 }

@@ -30,15 +30,7 @@ export class ClinicDepartmentsService {
 		try {
 			const data = ClinicDepartment.create(body) as any
 			await data.save()
-			const params = {
-				data: data as any,
-				...body,
-				isActive: true,
-			}
-			return await ClinicDepartment.findOne({
-				where: { id: params.id },
-				relations: ['emails', 'phones', 'devices'],
-			})
+			return data
 		} catch (error) {
 			throw new ServiceUnavailableException(
 				'Something went wrong. Please try again',
@@ -70,5 +62,13 @@ export class ClinicDepartmentsService {
 				'Unable to delete clinic account might be moved or deleted.',
 			)
 		}
+	}
+
+	async getDepartmentByClinic(id: number): Promise<ClinicDepartment[]> {
+		return await ClinicDepartment.find({
+			where: {
+				clinicId: id,
+			},
+		})
 	}
 }
