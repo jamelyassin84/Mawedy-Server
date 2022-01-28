@@ -56,6 +56,7 @@ export class ClinicService {
 					'clinicAccounts',
 					'files',
 					'photos',
+					'avatar',
 				],
 			})
 

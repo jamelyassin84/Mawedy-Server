@@ -21,9 +21,6 @@ export class ClinicDto {
 	@ApiProperty()
 	password?: string | null = null
 
-	@ApiProperty()
-	avatar: string | null | undefined
-
 	@IsNotEmpty()
 	@ApiProperty()
 	tradeLicenseNumber?: string = null
@@ -72,7 +69,7 @@ export class ClinicDto {
 	isRead?: boolean = false
 
 	files?: FormData[]
-
+	avatar?: FormData[]
 	clinicId?: number
 	approver?: Admin
 	users?: any[]

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Clinic } from '../clinic/clinic.entity'
 
-export class ClinicAvatarDto {
+export class ClinicPhotoDto {
 	@ApiProperty()
 	avatar: any
 

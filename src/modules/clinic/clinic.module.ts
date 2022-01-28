@@ -1,3 +1,5 @@
+import { ClinicPhotosModule } from './../clinic-photos/clinic-photos.module'
+import { ClinicAvatarsModule } from './../clinic-avatar/clinic-avatar.module'
 import { ClinicTimingsModule } from './../clinic-timings/clinic-timings.module'
 import { ClinicFilesModule } from './../clinic-file/clinic-file.module'
 import { MawedyInboxModule } from './../mawedy-inbox/mawedy-inbox.module'
@@ -27,6 +29,8 @@ import { MulterModule } from '@nestjs/platform-express'
 		MawedyInboxModule,
 		ClinicFilesModule,
 		ClinicTimingsModule,
+		ClinicAvatarsModule,
+		ClinicPhotosModule,
 	],
 	controllers: [ClinicController],
 	providers: [ClinicService],

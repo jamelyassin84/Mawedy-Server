@@ -1,3 +1,4 @@
+import { ClinicPhoto } from './../clinic-photos/clinic-photos.entity'
 import { ClinicTiming } from './../clinic-timings/clinic-timings.entity'
 import { ClinicFile } from './../clinic-file/clinic-file.entity'
 import { Phone } from './../phone/phone.entity'
@@ -40,9 +41,6 @@ export class Clinic extends BaseEntity {
 
 	@Column()
 	password?: string | null = null
-
-	@Column()
-	avatar: string
 
 	@Column()
 	description: string
@@ -107,10 +105,15 @@ export class Clinic extends BaseEntity {
 	})
 	files?: ClinicFile[]
 
-	@OneToMany(() => ClinicAvatar, (photo) => photo.clinic, {
+	@OneToMany(() => ClinicPhoto, (photo) => photo.clinic, {
 		cascade: true,
 	})
-	photos?: ClinicAvatar[]
+	photos?: ClinicPhoto[]
+
+	@OneToOne(() => ClinicAvatar, (photo) => photo.clinic, {
+		cascade: true,
+	})
+	avatar?: ClinicAvatar
 
 	@OneToMany(() => ClinicTiming, (timing) => timing.clinicId, {
 		cascade: true,

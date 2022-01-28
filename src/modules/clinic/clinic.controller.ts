@@ -20,6 +20,7 @@ import { resolveAPI, ROUTES } from 'src/routes/routes'
 import { ClinicDto } from './clinic.dto'
 import { Clinic } from './clinic.entity'
 import { ClinicService } from './clinic.service'
+import { ClinicAvatarsService } from '../clinic-avatar/clinic-avatar.service'
 
 @ApiBearerAuth()
 @ApiHeaders([
@@ -54,7 +55,7 @@ export class ClinicController {
 	@UseInterceptors(
 		FilesInterceptor('files[]', 20, {
 			storage: diskStorage({
-				destination: './public/uploads/clinic-files/',
+				destination: './public/uploads/clinic/files/',
 				filename: editFileName,
 			}),
 			fileFilter: imageFileFilter,

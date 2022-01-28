@@ -30,15 +30,7 @@ export class ClinicAvatarsService {
 		try {
 			const data = ClinicAvatar.create(body) as any
 			await data.save()
-			const params = {
-				data: data as any,
-				...body,
-				isActive: true,
-			}
-			return await ClinicAvatar.findOne({
-				where: { id: params.id },
-				relations: ['emails', 'phones', 'devices'],
-			})
+			return data
 		} catch (error) {
 			throw new ServiceUnavailableException(
 				'Something went wrong. Please try again',
@@ -69,6 +61,15 @@ export class ClinicAvatarsService {
 			throw new NotFoundException(
 				'Unable to delete clinic account might be moved or deleted.',
 			)
+		}
+	}
+
+	async upload(body: any, files: Express.Multer.File[] = []): Promise<void> {
+		for (let file of files) {
+			await this.create({
+				clinic: body.id,
+				avatar: file.filename,
+			})
 		}
 	}
 }

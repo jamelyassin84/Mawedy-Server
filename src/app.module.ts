@@ -98,6 +98,8 @@ import { Notification } from './modules/notification/notification.entity'
 import { AuthenticationModule } from './authentication/authentication.module'
 import { ServeStaticModule } from '@nestjs/serve-static/dist/serve-static.module'
 import { join } from 'path/posix'
+import { ClinicPhotosModule } from './modules/clinic-photos/clinic-photos.module'
+import { ClinicPhoto } from './modules/clinic-photos/clinic-photos.entity'
 
 const entities = [
 	Admin,
@@ -146,6 +148,7 @@ const entities = [
 	PatientBookingListFile,
 	Notification,
 	PatientAvatar,
+	ClinicPhoto,
 ]
 @Module({
 	imports: [
@@ -213,6 +216,7 @@ const entities = [
 		DoctorOverallRatingModule,
 		NotificationModule,
 		AuthenticationModule,
+		ClinicPhotosModule,
 	],
 	controllers: [],
 	providers: [AppService],
