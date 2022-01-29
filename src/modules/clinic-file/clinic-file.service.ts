@@ -1,3 +1,4 @@
+import { ROUTES } from './../../routes/routes'
 import { ClinicFileDto } from './clinic-file.dto'
 import { ClinicFile } from './clinic-file.entity'
 import {
@@ -10,15 +11,6 @@ import { Clinic } from '../clinic/clinic.entity'
 @Injectable()
 export class ClinicFilesService {
 	constructor() {}
-
-	async findOne(id: number): Promise<ClinicFile> {
-		try {
-			const data = await ClinicFile.findOneOrFail(id)
-			return data
-		} catch (error) {
-			throw new NotFoundException('data might be moved or deleted.')
-		}
-	}
 
 	async create(body: ClinicFileDto | any): Promise<ClinicFile> {
 		try {
@@ -41,22 +33,11 @@ export class ClinicFilesService {
 				clinic: body.id,
 				name: file.filename,
 				url:
-					process.env.PUBLIC_PATH +
-					process.env.CLINIC_DIR +
+					process.env.API_URL +
+					ROUTES.CLINIC_FILES +
+					'/trade-license/' +
 					file.filename,
 			})
-		}
-	}
-
-	async remove(id: number): Promise<ClinicFile> {
-		try {
-			const data = await ClinicFile.findOneOrFail(id)
-			ClinicFile.delete(id)
-			return data
-		} catch (error) {
-			throw new NotFoundException(
-				'Unable to delete clinic account might be moved or deleted.',
-			)
 		}
 	}
 }

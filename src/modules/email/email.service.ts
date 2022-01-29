@@ -10,20 +10,6 @@ import { Email } from './email.entity'
 export class EmailsService {
 	constructor() {}
 
-	async findAll(): Promise<Email[]> {
-		const emails = await Email.find()
-		return emails
-	}
-
-	async findOne(id: number): Promise<Email> {
-		try {
-			const email = await Email.findOneOrFail(id)
-			return email
-		} catch (error) {
-			throw new NotFoundException('Email might be moved or deleted.')
-		}
-	}
-
 	async create(body: EmailDto | any): Promise<Email> {
 		try {
 			const email = Email.create(body) as any
@@ -32,17 +18,6 @@ export class EmailsService {
 		} catch (error) {
 			throw new ServiceUnavailableException(
 				'Something went wrong. Please try again',
-			)
-		}
-	}
-
-	async update(id: number, body: Email): Promise<Email | any> {
-		try {
-			const email = await Email.update(id, body)
-			return email
-		} catch (error) {
-			throw new NotFoundException(
-				'Unable to update email might be moved or deleted.',
 			)
 		}
 	}

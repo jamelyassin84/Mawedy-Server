@@ -34,17 +34,17 @@ export class ClinicController {
 		private readonly fileService: ClinicFilesService,
 	) {}
 
-	@Get() //TODO: ADMIN GUARD
+	@Get()
 	async findAll(): Promise<Clinic[]> {
 		return this.service.findAll()
 	}
 
-	@Get(':id') //TODO: ADMIN GUARD
+	@Get(':id')
 	findOne(@Param('id') id: string): Promise<Clinic> {
 		return this.service.findOne(+id)
 	}
 
-	@Post() //TODO App Guard
+	@Post()
 	create(@Body() body: any): Promise<Clinic> {
 		return this.service.create(body)
 	}
@@ -52,13 +52,13 @@ export class ClinicController {
 	@UseInterceptors(
 		FilesInterceptor('files[]', 20, {
 			storage: diskStorage({
-				destination: './public/uploads/clinic/files/',
+				destination: './public/uploads/clinic/trade-license/',
 				filename: editFileName,
 			}),
 			fileFilter: imageFileFilter,
 		}),
 	)
-	@Post('files') //TODO App Guard
+	@Post('files')
 	async uploadClinicFiles(
 		@Body() body: any,
 		@UploadedFiles() files: Express.Multer.File[],
@@ -66,23 +66,23 @@ export class ClinicController {
 		this.fileService.uploadClinicFiles(body, files)
 	}
 
-	@Patch(':id') //TODO: ADMIN GUARD
+	@Patch(':id')
 	async update(@Param() param, @Body() body: any): Promise<Clinic> {
 		return this.service.update(param.id, body)
 	}
 
-	@Delete(':id') //TODO: ADMIN GUARD
+	@Delete(':id')
 	async remove(@Param() param: { id: number }): Promise<Clinic> {
 		return this.service.remove(+param.id)
 	}
 
-	@Post('read') //TODO: ADMIN GUARD
+	@Post('read')
 	async read(@Body() param: { id: number }): Promise<boolean> {
 		this.service.read(param.id)
 		return true
 	}
 
-	@Post('activate') //TODO: ADMIN GUARD
+	@Post('activate')
 	async activate(@Body() param): Promise<boolean> {
 		this.service.activate(param.id)
 		return true

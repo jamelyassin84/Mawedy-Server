@@ -1,20 +1,8 @@
-import { ClinicFileDto } from './clinic-file.dto'
-import { ClinicFile } from './clinic-file.entity'
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	Patch,
-	Post,
-	Res,
-	UseGuards,
-} from '@nestjs/common'
+import { Controller, Get, Param, Res } from '@nestjs/common'
 import { ApiBearerAuth, ApiHeaders, ApiTags } from '@nestjs/swagger'
-import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard'
 import { resolveAPI, ROUTES } from 'src/routes/routes'
-import { ClinicFilesService } from './clinic-file.service'
+import { Observable, of } from 'rxjs'
+import { join } from 'path/posix'
 
 @ApiBearerAuth()
 @ApiHeaders([
@@ -26,23 +14,14 @@ import { ClinicFilesService } from './clinic-file.service'
 @ApiTags('Clinic File')
 @Controller(resolveAPI(ROUTES.CLINIC_FILES))
 export class ClinicFilesController {
-	constructor(private readonly service: ClinicFilesService) {}
+	constructor() {}
 
-	@Get(':id')
-	@UseGuards(JwtAuthGuard)
-	findOne(@Param('id') id: string): Promise<ClinicFile> {
-		return this.service.findOne(+id)
-	}
-
-	@Post()
-	// @UseGuards(JwtAuthGuard)
-	create(@Body() body: ClinicFileDto): Promise<ClinicFile> {
-		return this.service.create(body)
-	}
-
-	@Delete(':id')
-	@UseGuards(JwtAuthGuard)
-	async remove(@Param() param): Promise<ClinicFile> {
-		return this.service.remove(+param.id)
+	@Get('trade-license/:path')
+	getPhoto(@Param('path') path, @Res() res): Observable<Object> {
+		return of(
+			res.sendFile(
+				`${process.cwd()}/public/uploads/clinic/trade-license/${path}`,
+			),
+		)
 	}
 }

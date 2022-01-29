@@ -42,7 +42,7 @@ export class ClinicAvatarsController {
 			fileFilter: imageFileFilter,
 		}),
 	)
-	@Post('upload') //TODO: CLINIC GUARD
+	@Post('upload')
 	async setAvatar(
 		@Body() body: any,
 		@UploadedFiles() files: Express.Multer.File[],
@@ -55,7 +55,7 @@ export class ClinicAvatarsController {
 	getPhoto(@Param('path') path, @Res() res): Observable<Object> {
 		return of(
 			res.sendFile(
-				join(process.cwd(), `/public/uploads/clinic/avatars/${path}`),
+				`${process.cwd()}/public/uploads/clinic/avatars/${path}`,
 			),
 		)
 	}
