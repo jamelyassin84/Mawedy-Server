@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, UseInterceptors } from '@nestjs/common'
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Patch,
+	Post,
+	UseGuards,
+	UseInterceptors,
+} from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiBearerAuth, ApiHeaders, ApiTags } from '@nestjs/swagger'
 import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard'
@@ -19,34 +29,37 @@ import { ClinicAccountService } from './clinic-account.service'
 export class ClinicAccountController {
 	constructor(private readonly service: ClinicAccountService) {}
 
-	@Get()
-	@UseGuards(JwtAuthGuard)
-	async findAll(): Promise<ClinicAccount[]> {
-		return this.service.findAll()
-	}
-
 	@Get(':id')
-	@UseGuards(JwtAuthGuard)
 	findOne(@Param('id') id: string): Promise<ClinicAccount> {
 		return this.service.findOne(+id)
 	}
 
 	@Post()
-	// @UseGuards(JwtAuthGuard)
 	@UseInterceptors(FileInterceptor('file'))
 	create(@Body() body: ClinicAccountDto): Promise<ClinicAccount> {
 		return this.service.create(body)
 	}
 
 	@Patch(':id')
-	@UseGuards(JwtAuthGuard)
-	async update(@Param() param, @Body() body: ClinicAccountDto): Promise<ClinicAccount> {
+	async update(
+		@Param() param,
+		@Body() body: ClinicAccountDto,
+	): Promise<ClinicAccount> {
 		return this.service.update(param.id, body)
 	}
 
 	@Delete(':id')
-	@UseGuards(JwtAuthGuard)
 	async remove(@Param() param): Promise<ClinicAccount> {
 		return this.service.remove(+param.id)
+	}
+
+	@Get('clinic/:id')
+	findClinic(@Param('id') id: string): Promise<ClinicAccount[]> {
+		return this.service.findByClinic(+id)
+	}
+
+	@Post('log-in')
+	logIn(@Body() body: { id: number }) {
+		return this.service.logIn(body.id)
 	}
 }

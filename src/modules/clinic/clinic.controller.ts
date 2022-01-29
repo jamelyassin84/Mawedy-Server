@@ -1,3 +1,4 @@
+import { Phone } from './../phone/phone.entity'
 import { ClinicFilesService } from './../clinic-file/clinic-file.service'
 import { editFileName, imageFileFilter } from './../../helpers/helpers'
 import {
@@ -9,7 +10,6 @@ import {
 	Patch,
 	Delete,
 	UseInterceptors,
-	UploadedFile,
 	UploadedFiles,
 } from '@nestjs/common'
 import { FilesInterceptor } from '@nestjs/platform-express'
@@ -18,6 +18,7 @@ import { diskStorage } from 'multer'
 import { resolveAPI, ROUTES } from 'src/routes/routes'
 import { Clinic } from './clinic.entity'
 import { ClinicService } from './clinic.service'
+import { ClinicV2Service } from './clinic.v2.service'
 
 @ApiBearerAuth()
 @ApiHeaders([
@@ -31,6 +32,7 @@ import { ClinicService } from './clinic.service'
 export class ClinicController {
 	constructor(
 		private readonly service: ClinicService,
+		private readonly servicev2: ClinicV2Service,
 		private readonly fileService: ClinicFilesService,
 	) {}
 
@@ -86,5 +88,10 @@ export class ClinicController {
 	async activate(@Body() body): Promise<boolean> {
 		this.service.activate(body.id)
 		return true
+	}
+
+	@Post('phone')
+	async addPhoneNumber(@Body() body): Promise<Phone> {
+		return this.servicev2.addPhoneNumber(body)
 	}
 }

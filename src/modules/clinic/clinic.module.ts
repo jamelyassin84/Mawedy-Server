@@ -1,3 +1,4 @@
+import { ClinicV2Service } from './clinic.v2.service'
 import { ClinicPhotosModule } from './../clinic-photos/clinic-photos.module'
 import { ClinicAvatarsModule } from './../clinic-avatar/clinic-avatar.module'
 import { ClinicTimingsModule } from './../clinic-timings/clinic-timings.module'
@@ -33,7 +34,7 @@ import { MulterModule } from '@nestjs/platform-express'
 		ClinicPhotosModule,
 	],
 	controllers: [ClinicController],
-	providers: [ClinicService],
-	exports: [ClinicService],
+	providers: [ClinicService, ClinicV2Service],
+	exports: [ClinicService, ClinicV2Service],
 })
 export class ClinicModule {}

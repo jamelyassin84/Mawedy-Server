@@ -92,8 +92,6 @@ export class ClinicService {
 
 			await this.emailService.create(data)
 
-			await this.phoneService.create(data)
-
 			await this.deviceService.create(data)
 
 			await this.inboxService.create({
@@ -197,10 +195,6 @@ export class ClinicService {
 			)
 		}
 	}
-
-	// findSubscription(subscriptionType: SubscriptionType): Promise<Clinic> {
-	// 	return
-	// }
 
 	async read(id: number) {
 		await this.inboxService.update(id, {
