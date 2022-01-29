@@ -1,9 +1,12 @@
-import { Module } from '@nestjs/common';
-import { MawedyInboxService } from './mawedy-inbox.service';
-import { MawedyInboxController } from './mawedy-inbox.controller';
+import { ClinicModule } from './../clinic/clinic.module'
+import { forwardRef, Module } from '@nestjs/common'
+import { MawedyInboxService } from './mawedy-inbox.service'
+import { MawedyInboxController } from './mawedy-inbox.controller'
 
 @Module({
-  controllers: [MawedyInboxController],
-  providers: [MawedyInboxService]
+	imports: [],
+	controllers: [MawedyInboxController],
+	providers: [MawedyInboxService],
+	exports: [MawedyInboxService],
 })
 export class MawedyInboxModule {}

@@ -5,17 +5,11 @@ import {
 	NotFoundException,
 	ServiceUnavailableException,
 } from '@nestjs/common'
+import { Clinic } from '../clinic/clinic.entity'
 
 @Injectable()
 export class ClinicFilesService {
 	constructor() {}
-
-	async findAll(): Promise<ClinicFile[]> {
-		const data = await ClinicFile.find({
-			relations: ['emails', 'phones', 'devices'],
-		})
-		return data
-	}
 
 	async findOne(id: number): Promise<ClinicFile> {
 		try {
@@ -30,15 +24,7 @@ export class ClinicFilesService {
 		try {
 			const data = ClinicFile.create(body) as any
 			await data.save()
-			const params = {
-				data: data as any,
-				...body,
-				isActive: true,
-			}
-			return await ClinicFile.findOne({
-				where: { id: params.id },
-				relations: ['emails', 'phones', 'devices'],
-			})
+			return data
 		} catch (error) {
 			throw new ServiceUnavailableException(
 				'Something went wrong. Please try again',
@@ -46,17 +32,19 @@ export class ClinicFilesService {
 		}
 	}
 
-	async update(
-		id: number,
-		body: ClinicFileDto | any,
-	): Promise<ClinicFile | any> {
-		try {
-			const data = await ClinicFile.update(id, body)
-			return data
-		} catch (error) {
-			throw new NotFoundException(
-				'Unable to update clinic account might be moved or deleted.',
-			)
+	async uploadClinicFiles(
+		body: any,
+		files: Express.Multer.File[] = [],
+	): Promise<void> {
+		for (let file of files) {
+			await this.create({
+				clinic: body.id,
+				name: file.filename,
+				url:
+					process.env.PUBLIC_PATH +
+					process.env.CLINIC_DIR +
+					file.filename,
+			})
 		}
 	}
 

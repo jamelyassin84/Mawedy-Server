@@ -22,19 +22,22 @@ export class AuthService {
 	constructor(
 		private adminService: AdminService,
 		private clinicService: ClinicService,
-		private clinicAccountService: ClinicAccountService,
-		private patientService: PatientService,
 		private jwtService: JwtService,
 		protected deviceService: DevicesService,
 	) {}
 
 	async login(body: AuthLoginDto) {
-		let user: any
+		let user: Clinic | Admin | ClinicAccount | Patient
 		if (body.type === 'admin') {
 			user = await this.validateAdmin(body)
 		}
 		if (body.type === 'clinic') {
 			user = await this.validateClinic(body)
+			if (!user.isApproved) {
+				throw new UnauthorizedException(
+					'We are currently reviewing your account and will get back to you once it is approved.',
+				)
+			}
 		}
 		if (body.type === 'clinic-accounts') {
 			user = await this.validateClinicAccount(body)
@@ -48,7 +51,7 @@ export class AuthService {
 		this.logDevice(body.type, user)
 		return {
 			user: user,
-			token: this.jwtService.sign(user),
+			token: this.jwtService.sign(user?.createdAt.toString()),
 		}
 	}
 
@@ -56,9 +59,12 @@ export class AuthService {
 		const { username, password } = body
 
 		const admin = await this.adminService.findByUsername(username)
+		if (!admin) {
+			throw new UnauthorizedException('Username is incorrect')
+		}
 
 		if (!(await admin?.validatePassword(password))) {
-			throw new UnauthorizedException('Username or password is incorrect')
+			throw new UnauthorizedException('Password is incorrect')
 		}
 
 		return admin
@@ -67,8 +73,12 @@ export class AuthService {
 	async validateClinic(body: AuthLoginDto): Promise<Clinic> {
 		const { username, password } = body
 		const clinic = await this.clinicService.findByUsername(username)
+		if (!clinic) {
+			throw new UnauthorizedException('Username is incorrect')
+		}
+
 		if (!(await clinic?.validatePassword(password))) {
-			throw new UnauthorizedException()
+			throw new UnauthorizedException('Password is incorrect')
 		}
 		return clinic
 	}

@@ -3,7 +3,7 @@ import { Clinic } from '../clinic/clinic.entity'
 
 export class ClinicAvatarDto {
 	@ApiProperty()
-	avatar?: string | null = null
+	avatar: any
 
 	@ApiProperty()
 	isActive?: boolean = true

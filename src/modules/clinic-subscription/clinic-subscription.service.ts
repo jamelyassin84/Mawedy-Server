@@ -1,4 +1,7 @@
-import { ClinicSubscriptionDto } from './clinic-subscription.dto'
+import {
+	ClinicSubscriptionDto,
+	SubscriptionType,
+} from './clinic-subscription.dto'
 import { ClinicSubscription } from './clinic-subscription.entity'
 import {
 	Injectable,
@@ -36,14 +39,9 @@ export class ClinicSubscriptionsService {
 		try {
 			const clinicSubscription = ClinicSubscription.create(body) as any
 			await clinicSubscription.save()
-			return await ClinicSubscription.findOne({
-				where: { id: clinicSubscription.id },
-				relations: ['roles', 'emails', 'phones', 'devices'],
-			})
+			return clinicSubscription
 		} catch (error) {
-			throw new ServiceUnavailableException(
-				'Something went wrong. Please try again',
-			)
+			throw new Error(error)
 		}
 	}
 
@@ -75,11 +73,38 @@ export class ClinicSubscriptionsService {
 		}
 	}
 
-	async findByUsername(username: string): Promise<ClinicSubscription> {
-		return await ClinicSubscription.findOneOrFail({
-			where: {
-				username: username,
-			},
-		})
+	resolveSubscription(subscriptionType: SubscriptionType): number {
+		if (subscriptionType === 'trial') {
+			return 2
+		}
+		if (subscriptionType === 'app') {
+			return 2
+		}
+		if (subscriptionType === 'premium') {
+			return 2
+		}
+		if (subscriptionType === 'solution') {
+			return 2
+		}
+	}
+
+	resolvePrice(subscriptionType: SubscriptionType): number {
+		if (subscriptionType === 'trial') {
+			return 150
+		}
+		if (subscriptionType === 'app') {
+			return 150
+		}
+		if (subscriptionType === 'premium') {
+			return 150
+		}
+		if (subscriptionType === 'solution') {
+			return 150
+		}
+	}
+
+	resolveNextMonth(timestamp: any): any {
+		var now = new Date(timestamp)
+		return new Date(now.getFullYear(), now.getMonth() + 1, 1)
 	}
 }

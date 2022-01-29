@@ -3,6 +3,7 @@ import {
 	NotFoundException,
 	ServiceUnavailableException,
 } from '@nestjs/common'
+import { ROUTES } from 'src/routes/routes'
 import { ClinicAvatarDto } from './clinic-avatar.dto'
 import { ClinicAvatar } from './clinic-avatar.entity'
 
@@ -26,19 +27,11 @@ export class ClinicAvatarsService {
 		}
 	}
 
-	async create(body: ClinicAvatarDto | any): Promise<ClinicAvatar> {
+	async create(body: any): Promise<ClinicAvatar> {
 		try {
 			const data = ClinicAvatar.create(body) as any
 			await data.save()
-			const params = {
-				data: data as any,
-				...body,
-				isActive: true,
-			}
-			return await ClinicAvatar.findOne({
-				where: { id: params.id },
-				relations: ['emails', 'phones', 'devices'],
-			})
+			return data
 		} catch (error) {
 			throw new ServiceUnavailableException(
 				'Something went wrong. Please try again',
@@ -46,10 +39,7 @@ export class ClinicAvatarsService {
 		}
 	}
 
-	async update(
-		id: number,
-		body: ClinicAvatarDto | any,
-	): Promise<ClinicAvatar | any> {
+	async update(id: number, body: any): Promise<ClinicAvatar | any> {
 		try {
 			const data = await ClinicAvatar.update(id, body)
 			return data
@@ -69,6 +59,19 @@ export class ClinicAvatarsService {
 			throw new NotFoundException(
 				'Unable to delete clinic account might be moved or deleted.',
 			)
+		}
+	}
+
+	async upload(body: any, files: Express.Multer.File[] = []): Promise<void> {
+		for (let file of files) {
+			await this.create({
+				clinic: body.id,
+				avatar:
+					process.env.API_URL +
+					ROUTES.CLINIC_AVATARS +
+					'/photo/' +
+					file.filename,
+			})
 		}
 	}
 }

@@ -1,19 +1,36 @@
 import { AppInboxDto } from './mawedy-inbox.dto'
 import {
+	forwardRef,
+	Inject,
 	Injectable,
 	NotFoundException,
 	ServiceUnavailableException,
 } from '@nestjs/common'
 import { AppInbox } from './mawedy-inbox.entity'
+import { ClinicService } from '../clinic/clinic.service'
+import { Clinic } from '../clinic/clinic.entity'
 
 @Injectable()
 export class MawedyInboxService {
 	constructor() {}
 
 	async findAll(): Promise<AppInbox[]> {
-		const data = await AppInbox.find({
-			relations: ['emails', 'phones', 'devices'],
+		let data = await AppInbox.find({
+			relations: ['clinic'],
 		})
+
+		for (const item of data) {
+			item.clinic = await Clinic.findOne(item.clinic.id, {
+				relations: [
+					'approver',
+					'emails',
+					'phones',
+					'devices',
+					'clinicAccounts',
+				],
+			})
+		}
+
 		return data
 	}
 
@@ -30,15 +47,7 @@ export class MawedyInboxService {
 		try {
 			const data = AppInbox.create(body) as any
 			await data.save()
-			const params = {
-				data: data as any,
-				...body,
-				isActive: true,
-			}
-			return await AppInbox.findOne({
-				where: { id: params.id },
-				relations: ['emails', 'phones', 'devices'],
-			})
+			return data
 		} catch (error) {
 			throw new ServiceUnavailableException(
 				'Something went wrong. Please try again',

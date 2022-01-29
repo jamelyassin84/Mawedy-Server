@@ -1,5 +1,7 @@
+import { ClinicPhoto } from './../clinic-photos/clinic-photos.entity'
+import { ClinicTiming } from './../clinic-timings/clinic-timings.entity'
+import { ClinicFile } from './../clinic-file/clinic-file.entity'
 import { Phone } from './../phone/phone.entity'
-import { Admin } from '../admin/admin.entity'
 import {
 	BaseEntity,
 	BeforeInsert,
@@ -12,10 +14,10 @@ import {
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import * as bcrypt from 'bcryptjs'
-import { Role } from '../role/roles.entity'
 import { Email } from '../email/email.entity'
 import { Device } from '../device/device.entity'
 import { ClinicAccount } from '../clinic-account/clinic-account.entity'
+import { ClinicAvatar } from '../clinic-avatar/clinic-avatar.entity'
 
 @Entity()
 export class Clinic extends BaseEntity {
@@ -29,7 +31,7 @@ export class Clinic extends BaseEntity {
 	address: string
 
 	@Column()
-	tradeLicenseNumber: number
+	tradeLicenseNumber: string
 
 	@Column()
 	registeredVia: 'Web' | 'Sales' | 'Admin'
@@ -38,10 +40,7 @@ export class Clinic extends BaseEntity {
 	username: string
 
 	@Column()
-	password: string
-
-	@Column()
-	avatar: string
+	password?: string | null = null
 
 	@Column()
 	description: string
@@ -65,13 +64,16 @@ export class Clinic extends BaseEntity {
 	apple: string
 
 	@Column()
-	isApproved: string
+	isApproved: boolean = false
 
 	@Column()
 	isActive: boolean
 
 	@Column()
 	isLoggedIn: boolean
+
+	@Column()
+	email: string
 
 	@ManyToOne(() => Clinic, (clinic) => clinic.approver, {
 		onDelete: 'CASCADE',
@@ -93,10 +95,30 @@ export class Clinic extends BaseEntity {
 	})
 	devices?: Device[]
 
-	@OneToMany(() => ClinicAccount, (clinicAccount) => clinicAccount.clinic, {
+	@OneToMany(() => ClinicAccount, (account) => account.clinic, {
 		cascade: true,
 	})
 	clinicAccounts?: ClinicAccount[]
+
+	@OneToMany(() => ClinicFile, (file) => file.clinic, {
+		cascade: true,
+	})
+	files?: ClinicFile[]
+
+	@OneToMany(() => ClinicPhoto, (photo) => photo.clinic, {
+		cascade: true,
+	})
+	photos?: ClinicPhoto[]
+
+	@OneToOne(() => ClinicAvatar, (photo) => photo.clinic, {
+		cascade: true,
+	})
+	avatar?: ClinicAvatar
+
+	@OneToMany(() => ClinicTiming, (timing) => timing.clinicId, {
+		cascade: true,
+	})
+	clinicTimings?: ClinicTiming[]
 
 	@CreateDateColumn({
 		type: 'timestamp',

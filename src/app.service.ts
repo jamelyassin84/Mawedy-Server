@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
+import { Admin } from './modules/admin/admin.entity'
+import { AdminService } from './modules/admin/admin.service'
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
-  }
+	constructor(protected service: AdminService) {}
 }

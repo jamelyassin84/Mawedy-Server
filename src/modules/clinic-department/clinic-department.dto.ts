@@ -10,5 +10,5 @@ export class ClinicDepartmentDto {
 	@ApiProperty()
 	isActive: boolean = true
 
-	clinic?: Clinic
+	clinicId?: number
 }

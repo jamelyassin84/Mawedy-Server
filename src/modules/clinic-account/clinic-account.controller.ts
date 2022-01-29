@@ -1,13 +1,5 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	Patch,
-	Post,
-	UseGuards,
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, UseInterceptors } from '@nestjs/common'
+import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiBearerAuth, ApiHeaders, ApiTags } from '@nestjs/swagger'
 import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard'
 import { resolveAPI, ROUTES } from 'src/routes/routes'
@@ -41,16 +33,14 @@ export class ClinicAccountController {
 
 	@Post()
 	// @UseGuards(JwtAuthGuard)
+	@UseInterceptors(FileInterceptor('file'))
 	create(@Body() body: ClinicAccountDto): Promise<ClinicAccount> {
 		return this.service.create(body)
 	}
 
 	@Patch(':id')
 	@UseGuards(JwtAuthGuard)
-	async update(
-		@Param() param,
-		@Body() body: ClinicAccountDto,
-	): Promise<ClinicAccount> {
+	async update(@Param() param, @Body() body: ClinicAccountDto): Promise<ClinicAccount> {
 		return this.service.update(param.id, body)
 	}
 

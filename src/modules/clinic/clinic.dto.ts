@@ -7,7 +7,6 @@ export class ClinicDto {
 	@ApiProperty()
 	email?: string
 
-	@IsNotEmpty()
 	@ApiProperty()
 	phone?: string
 
@@ -16,21 +15,18 @@ export class ClinicDto {
 
 	@IsNotEmpty()
 	@ApiProperty()
-	username: string
+	username?: string
 
 	@IsNotEmpty()
 	@ApiProperty()
-	password: string
-
-	@ApiProperty()
-	avatar: string | null | undefined
+	password?: string | null = null
 
 	@IsNotEmpty()
 	@ApiProperty()
-	tradeLicenseNumber: string = null
+	tradeLicenseNumber?: string = null
 
 	@ApiProperty()
-	address: string | null = null
+	address?: string | null = null
 
 	@ApiProperty()
 	description?: string | null = null
@@ -54,7 +50,7 @@ export class ClinicDto {
 	apple?: string | null = null
 
 	@ApiProperty()
-	isApproved: boolean = false
+	isApproved?: boolean = false
 
 	@IsNotEmpty()
 	@ApiProperty()
@@ -66,5 +62,15 @@ export class ClinicDto {
 	@ApiProperty()
 	isLoggedIn?: boolean = false
 
-	approver: Admin
+	@ApiProperty()
+	message?: string | null = null
+
+	@ApiProperty()
+	isRead?: boolean = false
+
+	files?: FormData[]
+	avatar?: FormData[]
+	clinicId?: number
+	approver?: Admin
+	users?: any[]
 }

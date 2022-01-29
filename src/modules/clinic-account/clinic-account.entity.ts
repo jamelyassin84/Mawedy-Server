@@ -23,7 +23,9 @@ export class ClinicAccount extends BaseEntity {
 	@Column()
 	isLoggedIn: boolean
 
-	@ManyToOne(() => Clinic, (clinic) => clinic.id)
+	@ManyToOne(() => Clinic, (clinic) => clinic.id, {
+		onDelete: 'CASCADE',
+	})
 	clinic: Clinic
 
 	@ManyToOne(

@@ -35,7 +35,7 @@ export class AdminService {
 		}
 	}
 
-	async create(body: CreateAdminDto | any): Promise<Admin> {
+	async create(body: CreateAdminDto | any, isServer?: false): Promise<Admin> {
 		try {
 			const admin = Admin.create(body) as any
 			await admin.save()
@@ -82,10 +82,22 @@ export class AdminService {
 	}
 
 	async findByUsername(username: string): Promise<Admin> {
-		return await Admin.findOneOrFail({
+		return await Admin.findOne({
 			where: {
 				username: username,
 			},
+		})
+	}
+
+	seedAdministrator(): Admin | any {
+		return this.create({
+			id: 0,
+			email: 'admin',
+			phone: 971,
+			areaCode: 567995775,
+			role: 'Super Admin',
+			username: 'admin',
+			password: 'admin',
 		})
 	}
 }

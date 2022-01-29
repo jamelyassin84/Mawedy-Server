@@ -1,5 +1,3 @@
-Add Service  
-Add Controller
 Build Super Admin
 Integrate Front End
 
@@ -14,8 +12,6 @@ Paginate
 File Upload (Single, Multiple)
 File Route
 Image Route
-Create Multiple File Route
-Create Multiple Image Route
 Gateway
 Interceptor
 Notifications
@@ -34,3 +30,9 @@ Create All Controllers
 Twilio
 Mail Gun
 Stripe
+
+
+LOgin then user type
+
+
+Paused:File Uploading specifically file path

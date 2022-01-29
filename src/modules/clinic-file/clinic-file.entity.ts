@@ -19,7 +19,9 @@ export class ClinicFile extends BaseEntity {
 	@Column()
 	url: string
 
-	@ManyToOne(() => Clinic, (clinic) => clinic.id)
+	@ManyToOne(() => Clinic, (clinic) => clinic.id, {
+		onDelete: 'CASCADE',
+	})
 	clinic: Clinic
 
 	@CreateDateColumn({

@@ -28,7 +28,7 @@ export class ClinicSubscriptionDto {
 	price: number = 0
 
 	@ApiProperty()
-	currency: string = 'AED'
+	currency?: string = 'AED'
 }
 
 export type SubscriptionType = 'trial' | 'solution' | 'app' | 'premium'

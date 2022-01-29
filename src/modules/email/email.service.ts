@@ -57,4 +57,12 @@ export class EmailsService {
 			)
 		}
 	}
+
+	async checkIfEmailExist(email: string): Promise<boolean> {
+		const hasEmail = await Email.findOne({ where: { email: email } })
+		if (hasEmail === null || hasEmail === undefined) {
+			return false
+		}
+		return true
+	}
 }

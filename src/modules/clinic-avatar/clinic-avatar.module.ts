@@ -5,5 +5,6 @@ import { ClinicAvatarsController } from './clinic-avatar.controller'
 @Module({
 	controllers: [ClinicAvatarsController],
 	providers: [ClinicAvatarsService],
+	exports: [ClinicAvatarsService],
 })
 export class ClinicAvatarsModule {}
