@@ -210,7 +210,7 @@ export class ClinicService {
 
 	async activate(id: number) {
 		//TODO:Add Approver
-		await this.update(id, {
+		await Clinic.update(id, {
 			isApproved: true,
 		})
 		//TODO:Generate Password

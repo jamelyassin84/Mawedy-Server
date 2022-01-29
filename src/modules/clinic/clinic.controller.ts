@@ -83,8 +83,8 @@ export class ClinicController {
 	}
 
 	@Post('activate')
-	async activate(@Body() param): Promise<boolean> {
-		this.service.activate(param.id)
+	async activate(@Body() body): Promise<boolean> {
+		this.service.activate(body.id)
 		return true
 	}
 }
