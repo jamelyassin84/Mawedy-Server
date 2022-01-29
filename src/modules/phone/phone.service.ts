@@ -1,3 +1,4 @@
+import { getConnection } from 'typeorm'
 import { Phone } from './phone.entity'
 import {
 	Injectable,
@@ -9,20 +10,6 @@ import { PhoneDto } from './phone.dto'
 @Injectable()
 export class PhonesService {
 	constructor() {}
-
-	async findAll(): Promise<Phone[]> {
-		const phones = await Phone.find()
-		return phones
-	}
-
-	async findOne(id: number): Promise<Phone> {
-		try {
-			const phone = await Phone.findOneOrFail(id)
-			return phone
-		} catch (error) {
-			throw new NotFoundException('Phone might be moved or deleted.')
-		}
-	}
 
 	async create(body: PhoneDto | any): Promise<Phone> {
 		try {
@@ -36,17 +23,6 @@ export class PhonesService {
 		}
 	}
 
-	async update(id: number, body: Phone): Promise<Phone | any> {
-		try {
-			const phone = await Phone.update(id, body)
-			return phone
-		} catch (error) {
-			throw new NotFoundException(
-				'Unable to update phone might be moved or deleted.',
-			)
-		}
-	}
-
 	async remove(id: number): Promise<Phone> {
 		try {
 			const phone = await Phone.findOneOrFail(id)
@@ -56,5 +32,21 @@ export class PhonesService {
 				'Unable to delete phone might be moved or deleted.',
 			)
 		}
+	}
+
+	async getPhoneByClinic(id: number): Promise<Phone[]> {
+		try {
+			return await Phone.find({
+				where: {
+					clinic: id,
+				},
+			})
+		} catch (error) {
+			throw new NotFoundException('Unable to fetch phones.')
+		}
+	}
+
+	async deletePhonesByClinic(id: number) {
+		await getConnection().query(`DELETE FROM phone WHERE  clinicID = ${id}`)
 	}
 }

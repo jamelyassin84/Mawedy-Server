@@ -10,6 +10,7 @@ export class ClinicV2Service {
 		id: number
 		phone: string
 	}): Promise<Phone> {
+		await this.phone.deletePhonesByClinic(clinic.id)
 		return await this.phone.create({
 			clinic: clinic.id,
 			phone: clinic.phone,

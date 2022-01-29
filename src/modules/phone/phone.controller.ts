@@ -27,33 +27,18 @@ import { ApiBearerAuth, ApiHeaders, ApiTags } from '@nestjs/swagger'
 export class PhonesController {
 	constructor(private readonly service: PhonesService) {}
 
-	@Get()
-	@UseGuards(JwtAuthGuard)
-	async findAll(): Promise<Phone[]> {
-		return this.service.findAll()
-	}
-
-	@Get(':id')
-	@UseGuards(JwtAuthGuard)
-	findOne(@Param('id') id: string): Promise<Phone> {
-		return this.service.findOne(+id)
-	}
-
 	@Post()
-	@UseGuards(JwtAuthGuard)
 	create(@Body() body: PhoneDto): Promise<Phone> {
 		return this.service.create(body)
 	}
 
-	@Patch(':id')
-	@UseGuards(JwtAuthGuard)
-	async update(@Param() param, @Body() body: PhoneDto | any): Promise<Phone> {
-		return this.service.update(param.id, body)
-	}
-
 	@Delete(':id')
-	@UseGuards(JwtAuthGuard)
 	async remove(@Param() param): Promise<Phone> {
 		return this.service.remove(+param.id)
+	}
+
+	@Get('clinic/:id')
+	async getPhoneByClinic(@Param() param): Promise<Phone[]> {
+		return this.service.getPhoneByClinic(+param.id)
 	}
 }
