@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Clinic } from './../clinic/clinic.entity'
+import {
+	BaseEntity,
+	Column,
+	Entity,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+} from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()
@@ -29,6 +36,9 @@ export class Doctor extends BaseEntity {
 
 	@Column()
 	isActive: boolean
+
+	@ManyToOne(() => Clinic, (clinic) => clinic.id)
+	clinic: Clinic
 
 	@CreateDateColumn({
 		type: 'timestamp',
