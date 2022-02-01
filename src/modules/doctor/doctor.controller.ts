@@ -7,13 +7,20 @@ import {
 	Param,
 	Patch,
 	Post,
+	Res,
+	UploadedFiles,
 	UseGuards,
+	UseInterceptors,
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiHeaders, ApiTags } from '@nestjs/swagger'
 import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard'
 import { resolveAPI, ROUTES } from 'src/routes/routes'
 import { Doctor } from './doctor.entity'
 import { DoctorService } from './doctor.service'
+import { Observable, of } from 'rxjs'
+import { FilesInterceptor } from '@nestjs/platform-express'
+import { diskStorage } from 'multer'
+import { editFileName, imageFileFilter } from 'src/helpers/helpers'
 
 @ApiBearerAuth()
 @ApiHeaders([
@@ -50,5 +57,36 @@ export class DoctorController {
 	@Delete(':id')
 	async remove(@Param() param): Promise<Doctor> {
 		return this.service.remove(+param.id)
+	}
+
+	@Get('clinic/:id')
+	findAllBtyClinic(@Param('id') id: string): Promise<Doctor> {
+		return this.service.findOne(+id)
+	}
+
+	@UseInterceptors(
+		FilesInterceptor('photos', 10, {
+			storage: diskStorage({
+				destination: './public/uploads/clinic/photos/',
+				filename: editFileName,
+			}),
+			fileFilter: imageFileFilter,
+		}),
+	)
+	@Post('upload')
+	async setPhoto(
+		@Body() body: any,
+		@UploadedFiles() photos: Express.Multer.File[],
+	): Promise<void> {
+		this.service.upload(body, photos)
+	}
+
+	@Get('avatar/:path')
+	getPhoto(@Param('path') path, @Res() res): Observable<Object> {
+		return of(
+			res.sendFile(
+				`${process.cwd()}/public/uploads/doctor/avatars/${path}`,
+			),
+		)
 	}
 }

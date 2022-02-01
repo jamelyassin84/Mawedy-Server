@@ -9,6 +9,10 @@ import { Patient } from '../patient/patient.entity'
 export class DoctorDto {
 	@IsNotEmpty()
 	@ApiProperty()
+	avatar: string | null = null
+
+	@IsNotEmpty()
+	@ApiProperty()
 	name: string
 
 	@IsNotEmpty()

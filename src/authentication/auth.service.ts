@@ -1,4 +1,3 @@
-import { PatientService } from './../modules/patient/patient.service'
 import { ClinicAccountService } from './../modules/clinic-account/clinic-account.service'
 import { ClinicAccount } from './../modules/clinic-account/clinic-account.entity'
 import { Clinic } from './../modules/clinic/clinic.entity'
@@ -24,6 +23,7 @@ export class AuthService {
 		private clinicService: ClinicService,
 		private jwtService: JwtService,
 		protected deviceService: DevicesService,
+		protected clinicAccountService: ClinicAccountService,
 	) {}
 
 	async login(body: AuthLoginDto) {
@@ -124,5 +124,35 @@ export class AuthService {
 		const device = await this.deviceService.create(data)
 
 		return device
+	}
+
+	async logOut(body: {
+		clinicAccount?: number
+		admin?: number
+		patient?: number
+	}) {
+		const { clinicAccount, admin, patient } = body
+
+		if (clinicAccount !== undefined) {
+			return this.clinicAccountService.update(clinicAccount, {
+				isLoggedIn: false,
+			})
+		}
+
+		if (admin !== undefined) {
+			return this.adminService.update(admin, {
+				isLoggedIn: false,
+			})
+		}
+
+		if (patient !== undefined) {
+			return this.clinicAccountService.update(patient, {
+				isLoggedIn: false,
+			})
+		}
+
+		throw new BadRequestException(
+			'Please pass and admin, patient or a clinic account',
+		)
 	}
 }

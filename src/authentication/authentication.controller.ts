@@ -12,15 +12,12 @@ export class AuthenticationController {
 	constructor(private readonly authService: AuthService) {}
 
 	@Post('login')
-	async login(
-		@Body() authLoginDto: AuthLoginDto,
-		@RealIP() ipAddress: string,
-	) {
-		return this.authService.login({ ...authLoginDto, ipAddress: ipAddress })
+	async login(@Body() body: AuthLoginDto, @RealIP() ipAddress: string) {
+		return this.authService.login({ ...body, ipAddress: ipAddress })
 	}
 
 	@Post('logout')
-	async logOut() {
-		return 'LoggedOut'
+	async logOut(@Body() body: any) {
+		return this.authService.logOut(body)
 	}
 }

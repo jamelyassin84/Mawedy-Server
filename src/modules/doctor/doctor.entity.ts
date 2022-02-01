@@ -4,6 +4,7 @@ import {
 	Column,
 	Entity,
 	ManyToOne,
+	OneToMany,
 	PrimaryGeneratedColumn,
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
@@ -14,30 +15,35 @@ export class Doctor extends BaseEntity {
 	id: number
 
 	@Column()
+	avatar: string | null = null
+
+	@Column()
 	name: string
 
 	@Column()
 	title: string
 
 	@Column()
-	profession: string
+	profession: string | null = null
 
 	@Column()
-	specialties: string
+	specialties: string | null = null
 
 	@Column()
 	yearsOfExperience: number
 
 	@Column()
-	about: string
+	about: string | null = null
 
 	@Column()
-	isAvailable: boolean
+	isAvailable: boolean = true
 
 	@Column()
-	isActive: boolean
+	isActive: boolean = true
 
-	@ManyToOne(() => Clinic, (clinic) => clinic.id)
+	@OneToMany(() => Clinic, (clinic) => clinic.id, {
+		onDelete: 'CASCADE',
+	})
 	clinic: Clinic
 
 	@CreateDateColumn({

@@ -12,14 +12,10 @@ export class ClinicDoctor extends BaseEntity {
 	@ManyToOne(() => Clinic, (clinic) => clinic.id)
 	clinic: Clinic
 
-	@ManyToOne(() => Doctor, (doctor) => doctor.id)
-	doctor: Doctor
-
-	@ManyToOne(
-		() => ClinicDepartmentDoctor,
-		(clinicDepartmentDoctor) => clinicDepartmentDoctor.id,
-	)
-	clinicDepartmentDoctor: ClinicDepartmentDoctor
+	@ManyToOne(() => Doctor, (doctor) => doctor.id, {
+		onDelete: 'CASCADE',
+	})
+	doctors: Doctor[]
 
 	@CreateDateColumn({
 		type: 'timestamp',

@@ -37,7 +37,7 @@ export class ClinicPhotosController {
 			fileFilter: imageFileFilter,
 		}),
 	)
-	@Post('upload') //TODO: CLINIC GUARD
+	@Post('upload')
 	async setPhoto(
 		@Body() body: any,
 		@UploadedFiles() photos: Express.Multer.File[],
