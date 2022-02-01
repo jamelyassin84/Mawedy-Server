@@ -67,7 +67,7 @@ export class DoctorController {
 	@UseInterceptors(
 		FilesInterceptor('avatar', 1, {
 			storage: diskStorage({
-				destination: './public/uploads/clinic/photos/',
+				destination: './public/uploads/doctor/avatars/',
 				filename: editFileName,
 			}),
 			fileFilter: imageFileFilter,
@@ -81,7 +81,7 @@ export class DoctorController {
 		this.service.upload(body, photos)
 	}
 
-	@Get('avatar/:path')
+	@Get('photo/:path')
 	getPhoto(@Param('path') path, @Res() res): Observable<Object> {
 		return of(
 			res.sendFile(

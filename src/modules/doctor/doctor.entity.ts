@@ -46,12 +46,12 @@ export class Doctor extends BaseEntity {
 	@Column()
 	isActive: boolean = true
 
-	@OneToMany(() => Email, (email) => email.clinic, {
+	@OneToMany(() => Email, (email) => email.doctor, {
 		cascade: true,
 	})
 	emails?: Email[]
 
-	@OneToMany(() => Phone, (phone) => phone.clinic, {
+	@OneToMany(() => Phone, (phone) => phone.doctor, {
 		cascade: true,
 	})
 	phones?: Phone[]

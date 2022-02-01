@@ -14,7 +14,7 @@ export class PhoneDto {
 	userType: UserType
 
 	@ApiProperty()
-	phone: number
+	phone: string
 
 	@ApiProperty()
 	areaCode: number = 971

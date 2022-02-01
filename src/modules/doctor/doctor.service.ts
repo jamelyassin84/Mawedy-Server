@@ -66,6 +66,20 @@ export class DoctorService {
 
 			await doctor.save()
 
+			await this.emailService.create({
+				doctor: doctor,
+				email: body.email,
+				userType: 'doctor',
+			})
+
+			await this.phoneService.create(
+				Object.assign({
+					doctor: doctor,
+					phone: body.phone,
+					userType: 'doctor',
+				}),
+			)
+
 			for (let schedule of body.workingSchedules) {
 				this.clinicDoctorWorkingScheduleService.create(
 					Object.assign({ data, doctor: doctor }, schedule),
@@ -76,14 +90,6 @@ export class DoctorService {
 				clinic: body.clinicID,
 				doctor: body.doctor,
 			})
-
-			await this.phoneService.create(
-				Object.assign({ ...body, doctor: doctor }),
-			)
-
-			await this.emailService.create(
-				Object.assign({ ...body, doctor: doctor }),
-			)
 
 			return this.findOne(doctor.id)
 		} catch (error) {
