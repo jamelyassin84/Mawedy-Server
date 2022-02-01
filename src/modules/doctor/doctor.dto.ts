@@ -7,15 +7,13 @@ import { Doctor } from '../doctor/doctor.entity'
 import { Patient } from '../patient/patient.entity'
 
 export class DoctorDto {
-	@IsNotEmpty()
 	@ApiProperty()
-	avatar: string | null = null
+	avatar?: string | null = null
 
 	@IsNotEmpty()
 	@ApiProperty()
 	name: string
 
-	@IsNotEmpty()
 	@ApiProperty()
 	title: string
 
@@ -34,6 +32,14 @@ export class DoctorDto {
 	@IsNotEmpty()
 	@ApiProperty()
 	about: string
+
+	@IsNotEmpty()
+	@ApiProperty()
+	phone: string
+
+	@IsNotEmpty()
+	@ApiProperty()
+	email: string
 
 	@IsNotEmpty()
 	@ApiProperty()

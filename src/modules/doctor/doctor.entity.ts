@@ -8,14 +8,17 @@ import {
 	PrimaryGeneratedColumn,
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { ClinicDoctorWorkingSchedule } from '../clinic-doctor-working-schedule/clinic-doctor-working-schedule.entity'
 
 @Entity()
 export class Doctor extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 
-	@Column()
-	avatar: string | null = null
+	@Column({
+		nullable: true,
+	})
+	avatar?: string | null = null
 
 	@Column()
 	name: string
@@ -45,6 +48,15 @@ export class Doctor extends BaseEntity {
 		onDelete: 'CASCADE',
 	})
 	clinic: Clinic
+
+	@OneToMany(
+		() => ClinicDoctorWorkingSchedule,
+		(clinicDoctorWorkingSchedule) => clinicDoctorWorkingSchedule.doctor,
+		{
+			onDelete: 'CASCADE',
+		},
+	)
+	clinicDoctorWorkingSchedule: ClinicDoctorWorkingSchedule[]
 
 	@CreateDateColumn({
 		type: 'timestamp',

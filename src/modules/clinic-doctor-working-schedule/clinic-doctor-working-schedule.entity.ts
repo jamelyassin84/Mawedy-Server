@@ -23,10 +23,14 @@ export class ClinicDoctorWorkingSchedule extends BaseEntity {
 	@Column()
 	isActive: boolean
 
-	@ManyToOne(() => Clinic, (clinic) => clinic.id)
+	@ManyToOne(() => Clinic, (clinic) => clinic.id, {
+		onDelete: 'CASCADE',
+	})
 	clinic: Clinic
 
-	@ManyToOne(() => Doctor, (doctor) => doctor.id)
+	@ManyToOne(() => Doctor, (doctor) => doctor.id, {
+		cascade: true,
+	})
 	doctor: Doctor
 
 	@CreateDateColumn({

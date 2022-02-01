@@ -65,7 +65,7 @@ export class DoctorController {
 	}
 
 	@UseInterceptors(
-		FilesInterceptor('photos', 10, {
+		FilesInterceptor('avatar', 1, {
 			storage: diskStorage({
 				destination: './public/uploads/clinic/photos/',
 				filename: editFileName,

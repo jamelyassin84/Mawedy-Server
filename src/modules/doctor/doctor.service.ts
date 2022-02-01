@@ -9,6 +9,7 @@ import { EmailsService } from '../email/email.service'
 import { PhonesService } from '../phone/phone.service'
 import { ClinicDoctorsService } from '../clinic-doctor/clinic-doctor.service'
 import { ROUTES } from 'src/routes/routes'
+import { ClinicDoctorWorkingScheduleService } from '../clinic-doctor-working-schedule/clinic-doctor-working-schedule.service'
 
 @Injectable()
 export class DoctorService {
@@ -16,6 +17,7 @@ export class DoctorService {
 		protected emailService: EmailsService,
 		protected phoneService: PhonesService,
 		protected clinicDoctorsService: ClinicDoctorsService,
+		protected clinicDoctorWorkingScheduleService: ClinicDoctorWorkingScheduleService,
 	) {}
 
 	async findAll(): Promise<Doctor[]> {
@@ -39,9 +41,10 @@ export class DoctorService {
 
 	async findOne(id: number): Promise<Doctor> {
 		try {
-			return await Doctor.findOne(id, {
-				relations: ['emails', 'phones', 'clinic'],
-			})
+			return await Doctor.findOne(id)
+			//  {
+			// 	relations: ['emails', 'phones', 'workingSchedules', 'clinic'],
+			// }
 		} catch (error) {
 			throw new NotFoundException('data might be moved or deleted.')
 		}
@@ -54,18 +57,27 @@ export class DoctorService {
 				clinic: body.clinicID,
 			}
 
-			await this.emailService.create(data)
-
-			await this.phoneService.create(data)
-
 			const doctor = Doctor.create(body) as any
 
 			await doctor.save()
 
-			await this.phoneService.create(data)
+			for (let schedule of body.workingSchedules) {
+				this.clinicDoctorWorkingScheduleService.create(
+					Object.assign({ data, doctor: doctor }, schedule),
+				)
+			}
+
+			await this.phoneService.create(
+				Object.assign({ ...body, doctor: doctor }),
+			)
+
+			await this.emailService.create(
+				Object.assign({ ...body, doctor: doctor }),
+			)
 
 			return this.findOne(doctor.id)
 		} catch (error) {
+			console.log(error)
 			throw new ServiceUnavailableException(
 				'Something went wrong. Please try again',
 			)
@@ -96,8 +108,7 @@ export class DoctorService {
 
 	async upload(body: any, files: Express.Multer.File[] = []): Promise<void> {
 		for (let file of files) {
-			await this.create({
-				clinic: body.id,
+			this.update(body.id, {
 				avatar:
 					process.env.API_URL +
 					ROUTES.DOCTOR +

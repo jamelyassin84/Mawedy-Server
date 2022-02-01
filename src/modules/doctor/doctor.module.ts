@@ -4,9 +4,15 @@ import { Module } from '@nestjs/common'
 import { DoctorService } from './doctor.service'
 import { DoctorController } from './doctor.controller'
 import { ClinicDoctorsModule } from '../clinic-doctor/clinic-doctor.module'
+import { ClinicDoctorWorkingScheduleModule } from '../clinic-doctor-working-schedule/clinic-doctor-working-schedule.module'
 
 @Module({
-	imports: [PhonesModule, EmailsModule, ClinicDoctorsModule, PhonesModule],
+	imports: [
+		EmailsModule,
+		PhonesModule,
+		ClinicDoctorsModule,
+		ClinicDoctorWorkingScheduleModule,
+	],
 	controllers: [DoctorController],
 	providers: [DoctorService],
 })
