@@ -60,8 +60,8 @@ export class DoctorController {
 	}
 
 	@Get('clinic/:id')
-	findAllBtyClinic(@Param('id') id: string): Promise<Doctor> {
-		return this.service.findOne(+id)
+	findAllBtyClinic(@Param('id') id: string): Promise<Doctor[]> {
+		return this.service.findAllByClinic(+id)
 	}
 
 	@UseInterceptors(

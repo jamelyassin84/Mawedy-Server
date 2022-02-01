@@ -3,12 +3,14 @@ import {
 	BaseEntity,
 	Column,
 	Entity,
-	ManyToOne,
 	OneToMany,
 	PrimaryGeneratedColumn,
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { ClinicDoctorWorkingSchedule } from '../clinic-doctor-working-schedule/clinic-doctor-working-schedule.entity'
+import { Email } from '../email/email.entity'
+import { Phone } from '../phone/phone.entity'
+import { ClinicDoctor } from '../clinic-doctor/clinic-doctor.entity'
 
 @Entity()
 export class Doctor extends BaseEntity {
@@ -44,10 +46,15 @@ export class Doctor extends BaseEntity {
 	@Column()
 	isActive: boolean = true
 
-	@OneToMany(() => Clinic, (clinic) => clinic.id, {
-		onDelete: 'CASCADE',
+	@OneToMany(() => Email, (email) => email.clinic, {
+		cascade: true,
 	})
-	clinic: Clinic
+	emails?: Email[]
+
+	@OneToMany(() => Phone, (phone) => phone.clinic, {
+		cascade: true,
+	})
+	phones?: Phone[]
 
 	@OneToMany(
 		() => ClinicDoctorWorkingSchedule,
@@ -56,7 +63,12 @@ export class Doctor extends BaseEntity {
 			onDelete: 'CASCADE',
 		},
 	)
-	clinicDoctorWorkingSchedule: ClinicDoctorWorkingSchedule[]
+	clinicDoctorWorkingSchedules: ClinicDoctorWorkingSchedule[]
+
+	@OneToMany(() => ClinicDoctor, (clinicDoctor) => clinicDoctor.doctors, {
+		onDelete: 'CASCADE',
+	})
+	clinicDoctors: ClinicDoctor[]
 
 	@CreateDateColumn({
 		type: 'timestamp',

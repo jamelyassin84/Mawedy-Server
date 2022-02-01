@@ -21,20 +21,25 @@ export class DoctorService {
 	) {}
 
 	async findAll(): Promise<Doctor[]> {
-		return await Doctor.find({
-			relations: ['emails', 'phones', 'clinic'],
-		})
-	}
-
-	async findAllBtyClinic(id: number): Promise<Doctor> {
 		try {
-			return await Doctor.findOne({
-				where: {
-					clinic: id,
-				},
-				relations: ['emails', 'phones', 'clinic'],
+			return await Doctor.find({
+				relations: [
+					'emails',
+					'phones',
+					'clinicDoctorWorkingSchedules',
+					'clinicDoctors',
+				],
 			})
 		} catch (error) {
+			console.error(error)
+		}
+	}
+
+	async findAllByClinic(id: number): Promise<any[]> {
+		try {
+			return await this.clinicDoctorsService.findAllByClinic(id)
+		} catch (error) {
+			console.error(error)
 			throw new NotFoundException('data might be moved or deleted.')
 		}
 	}
@@ -66,6 +71,11 @@ export class DoctorService {
 					Object.assign({ data, doctor: doctor }, schedule),
 				)
 			}
+
+			this.clinicDoctorsService.create({
+				clinic: body.clinicID,
+				doctor: body.doctor,
+			})
 
 			await this.phoneService.create(
 				Object.assign({ ...body, doctor: doctor }),

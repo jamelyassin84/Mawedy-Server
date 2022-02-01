@@ -18,6 +18,7 @@ import { Email } from '../email/email.entity'
 import { Device } from '../device/device.entity'
 import { ClinicAccount } from '../clinic-account/clinic-account.entity'
 import { ClinicAvatar } from '../clinic-avatar/clinic-avatar.entity'
+import { Doctor } from '../doctor/doctor.entity'
 
 @Entity()
 export class Clinic extends BaseEntity {
@@ -79,6 +80,9 @@ export class Clinic extends BaseEntity {
 		onDelete: 'CASCADE',
 	})
 	approver: Clinic
+
+	@ManyToOne(() => Doctor, (doctor) => doctor.id, {})
+	doctor: Doctor
 
 	@OneToMany(() => Email, (email) => email.clinic, {
 		cascade: true,

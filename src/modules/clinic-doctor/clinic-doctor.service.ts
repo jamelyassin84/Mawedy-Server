@@ -18,6 +18,20 @@ export class ClinicDoctorsService {
 		return data
 	}
 
+	async findAllByClinic(id: number): Promise<ClinicDoctor[]> {
+		try {
+			return await ClinicDoctor.find({
+				where: {
+					clinic: id,
+				},
+				relations: ['doctors', 'clinic'],
+			})
+		} catch (error) {
+			console.error(error)
+			throw new NotFoundException('data might be moved or deleted.')
+		}
+	}
+
 	async findOne(id: number): Promise<ClinicDoctor> {
 		try {
 			const data = await ClinicDoctor.findOneOrFail(id)
