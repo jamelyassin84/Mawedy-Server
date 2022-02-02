@@ -68,9 +68,17 @@ export class ClinicDto {
 	@ApiProperty()
 	isRead?: boolean = false
 
+	@ApiProperty()
 	files?: FormData[]
+
 	avatar?: FormData[]
+
+	@ApiProperty()
 	clinicId?: number
+
+	@ApiProperty()
 	approver?: Admin
+
+	@ApiProperty()
 	users?: any[]
 }

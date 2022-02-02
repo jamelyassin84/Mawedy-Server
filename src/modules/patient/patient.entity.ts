@@ -30,6 +30,18 @@ export class Patient extends BaseEntity {
 	@Column()
 	religion: string
 
+	@Column()
+	dob: string
+
+	@Column()
+	city: string
+
+	@Column()
+	country: string
+
+	@Column()
+	age: string
+
 	@CreateDateColumn({
 		type: 'timestamp',
 		default: () => 'CURRENT_TIMESTAMP(6)',

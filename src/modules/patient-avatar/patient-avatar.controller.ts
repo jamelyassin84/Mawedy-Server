@@ -1,20 +1,20 @@
-import { PatientAvatarDto } from './patient-avatar.dto'
-import { PatientAvatar } from './patient-avatar.enitity'
-import { PatientAvatarService } from './patient-avatar.service'
-
 import {
 	Body,
 	Controller,
-	Delete,
 	Get,
 	Param,
-	Patch,
 	Post,
-	UseGuards,
+	Res,
+	UploadedFiles,
+	UseInterceptors,
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiHeaders, ApiTags } from '@nestjs/swagger'
-import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard'
 import { resolveAPI, ROUTES } from 'src/routes/routes'
+import { FilesInterceptor } from '@nestjs/platform-express'
+import { diskStorage } from 'multer'
+import { editFileName, imageFileFilter } from 'src/helpers/helpers'
+import { Observable, of } from 'rxjs'
+import { PatientAvatarService } from './patient-avatar.service'
 
 @ApiBearerAuth()
 @ApiHeaders([
@@ -27,36 +27,31 @@ import { resolveAPI, ROUTES } from 'src/routes/routes'
 @Controller(resolveAPI(ROUTES.PATIENT_AVATARS))
 export class PatientAvatarController {
 	constructor(private readonly service: PatientAvatarService) {}
-	@Get()
-	@UseGuards(JwtAuthGuard)
-	async findAll(): Promise<PatientAvatar[]> {
-		return this.service.findAll()
+
+	@UseInterceptors(
+		FilesInterceptor('avatar', 1, {
+			storage: diskStorage({
+				destination: './public/uploads/patient/avatars/',
+				filename: editFileName,
+			}),
+			fileFilter: imageFileFilter,
+		}),
+	)
+	@Post('upload')
+	async setAvatar(
+		@Body() body: any,
+		@UploadedFiles() files: Express.Multer.File[],
+	): Promise<void> {
+		console.log(files)
+		this.service.upload(body, files)
 	}
 
-	@Get(':id')
-	@UseGuards(JwtAuthGuard)
-	findOne(@Param('id') id: string): Promise<PatientAvatar> {
-		return this.service.findOne(+id)
-	}
-
-	@Post()
-	// @UseGuards(JwtAuthGuard)
-	create(@Body() body: PatientAvatarDto): Promise<PatientAvatar> {
-		return this.service.create(body)
-	}
-
-	@Patch(':id')
-	@UseGuards(JwtAuthGuard)
-	async update(
-		@Param() param,
-		@Body() body: PatientAvatarDto,
-	): Promise<PatientAvatar> {
-		return this.service.update(param.id, body)
-	}
-
-	@Delete(':id')
-	@UseGuards(JwtAuthGuard)
-	async remove(@Param() param): Promise<PatientAvatar> {
-		return this.service.remove(+param.id)
+	@Get('photo/:path')
+	getPhoto(@Param('path') path, @Res() res): Observable<Object> {
+		return of(
+			res.sendFile(
+				`${process.cwd()}/public/uploads/patient/avatars/${path}`,
+			),
+		)
 	}
 }

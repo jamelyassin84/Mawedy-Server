@@ -7,5 +7,9 @@ export class PatientAvatarDto {
 	@ApiProperty()
 	url: string
 
+	@ApiProperty()
 	patient: Patient
+
+	@ApiProperty()
+	avatar?: FormData[]
 }

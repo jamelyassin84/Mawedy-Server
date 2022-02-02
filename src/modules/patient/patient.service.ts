@@ -6,22 +6,24 @@ import {
 	ServiceUnavailableException,
 } from '@nestjs/common'
 import { Patient } from './patient.entity'
+import { EmailsService } from '../email/email.service'
+import { PhonesService } from '../phone/phone.service'
 
 @Injectable()
 export class PatientService {
-	constructor() {}
+	constructor(
+		protected emailService: EmailsService,
+		protected phoneService: PhonesService,
+	) {}
 
 	async findAll(): Promise<Patient[]> {
-		const patients = await Patient.find({
-			relations: ['roles'],
-		})
+		const patients = await Patient.find()
 		return patients
 	}
 
 	async findOne(id: number): Promise<Patient> {
 		try {
-			const patient = await Patient.findOneOrFail(id)
-			return patient
+			return await Patient.findOneOrFail(id)
 		} catch (error) {
 			throw new NotFoundException('patient might be moved or deleted.')
 		}
@@ -30,12 +32,25 @@ export class PatientService {
 	async create(body: PatientDto | any): Promise<Patient> {
 		try {
 			const patient = Patient.create(body) as any
+
 			await patient.save()
-			return await Patient.findOne({
-				where: { id: patient.id },
-				relations: ['roles', 'emails', 'phones', 'devices'],
+
+			await this.emailService.create({
+				patient: patient,
+				email: body.email,
+				userType: 'doctor',
 			})
+
+			await this.phoneService.create(
+				Object.assign({
+					patient: patient,
+					phone: body.phone,
+					userType: 'doctor',
+				}),
+			)
+			return patient
 		} catch (error) {
+			console.log(error)
 			throw new ServiceUnavailableException(
 				'Something went wrong. Please try again',
 			)

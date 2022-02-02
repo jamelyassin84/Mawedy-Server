@@ -14,8 +14,6 @@ export class PatientDto extends BaseEntity {
 	first: string
 
 	@ApiProperty()
-	@IsNotEmpty()
-	@IsDefined()
 	middle: string
 
 	@ApiProperty()
@@ -26,14 +24,36 @@ export class PatientDto extends BaseEntity {
 	@ApiProperty()
 	ext: string
 
+	@IsNotEmpty()
 	@ApiProperty()
 	address: string
 
+	@IsNotEmpty()
 	@ApiProperty()
 	sex: 'M' | 'F'
 
 	@ApiProperty()
 	religion: string
-}
 
+	@IsNotEmpty()
+	@ApiProperty()
+	dob: string
+
+	@ApiProperty()
+	city: string
+
+	@ApiProperty()
+	country: string
+
+	@IsNotEmpty()
+	@ApiProperty()
+	phone: string
+
+	@IsNotEmpty()
+	@ApiProperty()
+	email: string
+
+	@ApiProperty()
+	age: string
+}
 export type PatientType = 'walk-in' | 'app'

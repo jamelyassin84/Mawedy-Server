@@ -27,31 +27,26 @@ import { Patient } from './patient.entity'
 export class PatientController {
 	constructor(private readonly service: PatientService) {}
 	@Get()
-	@UseGuards(JwtAuthGuard)
 	async findAll(): Promise<Patient[]> {
 		return this.service.findAll()
 	}
 
 	@Get(':id')
-	@UseGuards(JwtAuthGuard)
 	findOne(@Param('id') id: string): Promise<Patient> {
 		return this.service.findOne(+id)
 	}
 
 	@Post()
-	// @UseGuards(JwtAuthGuard)
 	create(@Body() body: PatientDto): Promise<Patient> {
 		return this.service.create(body)
 	}
 
 	@Patch(':id')
-	@UseGuards(JwtAuthGuard)
 	async update(@Param() param, @Body() body: PatientDto): Promise<Patient> {
 		return this.service.update(param.id, body)
 	}
 
 	@Delete(':id')
-	@UseGuards(JwtAuthGuard)
 	async remove(@Param() param): Promise<Patient> {
 		return this.service.remove(+param.id)
 	}
