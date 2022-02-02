@@ -10,6 +10,7 @@ import { PhonesService } from '../phone/phone.service'
 import { ClinicDoctorsService } from '../clinic-doctor/clinic-doctor.service'
 import { ROUTES } from 'src/routes/routes'
 import { ClinicDoctorWorkingScheduleService } from '../clinic-doctor-working-schedule/clinic-doctor-working-schedule.service'
+import { getConnection, getRepository } from 'typeorm'
 
 @Injectable()
 export class DoctorService {
@@ -132,5 +133,16 @@ export class DoctorService {
 					file.filename,
 			})
 		}
+	}
+
+	async search(body: { keyword: string }): Promise<Doctor[]> {
+		if (body.keyword === '') {
+			return []
+		}
+		return await getConnection().query(
+			`SELECT * FROM doctor
+            WHERE name LIKE '%${body.keyword}%' 
+            `,
+		)
 	}
 }

@@ -89,4 +89,9 @@ export class DoctorController {
 			),
 		)
 	}
+
+	@Post('search')
+	search(@Body() body: { keyword: string }): Promise<Doctor[]> {
+		return this.service.search(body)
+	}
 }
