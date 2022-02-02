@@ -46,7 +46,7 @@ export class PatientAvatarController {
 		this.service.upload(body, files)
 	}
 
-	@Get('photo/:path')
+	@Get('avatars/:path')
 	getPhoto(@Param('path') path, @Res() res): Observable<Object> {
 		return of(
 			res.sendFile(

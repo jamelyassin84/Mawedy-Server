@@ -29,16 +29,7 @@ export class ClinicPatientService {
 	async create(body: ClinicPatientDto | any): Promise<ClinicPatient> {
 		try {
 			const data = ClinicPatient.create(body) as any
-			await data.save()
-			const params = {
-				data: data as any,
-				...body,
-				isActive: true,
-			}
-			return await ClinicPatient.findOne({
-				where: { id: params.id },
-				relations: ['emails', 'phones', 'devices'],
-			})
+			return data.save()
 		} catch (error) {
 			throw new ServiceUnavailableException(
 				'Something went wrong. Please try again',

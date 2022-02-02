@@ -1,3 +1,4 @@
+import { ClinicPatientService } from './../clinic-patient/clinic-patient.service'
 import { PatientDto } from './patient.dto'
 
 import {
@@ -14,16 +15,21 @@ export class PatientService {
 	constructor(
 		protected emailService: EmailsService,
 		protected phoneService: PhonesService,
+		protected clinicPatientService: ClinicPatientService,
 	) {}
 
 	async findAll(): Promise<Patient[]> {
-		const patients = await Patient.find()
+		const patients = await Patient.find({
+			relations: ['phones', 'emails', 'avatars', 'clinicPatient'],
+		})
 		return patients
 	}
 
 	async findOne(id: number): Promise<Patient> {
 		try {
-			return await Patient.findOneOrFail(id)
+			return await Patient.findOneOrFail(id, {
+				relations: ['phones', 'emails', 'avatars', 'clinicPatient'],
+			})
 		} catch (error) {
 			throw new NotFoundException('patient might be moved or deleted.')
 		}
@@ -48,6 +54,12 @@ export class PatientService {
 					userType: 'doctor',
 				}),
 			)
+
+			this.clinicPatientService.create({
+				patient: patient,
+				clinic: body.clinic,
+			})
+
 			return patient
 		} catch (error) {
 			console.log(error)

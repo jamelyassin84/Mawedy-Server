@@ -1,5 +1,15 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import {
+	BaseEntity,
+	Column,
+	Entity,
+	OneToMany,
+	PrimaryGeneratedColumn,
+} from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { ClinicPatient } from '../clinic-patient/clinic-patient.entity'
+import { Email } from '../email/email.entity'
+import { PatientAvatar } from '../patient-avatar/patient-avatar.enitity'
+import { Phone } from '../phone/phone.entity'
 
 @Entity()
 export class Patient extends BaseEntity {
@@ -41,6 +51,26 @@ export class Patient extends BaseEntity {
 
 	@Column()
 	age: string
+
+	@OneToMany(() => Email, (email) => email.patient, {
+		cascade: true,
+	})
+	emails?: Email[]
+
+	@OneToMany(() => Phone, (phone) => phone.patient, {
+		cascade: true,
+	})
+	phones?: Phone[]
+
+	@OneToMany(() => PatientAvatar, (photo) => photo.patient, {
+		cascade: true,
+	})
+	avatars?: PatientAvatar[]
+
+	@OneToMany(() => ClinicPatient, (clinicPatient) => clinicPatient.patient, {
+		cascade: true,
+	})
+	clinicPatient: ClinicPatient
 
 	@CreateDateColumn({
 		type: 'timestamp',

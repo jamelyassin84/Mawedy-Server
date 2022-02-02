@@ -20,10 +20,14 @@ export class ClinicPatient extends BaseEntity {
 	@Column()
 	isValued: boolean
 
-	@ManyToOne(() => Clinic, (clinic) => clinic.id)
+	@ManyToOne(() => Clinic, (clinic) => clinic.id, {
+		onDelete: 'CASCADE',
+	})
 	clinic: Clinic
 
-	@ManyToOne(() => Patient, (patient) => patient.id)
+	@ManyToOne(() => Patient, (patient) => patient.id, {
+		onDelete: 'CASCADE',
+	})
 	patient: Patient
 
 	@CreateDateColumn({

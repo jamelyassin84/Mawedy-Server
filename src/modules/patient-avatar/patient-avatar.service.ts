@@ -11,7 +11,7 @@ import { ROUTES } from 'src/routes/routes'
 export class PatientAvatarService {
 	constructor() {}
 
-	async create(body: PatientAvatarDto | any): Promise<PatientAvatar> {
+	async create(body: any): Promise<PatientAvatar> {
 		try {
 			const data = PatientAvatar.create(body) as any
 			await data.save()
@@ -36,13 +36,14 @@ export class PatientAvatarService {
 	}
 
 	async upload(body: any, files: Express.Multer.File[] = []): Promise<void> {
+		console.log(body.id)
 		for (let file of files) {
 			await this.create({
 				patient: body.id,
 				url:
 					process.env.API_URL +
 					ROUTES.PATIENT_AVATARS +
-					'/photo/' +
+					'/avatars/' +
 					file.filename,
 			})
 		}
