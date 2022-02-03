@@ -28,19 +28,16 @@ export class ClinicMedicalServiceController {
 	constructor(private readonly service: ClinicMedicalServiceService) {}
 
 	@Get()
-	@UseGuards(JwtAuthGuard)
 	async findAll(): Promise<ClinicMedicalService[]> {
 		return this.service.findAll()
 	}
 
 	@Get(':id')
-	@UseGuards(JwtAuthGuard)
 	findOne(@Param('id') id: string): Promise<ClinicMedicalService> {
 		return this.service.findOne(+id)
 	}
 
 	@Post()
-	// @UseGuards(JwtAuthGuard)
 	create(
 		@Body() body: ClinicMedicalServiceDto,
 	): Promise<ClinicMedicalService> {
@@ -48,7 +45,6 @@ export class ClinicMedicalServiceController {
 	}
 
 	@Patch(':id')
-	@UseGuards(JwtAuthGuard)
 	async update(
 		@Param() param,
 		@Body() body: ClinicMedicalServiceDto,
@@ -60,5 +56,10 @@ export class ClinicMedicalServiceController {
 	@UseGuards(JwtAuthGuard)
 	async remove(@Param() param): Promise<ClinicMedicalService> {
 		return this.service.remove(+param.id)
+	}
+
+	@Get('department/:id')
+	async getByDepartment(@Param() param): Promise<ClinicMedicalService[]> {
+		return this.service.getByDepartment(+param.id)
 	}
 }

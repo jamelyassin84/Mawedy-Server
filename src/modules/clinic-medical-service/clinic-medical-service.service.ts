@@ -89,4 +89,17 @@ export class ClinicMedicalServiceService {
 			)
 		}
 	}
+
+	async getByDepartment(id: number): Promise<ClinicMedicalService[]> {
+		try {
+			return await ClinicMedicalService.find({
+				where: {
+					department: id,
+				},
+				relations: ['images'],
+			})
+		} catch (error) {
+			return []
+		}
+	}
 }

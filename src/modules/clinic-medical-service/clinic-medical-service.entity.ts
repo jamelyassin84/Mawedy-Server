@@ -4,12 +4,14 @@ import {
 	Column,
 	Entity,
 	ManyToOne,
+	OneToMany,
 	PrimaryGeneratedColumn,
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Clinic } from '../clinic/clinic.entity'
 import { Doctor } from '../doctor/doctor.entity'
 import { ClinicDepartment } from '../clinic-department/clinic-department.enitiy'
+import { ClinicMedicalServiceImage } from '../clinic-medical-service-image/clinic-medical-service-image.entity'
 
 @Entity()
 export class ClinicMedicalService extends BaseEntity {
@@ -32,6 +34,12 @@ export class ClinicMedicalService extends BaseEntity {
 
 	@ManyToOne(() => ClinicDepartment, (department) => department.id)
 	department: ClinicDepartment
+
+	@OneToMany(
+		() => ClinicMedicalServiceImage,
+		(image) => image.clinicMedicalService,
+	)
+	images: ClinicMedicalServiceImage
 
 	@CreateDateColumn({
 		type: 'timestamp',

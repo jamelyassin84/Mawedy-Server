@@ -27,7 +27,6 @@ export class ClinicDepartmentsController {
 	constructor(private readonly service: ClinicDepartmentsService) {}
 
 	@Get()
-	@UseGuards(JwtAuthGuard)
 	async findAll(): Promise<ClinicDepartment[]> {
 		return this.service.findAll()
 	}
@@ -38,7 +37,6 @@ export class ClinicDepartmentsController {
 	}
 
 	@Post()
-	// @UseGuards(JwtAuthGuard)
 	create(@Body() body: ClinicDepartmentDto): Promise<ClinicDepartment> {
 		return this.service.create(body)
 	}
