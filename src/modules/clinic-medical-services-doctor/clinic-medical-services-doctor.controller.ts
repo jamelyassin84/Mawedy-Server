@@ -3,9 +3,7 @@ import {
 	Body,
 	Controller,
 	Delete,
-	Get,
 	Param,
-	Patch,
 	Post,
 	UseGuards,
 } from '@nestjs/common'
@@ -29,33 +27,11 @@ export class ClinicMedicalServicesDoctorsController {
 		private readonly service: ClinicMedicalServicesDoctorsService,
 	) {}
 
-	@Get()
-	@UseGuards(JwtAuthGuard)
-	async findAll(): Promise<ClinicMedicalServiceDoctor[]> {
-		return this.service.findAll()
-	}
-
-	@Get(':id')
-	@UseGuards(JwtAuthGuard)
-	findOne(@Param('id') id: string): Promise<ClinicMedicalServiceDoctor> {
-		return this.service.findOne(+id)
-	}
-
 	@Post()
-	// @UseGuards(JwtAuthGuard)
 	create(
 		@Body() body: ClinicMedicalServiceDoctorDto,
 	): Promise<ClinicMedicalServiceDoctor> {
 		return this.service.create(body)
-	}
-
-	@Patch(':id')
-	@UseGuards(JwtAuthGuard)
-	async update(
-		@Param() param,
-		@Body() body: ClinicMedicalServiceDoctorDto,
-	): Promise<ClinicMedicalServiceDoctor> {
-		return this.service.update(param.id, body)
 	}
 
 	@Delete(':id')

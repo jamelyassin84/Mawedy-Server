@@ -25,20 +25,13 @@ export class ClinicMedicalService extends BaseEntity {
 	@Column()
 	isActive: boolean
 
-	@ManyToOne(() => Clinic, (clinic) => clinic.id)
+	@ManyToOne(() => Clinic, (clinic) => clinic.id, {
+		onDelete: 'CASCADE',
+	})
 	clinic: Clinic
 
-	@ManyToOne(() => Doctor, (doctor) => doctor.id)
-	doctor: Doctor
-
-	@ManyToOne(() => ClinicServiceEntity, (clinicService) => clinicService.id)
-	clinicService: ClinicServiceEntity
-
-	@ManyToOne(
-		() => ClinicDepartment,
-		(clinicDepartment) => clinicDepartment.id,
-	)
-	clinicDepartment: ClinicDepartment
+	@ManyToOne(() => ClinicDepartment, (department) => department.id)
+	department: ClinicDepartment
 
 	@CreateDateColumn({
 		type: 'timestamp',

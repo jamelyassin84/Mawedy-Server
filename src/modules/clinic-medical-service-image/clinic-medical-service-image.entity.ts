@@ -19,24 +19,12 @@ export class ClinicMedicalServiceImage extends BaseEntity {
 	@Column()
 	url: string
 
-	@Column()
-	isActive: boolean
-
-	@ManyToOne(() => Clinic, (clinic) => clinic.id)
-	clinic: Clinic
-
-	@ManyToOne(() => ClinicServiceEntity, (clinicService) => clinicService.id)
-	clinicService: ClinicServiceEntity
-
-	@ManyToOne(
-		() => ClinicDepartment,
-		(clinicDepartment) => clinicDepartment.id,
-	)
-	clinicDepartment: ClinicDepartment
-
 	@ManyToOne(
 		() => ClinicMedicalService,
 		(clinicMedicalService) => clinicMedicalService.id,
+		{
+			onDelete: 'CASCADE',
+		},
 	)
 	clinicMedicalService: ClinicMedicalService
 

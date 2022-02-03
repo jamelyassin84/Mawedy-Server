@@ -1,3 +1,4 @@
+import { ClinicDepartment } from './../clinic-department/clinic-department.enitiy'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty } from 'class-validator'
 import { Clinic } from '../clinic/clinic.entity'
@@ -13,19 +14,11 @@ export class ClinicMedicalServiceDto {
 
 	@IsNotEmpty()
 	@ApiProperty()
-	clinicServiceId: number
-
-	@IsNotEmpty()
-	@ApiProperty()
 	description: string
 
 	@IsNotEmpty()
 	@ApiProperty()
-	doctorId: number
+	department: ClinicDepartment
 
-	@IsNotEmpty()
-	@ApiProperty()
-	clinicDepartmentId: number
-
-	clinic?: Clinic
+	doctors?: any
 }

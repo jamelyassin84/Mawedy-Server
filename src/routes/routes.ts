@@ -34,9 +34,9 @@ export enum ROUTES {
 	CLINIC_DEPARTMENT = 'clinic-department',
 	CLINIC_DEPARTMENT_DOCTORS = 'clinic-department-doctor',
 	CLINIC_DOCTORS = 'clinic-doctor',
-	CLINIC_MEDICAL_SERVICES = 'clinic-medical=service',
-	CLINIC_MEDICAL_SERVICES_IMAGES = 'clinic-medical=service-image',
-	CLINIC_MEDICAL_SERVICES_DOCTORS = 'clinic-medical=service-doctor',
+	CLINIC_MEDICAL_SERVICES = 'clinic-medical-service',
+	CLINIC_MEDICAL_SERVICES_IMAGES = 'clinic-medical-service-image',
+	CLINIC_MEDICAL_SERVICES_DOCTORS = 'clinic-medical-service-doctor',
 	CLINIC_DOCTORS_WORKING_SCHEDULES = 'clinic-doctors-working-schedule',
 
 	DOCTOR = 'doctor',

@@ -23,21 +23,26 @@ export class ClinicMedicalServiceDoctor extends BaseEntity {
 	@ManyToOne(() => Clinic, (clinic) => clinic.id)
 	clinic: Clinic
 
-	@ManyToOne(() => Doctor, (doctor) => doctor.id)
+	@ManyToOne(() => Doctor, (doctor) => doctor.id, {
+		onDelete: 'CASCADE',
+	})
 	doctor: Doctor
-
-	@ManyToOne(() => ClinicServiceEntity, (clinicService) => clinicService.id)
-	clinicService: ClinicServiceEntity
 
 	@ManyToOne(
 		() => ClinicMedicalService,
 		(clinicMedicalService) => clinicMedicalService.id,
+		{
+			onDelete: 'CASCADE',
+		},
 	)
 	clinicMedicalService: ClinicMedicalService
 
 	@ManyToOne(
 		() => ClinicDepartment,
 		(clinicDepartment) => clinicDepartment.id,
+		{
+			onDelete: 'CASCADE',
+		},
 	)
 	clinicDepartment: ClinicDepartment
 

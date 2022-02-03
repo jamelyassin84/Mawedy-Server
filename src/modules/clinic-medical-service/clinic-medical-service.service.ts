@@ -1,3 +1,4 @@
+import { ClinicMedicalServicesDoctorsService } from './../clinic-medical-services-doctor/clinic-medical-services-doctor.service'
 import { ClinicMedicalServiceDto } from './clinic-medical-service.dto'
 import { ClinicMedicalService } from './clinic-medical-service.entity'
 import {
@@ -5,15 +6,17 @@ import {
 	NotFoundException,
 	ServiceUnavailableException,
 } from '@nestjs/common'
+import { ClinicDepartmentDoctorService } from '../clinic-department-doctor/clinic-department-doctor.service'
 
 @Injectable()
 export class ClinicMedicalServiceService {
-	constructor() {}
+	constructor(
+		private clinicMedicalServicesDoctorsService: ClinicMedicalServicesDoctorsService,
+		private clinicDepartmentDoctorService: ClinicDepartmentDoctorService,
+	) {}
 
 	async findAll(): Promise<ClinicMedicalService[]> {
-		const data = await ClinicMedicalService.find({
-			relations: ['emails', 'phones', 'devices'],
-		})
+		const data = await ClinicMedicalService.find()
 		return data
 	}
 
@@ -30,17 +33,30 @@ export class ClinicMedicalServiceService {
 		body: ClinicMedicalServiceDto | any,
 	): Promise<ClinicMedicalService> {
 		try {
-			const data = ClinicMedicalService.create(body) as any
-			await data.save()
-			const params = {
-				data: data as any,
+			const medicalService = ClinicMedicalService.create(body) as any
+
+			const data = {
 				...body,
 				isActive: true,
+				department: body.department,
+				clinic: body.clinic,
 			}
-			return await ClinicMedicalService.findOne({
-				where: { id: params.id },
-				relations: ['emails', 'phones', 'devices'],
-			})
+			await medicalService.save()
+
+			for (let doctor of body.doctors) {
+				await this.clinicMedicalServicesDoctorsService.create({
+					clinic: body.clinic,
+					clinicDepartment: body.department,
+					clinicMedicalService: medicalService,
+					doctor: doctor,
+				})
+				await this.clinicDepartmentDoctorService.create({
+					clinic: body.clinic,
+					doctor: doctor,
+				})
+			}
+
+			return medicalService
 		} catch (error) {
 			throw new ServiceUnavailableException(
 				'Something went wrong. Please try again',
