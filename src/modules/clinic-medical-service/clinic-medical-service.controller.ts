@@ -53,7 +53,6 @@ export class ClinicMedicalServiceController {
 	}
 
 	@Delete(':id')
-	@UseGuards(JwtAuthGuard)
 	async remove(@Param() param): Promise<ClinicMedicalService> {
 		return this.service.remove(+param.id)
 	}
@@ -61,5 +60,12 @@ export class ClinicMedicalServiceController {
 	@Get('department/:id')
 	async getByDepartment(@Param() param): Promise<ClinicMedicalService[]> {
 		return this.service.getByDepartment(+param.id)
+	}
+
+	@Post('search')
+	search(
+		@Body() body: { keyword: string; department: string },
+	): Promise<ClinicMedicalService[]> {
+		return this.service.search(body)
 	}
 }

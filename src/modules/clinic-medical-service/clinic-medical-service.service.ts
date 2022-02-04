@@ -1,3 +1,4 @@
+import { getRepository } from 'typeorm'
 import { ClinicMedicalServicesDoctorsService } from './../clinic-medical-services-doctor/clinic-medical-services-doctor.service'
 import { ClinicMedicalServiceDto } from './clinic-medical-service.dto'
 import { ClinicMedicalService } from './clinic-medical-service.entity'
@@ -101,5 +102,27 @@ export class ClinicMedicalServiceService {
 		} catch (error) {
 			return []
 		}
+	}
+
+	async search(body: {
+		keyword: string
+		department: string
+	}): Promise<ClinicMedicalService[]> {
+		if (body.keyword === '') {
+			return []
+		}
+
+		return await getRepository(ClinicMedicalService)
+			.createQueryBuilder('service')
+			.leftJoinAndSelect('service.images', 'images')
+			.leftJoinAndSelect('service.department', 'department')
+			.where('service.name like :keyword', {
+				keyword: `%${body.keyword}%`,
+			})
+			.where('department.id = :id', {
+				id: body.department,
+			})
+			.orderBy('service.name', 'DESC')
+			.getMany()
 	}
 }

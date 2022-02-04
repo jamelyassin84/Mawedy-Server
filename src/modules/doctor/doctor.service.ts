@@ -135,14 +135,41 @@ export class DoctorService {
 		}
 	}
 
-	async search(body: { keyword: string }): Promise<Doctor[]> {
-		if (body.keyword === '') {
+	async search(body: {
+		keyword: string
+		service?: number
+		department?: number
+	}): Promise<Doctor[]> {
+		const { keyword, service, department } = body
+
+		if (keyword === '') {
 			return []
 		}
-		return await getConnection().query(
-			`SELECT * FROM doctor
-            WHERE name LIKE '%${body.keyword}%' 
-            `,
-		)
+
+		let builder = getRepository(Doctor)
+			.createQueryBuilder('doctor')
+
+			.leftJoinAndSelect('doctor.departmentDoctors', 'department')
+
+			.leftJoinAndSelect('doctor.serviceDoctors', 'service')
+
+		if (service !== undefined) {
+			builder.where('service.id = :service', {
+				service: service,
+			})
+		}
+
+		if (department !== undefined) {
+			builder.where('department.id = :department', {
+				department: department,
+			})
+		}
+
+		return await builder
+			.orderBy('doctor.name', 'DESC')
+			.where('doctor.name like :keyword', {
+				keyword: `%${keyword}%`,
+			})
+			.getMany()
 	}
 }

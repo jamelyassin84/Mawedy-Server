@@ -114,13 +114,13 @@ export class PatientService {
 			.leftJoinAndSelect('patients.avatars', 'avatars')
 			.leftJoinAndSelect('avatars.patient', 'patient')
 			.where('patients.first like :keyword', {
-				keyword: '%' + body.keyword + '%',
+				keyword: `%${body.keyword}%`,
 			})
 			.orWhere('patients.last like :keyword', {
-				keyword: '%' + body.keyword + '%',
+				keyword: `%${body.keyword}%`,
 			})
 			.orWhere('patients.middle like :keyword', {
-				keyword: '%' + body.keyword + '%',
+				keyword: `%${body.keyword}%`,
 			})
 			.orderBy('patients.first', 'DESC')
 			.getMany()

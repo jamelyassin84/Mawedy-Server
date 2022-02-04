@@ -1,8 +1,10 @@
+import { ClinicDepartmentDoctor } from './../clinic-department-doctor/clinic-department-doctor.entity'
 import { Clinic } from './../clinic/clinic.entity'
 import {
 	BaseEntity,
 	Column,
 	Entity,
+	ManyToOne,
 	OneToMany,
 	PrimaryGeneratedColumn,
 } from 'typeorm'
@@ -11,6 +13,8 @@ import { ClinicDoctorWorkingSchedule } from '../clinic-doctor-working-schedule/c
 import { Email } from '../email/email.entity'
 import { Phone } from '../phone/phone.entity'
 import { ClinicDoctor } from '../clinic-doctor/clinic-doctor.entity'
+import { ClinicMedicalService } from '../clinic-medical-service/clinic-medical-service.entity'
+import { ClinicMedicalServiceDoctor } from '../clinic-medical-services-doctor/clinic-medical-services-doctor.entity'
 
 @Entity()
 export class Doctor extends BaseEntity {
@@ -64,6 +68,24 @@ export class Doctor extends BaseEntity {
 		},
 	)
 	clinicDoctorWorkingSchedules: ClinicDoctorWorkingSchedule[]
+
+	@ManyToOne(
+		() => ClinicMedicalServiceDoctor,
+		(serviceDoctors) => serviceDoctors.doctor,
+		{
+			onDelete: 'CASCADE',
+		},
+	)
+	serviceDoctors: ClinicMedicalServiceDoctor
+
+	@OneToMany(
+		() => ClinicDepartmentDoctor,
+		(departmentDoctors) => departmentDoctors.doctor,
+		{
+			onDelete: 'CASCADE',
+		},
+	)
+	departmentDoctors: ClinicDepartmentDoctor[]
 
 	@OneToMany(() => ClinicDoctor, (clinicDoctor) => clinicDoctor.doctors, {
 		onDelete: 'CASCADE',
