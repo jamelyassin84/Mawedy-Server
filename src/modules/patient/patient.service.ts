@@ -1,3 +1,4 @@
+import { getConnection, getRepository } from 'typeorm'
 import { ClinicPatientService } from './../clinic-patient/clinic-patient.service'
 import { PatientDto } from './patient.dto'
 
@@ -21,6 +22,9 @@ export class PatientService {
 	async findAll(): Promise<Patient[]> {
 		const patients = await Patient.find({
 			relations: ['phones', 'emails', 'avatars', 'clinicPatient'],
+			order: {
+				first: 'ASC',
+			},
 		})
 		return patients
 	}
@@ -98,5 +102,27 @@ export class PatientService {
 				username: username,
 			},
 		})
+	}
+
+	async search(body: { keyword: string }): Promise<Patient[]> {
+		if (body.keyword === '') {
+			return []
+		}
+
+		return await getRepository(Patient)
+			.createQueryBuilder('patients')
+			.leftJoinAndSelect('patients.avatars', 'avatars')
+			.leftJoinAndSelect('avatars.patient', 'patient')
+			.where('patients.first like :keyword', {
+				keyword: '%' + body.keyword + '%',
+			})
+			.orWhere('patients.last like :keyword', {
+				keyword: '%' + body.keyword + '%',
+			})
+			.orWhere('patients.middle like :keyword', {
+				keyword: '%' + body.keyword + '%',
+			})
+			.orderBy('patients.first', 'DESC')
+			.getMany()
 	}
 }

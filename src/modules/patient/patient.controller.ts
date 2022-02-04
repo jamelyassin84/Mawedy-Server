@@ -50,4 +50,9 @@ export class PatientController {
 	async remove(@Param() param): Promise<Patient> {
 		return this.service.remove(+param.id)
 	}
+
+	@Post('search')
+	search(@Body() body: { keyword: string }): Promise<Patient[]> {
+		return this.service.search(body)
+	}
 }

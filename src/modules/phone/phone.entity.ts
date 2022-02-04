@@ -25,7 +25,7 @@ export class Phone extends BaseEntity {
 	areaCode: number
 
 	@Column()
-	phone: number
+	phone: string
 
 	@Column()
 	verificationCode: string | null
