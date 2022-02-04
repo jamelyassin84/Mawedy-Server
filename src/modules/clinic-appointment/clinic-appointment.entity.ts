@@ -14,7 +14,6 @@ import { Patient } from '../patient/patient.entity'
 import { Doctor } from '../doctor/doctor.entity'
 import { ClinicPromotion } from '../clinic-promotion/clinic-promotion.entity'
 import { ClinicMedicalService } from '../clinic-medical-service/clinic-medical-service.entity'
-import { ClinicFollowUp } from '../clinic-follow-up-check-up/clinic-follow-up-check-up.entity'
 import { PatientBookingFollowUp } from '../patient-booking-follow-up/patient-booking-follow-up.entity'
 var uuid = require('uuid')
 

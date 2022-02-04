@@ -27,8 +27,8 @@ export class ClinicAppointmentsController {
 	constructor(private readonly service: ClinicAppointmentsService) {}
 
 	@Get()
-	async findAll(): Promise<ClinicAppointment[]> {
-		return this.service.findAll()
+	async findAll(@Param() param): Promise<ClinicAppointment[]> {
+		return this.service.findAll(param)
 	}
 
 	@Get(':id')

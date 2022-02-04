@@ -15,8 +15,32 @@ export class ClinicAppointmentsService {
 		private patientBookingListService: PatientBookingListService,
 	) {}
 
-	async findAll(): Promise<ClinicAppointment[]> {
-		return await ClinicAppointment.find()
+	async findAll(param: any): Promise<ClinicAppointment[]> {
+		const { clinic } = param
+
+		if (clinic) {
+			return await ClinicAppointment.find({
+				where: { clinic: clinic },
+				relations: [
+					'patient',
+					'doctor',
+					'clinicPromotion',
+					'clinicMedicalService',
+					'followUp',
+					'patientBookingList',
+				],
+			})
+		}
+		return await ClinicAppointment.find({
+			relations: [
+				'patient',
+				'doctor',
+				'clinicPromotion',
+				'clinicMedicalService',
+				'followUp',
+				'patientBookingList',
+			],
+		})
 	}
 
 	async findOne(id: number): Promise<ClinicAppointment> {
