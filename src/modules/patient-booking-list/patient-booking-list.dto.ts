@@ -2,13 +2,10 @@ import { ApiProperty } from '@nestjs/swagger'
 import { Clinic } from '../clinic/clinic.entity'
 export class PatientBookingListDto {
 	@ApiProperty()
-	has_canceled: boolean = false
+	hasCanceled?: boolean = false
 
 	@ApiProperty()
-	has_result: boolean = false
-
-	@ApiProperty()
-	doctorId: number
+	hasResult?: boolean = false
 
 	@ApiProperty()
 	clinicAppointmentId: number

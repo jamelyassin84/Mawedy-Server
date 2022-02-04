@@ -16,10 +16,10 @@ export class PatientBookingList extends BaseEntity {
 	id: number
 
 	@Column()
-	has_canceled: boolean
+	hasCanceled: boolean
 
 	@Column()
-	has_result: boolean
+	hasResult: boolean
 
 	@Column()
 	referenceNumber: number
@@ -35,12 +35,6 @@ export class PatientBookingList extends BaseEntity {
 		(clinicAppointment) => clinicAppointment.id,
 	)
 	clinicAppointment: ClinicAppointment
-
-	@ManyToOne(
-		() => PatientBookingList,
-		(patientBookingList) => patientBookingList.id,
-	)
-	patientBookingList: PatientBookingList
 
 	@CreateDateColumn({
 		type: 'timestamp',

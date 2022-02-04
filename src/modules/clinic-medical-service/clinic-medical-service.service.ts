@@ -114,12 +114,12 @@ export class ClinicMedicalServiceService {
 
 		return await getRepository(ClinicMedicalService)
 			.createQueryBuilder('service')
-			.leftJoinAndSelect('service.images', 'images')
 			.leftJoinAndSelect('service.department', 'department')
 			.where('service.name like :keyword', {
 				keyword: `%${body.keyword}%`,
 			})
-			.where('department.id = :id', {
+			.leftJoinAndSelect('service.images', 'images')
+			.andWhere('department.id = :id', {
 				id: body.department,
 			})
 			.orderBy('service.name', 'DESC')

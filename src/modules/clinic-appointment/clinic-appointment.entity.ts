@@ -2,6 +2,7 @@ import { PatientBookingList } from './../patient-booking-list/patient-booking-li
 import { Clinic } from '../clinic/clinic.entity'
 import {
 	BaseEntity,
+	BeforeInsert,
 	Column,
 	Entity,
 	ManyToOne,
@@ -11,6 +12,7 @@ import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Patient } from '../patient/patient.entity'
 import { Doctor } from '../doctor/doctor.entity'
 import { ClinicPromotion } from '../clinic-promotion/clinic-promotion.entity'
+var uuid = require('uuid')
 
 @Entity()
 export class ClinicAppointment extends BaseEntity {
@@ -21,16 +23,16 @@ export class ClinicAppointment extends BaseEntity {
 	bookedThrough: 'app' | 'walk-in'
 
 	@Column()
+	appointment_type: 'app' | 'walk-in'
+
+	@Column()
 	date: string
 
 	@Column()
 	time: string
 
 	@Column()
-	appointment_type: 'app' | 'walk-in'
-
-	@Column()
-	comments: string
+	comments: string | null
 
 	@Column()
 	status: AppointmentStatus
@@ -51,7 +53,7 @@ export class ClinicAppointment extends BaseEntity {
 	bookingList: PatientBookingList
 
 	@ManyToOne(() => Doctor, (clinicPromotion) => clinicPromotion.id)
-	clinicPromotion: ClinicPromotion
+	clinicPromotion: ClinicPromotion | null
 
 	@CreateDateColumn({
 		type: 'timestamp',
@@ -65,6 +67,13 @@ export class ClinicAppointment extends BaseEntity {
 		onUpdate: 'CURRENT_TIMESTAMP(6)',
 	})
 	updatedAt: Date
+
+	@BeforeInsert()
+	async serializeData() {
+		this.booking_reference =
+			this.appointment_type === 'app' ? 'AAP' : 'WWP' + uuid.v1()
+		this.status = 'pending'
+	}
 }
 
-export type AppointmentStatus = 'canceled' | 'attended' | null
+export type AppointmentStatus = 'pending' | 'canceled' | 'attended' | null
