@@ -24,15 +24,22 @@ export class PatientBookingList extends BaseEntity {
 	@Column()
 	referenceNumber: number
 
-	@ManyToOne(() => Doctor, (doctor) => doctor.id)
+	@ManyToOne(() => Doctor, (doctor) => doctor.id, {
+		onDelete: 'CASCADE',
+	})
 	doctor: Doctor
 
-	@ManyToOne(() => Clinic, (clinic) => clinic.id)
+	@ManyToOne(() => Clinic, (clinic) => clinic.id, {
+		onDelete: 'CASCADE',
+	})
 	clinic: Clinic
 
 	@ManyToOne(
 		() => ClinicAppointment,
 		(clinicAppointment) => clinicAppointment.id,
+		{
+			onDelete: 'CASCADE',
+		},
 	)
 	clinicAppointment: ClinicAppointment
 

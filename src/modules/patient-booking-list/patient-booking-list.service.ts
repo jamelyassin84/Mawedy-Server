@@ -11,10 +11,7 @@ export class PatientBookingListService {
 	constructor() {}
 
 	async findAll(): Promise<PatientBookingList[]> {
-		const data = await PatientBookingList.find({
-			relations: ['emails', 'phones', 'devices'],
-		})
-		return data
+		return await PatientBookingList.find()
 	}
 
 	async findOne(id: number): Promise<PatientBookingList> {
@@ -32,15 +29,7 @@ export class PatientBookingListService {
 		try {
 			const data = PatientBookingList.create(body) as any
 			await data.save()
-			const params = {
-				data: data as any,
-				...body,
-				isActive: true,
-			}
-			return await PatientBookingList.findOne({
-				where: { id: params.id },
-				relations: ['emails', 'phones', 'devices'],
-			})
+			return data
 		} catch (error) {
 			throw new ServiceUnavailableException(
 				'Something went wrong. Please try again',

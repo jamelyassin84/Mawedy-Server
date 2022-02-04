@@ -1,3 +1,4 @@
+import { ClinicAppointment } from './../clinic-appointment/clinic-appointment.entity'
 import {
 	BaseEntity,
 	Column,
@@ -19,8 +20,20 @@ export class PatientBookingFollowUp extends BaseEntity {
 	@ManyToOne(
 		() => PatientBookingList,
 		(patientBookingList) => patientBookingList.id,
+		{
+			onDelete: 'CASCADE',
+		},
 	)
 	patientBookingList: PatientBookingList
+
+	@ManyToOne(
+		() => ClinicAppointment,
+		(clinicAppointment) => clinicAppointment.id,
+		{
+			onDelete: 'CASCADE',
+		},
+	)
+	clinicAppointment: ClinicAppointment
 
 	@CreateDateColumn({
 		type: 'timestamp',

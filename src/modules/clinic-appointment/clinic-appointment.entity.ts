@@ -6,12 +6,16 @@ import {
 	Column,
 	Entity,
 	ManyToOne,
+	OneToMany,
 	PrimaryGeneratedColumn,
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Patient } from '../patient/patient.entity'
 import { Doctor } from '../doctor/doctor.entity'
 import { ClinicPromotion } from '../clinic-promotion/clinic-promotion.entity'
+import { ClinicMedicalService } from '../clinic-medical-service/clinic-medical-service.entity'
+import { ClinicFollowUp } from '../clinic-follow-up-check-up/clinic-follow-up-check-up.entity'
+import { PatientBookingFollowUp } from '../patient-booking-follow-up/patient-booking-follow-up.entity'
 var uuid = require('uuid')
 
 @Entity()
@@ -49,11 +53,28 @@ export class ClinicAppointment extends BaseEntity {
 	@ManyToOne(() => Doctor, (doctor) => doctor.id)
 	doctor: Doctor
 
-	@ManyToOne(() => Doctor, (bookingList) => bookingList.id)
-	bookingList: PatientBookingList
+	@ManyToOne(() => ClinicPromotion, (clinicPromotion) => clinicPromotion.id)
+	clinicPromotion: ClinicPromotion
 
-	@ManyToOne(() => Doctor, (clinicPromotion) => clinicPromotion.id)
-	clinicPromotion: ClinicPromotion | null
+	@ManyToOne(
+		() => ClinicMedicalService,
+		(clinicMedicalService) => clinicMedicalService.id,
+	)
+	clinicMedicalService: ClinicMedicalService
+
+	@OneToMany(
+		() => PatientBookingFollowUp,
+		(followup) => followup.clinicAppointment,
+		{
+			cascade: true,
+		},
+	)
+	followUp: PatientBookingFollowUp
+
+	@OneToMany(() => PatientBookingList, (data) => data.clinicAppointment, {
+		onDelete: 'CASCADE',
+	})
+	patientBookingList: PatientBookingList
 
 	@CreateDateColumn({
 		type: 'timestamp',

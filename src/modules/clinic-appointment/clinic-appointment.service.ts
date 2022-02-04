@@ -28,27 +28,35 @@ export class ClinicAppointmentsService {
 	}
 
 	async create(body: ClinicAppointmentDto | any): Promise<ClinicAppointment> {
-		const { doctor, clinic } = body
+		const { doctor, clinic, service, patient } = body
 
 		try {
-			const appointment = ClinicAppointment.create(body) as any
+			const appointment = ClinicAppointment.create({
+				...body,
+				clinicMedicalService: service,
+			}) as any
+
 			await appointment.save()
 
-			const booking = this.patientBookingListService.create({
+			const booking = await this.patientBookingListService.create({
 				hasCanceled: false,
 				hasResult: false,
 				doctor: doctor,
+				patient: patient,
 				clinic: clinic,
 				clinicAppointment: appointment,
+				referenceNumber: appointment.referenceNumber,
 			})
 
-			this.patientBookingFollowUpService.create({
+			await this.patientBookingFollowUpService.create({
 				should_follow_up: false,
 				patientBookingList: booking,
+				clinicAppointment: appointment,
 			})
 
 			return appointment
 		} catch (error) {
+			console.log(error)
 			throw new ServiceUnavailableException(
 				'Something went wrong. Please try again',
 			)

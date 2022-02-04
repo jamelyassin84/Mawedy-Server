@@ -11,16 +11,13 @@ export class ClinicFollowUpCheckUpService {
 	constructor() {}
 
 	async findAll(): Promise<ClinicFollowUp[]> {
-		const data = await ClinicFollowUp.find({
-			relations: ['emails', 'phones', 'devices'],
-		})
+		const data = await ClinicFollowUp.find()
 		return data
 	}
 
 	async findOne(id: number): Promise<ClinicFollowUp> {
 		try {
-			const data = await ClinicFollowUp.findOneOrFail(id)
-			return data
+			return await ClinicFollowUp.findOneOrFail(id)
 		} catch (error) {
 			throw new NotFoundException('data might be moved or deleted.')
 		}
@@ -30,15 +27,7 @@ export class ClinicFollowUpCheckUpService {
 		try {
 			const data = ClinicFollowUp.create(body) as any
 			await data.save()
-			const params = {
-				data: data as any,
-				...body,
-				isActive: true,
-			}
-			return await ClinicFollowUp.findOne({
-				where: { id: params.id },
-				relations: ['emails', 'phones', 'devices'],
-			})
+			return data
 		} catch (error) {
 			throw new ServiceUnavailableException(
 				'Something went wrong. Please try again',
@@ -51,8 +40,7 @@ export class ClinicFollowUpCheckUpService {
 		body: ClinicFollowUpDto | any,
 	): Promise<ClinicFollowUp | any> {
 		try {
-			const data = await ClinicFollowUp.update(id, body)
-			return data
+			return await ClinicFollowUp.update(id, body)
 		} catch (error) {
 			throw new NotFoundException(
 				'Unable to update clinic account might be moved or deleted.',

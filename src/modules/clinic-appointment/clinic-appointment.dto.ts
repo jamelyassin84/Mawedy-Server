@@ -6,6 +6,7 @@ import { IsDefined, IsNotEmpty } from 'class-validator'
 import { Clinic } from '../clinic/clinic.entity'
 import { BaseEntity } from 'typeorm'
 import { Patient } from '../patient/patient.entity'
+import { ClinicMedicalService } from '../clinic-medical-service/clinic-medical-service.entity'
 
 export class ClinicAppointmentDto extends BaseEntity {
 	@ApiProperty()
@@ -38,6 +39,11 @@ export class ClinicAppointmentDto extends BaseEntity {
 	@IsDefined()
 	@ApiProperty()
 	clinic?: Clinic
+
+	@IsNotEmpty()
+	@IsDefined()
+	@ApiProperty()
+	service?: ClinicMedicalService
 
 	@IsNotEmpty()
 	@IsDefined()
