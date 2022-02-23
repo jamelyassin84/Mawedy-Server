@@ -5,10 +5,20 @@ import {
 	ServiceUnavailableException,
 } from '@nestjs/common'
 import { ClinicMedicalServiceDoctor } from './clinic-medical-services-doctor.entity'
+import { Doctor } from '../doctor/doctor.entity'
 
 @Injectable()
 export class ClinicMedicalServicesDoctorsService {
 	constructor() {}
+
+	async getDoctors(id: number) {
+		return await ClinicMedicalServiceDoctor.find({
+			where: {
+				clinicMedicalService: id,
+			},
+			relations: ['doctor'],
+		})
+	}
 
 	async create(
 		body: ClinicMedicalServiceDoctorDto | any,

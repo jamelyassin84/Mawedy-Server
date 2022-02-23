@@ -1,15 +1,7 @@
 import { ClinicMedicalServiceDoctorDto } from './clinic-medical-services-doctor.dto'
-import {
-	Body,
-	Controller,
-	Delete,
-	Param,
-	Post,
-	UseGuards,
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
 import { ApiBearerAuth, ApiHeaders, ApiTags } from '@nestjs/swagger'
-import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard'
-import { resolveAPI, ROUTES } from 'src/routes/routes'
+import { ROUTES } from 'src/routes/routes'
 import { ClinicMedicalServiceDoctor } from './clinic-medical-services-doctor.entity'
 import { ClinicMedicalServicesDoctorsService } from './clinic-medical-services-doctor.service'
 
@@ -21,11 +13,16 @@ import { ClinicMedicalServicesDoctorsService } from './clinic-medical-services-d
 	},
 ])
 @ApiTags('Clinic Medical Services Doctors')
-@Controller(resolveAPI(ROUTES.CLINIC_MEDICAL_SERVICES_DOCTORS))
+@Controller(ROUTES.CLINIC_MEDICAL_SERVICES_DOCTORS)
 export class ClinicMedicalServicesDoctorsController {
 	constructor(
 		private readonly service: ClinicMedicalServicesDoctorsService,
 	) {}
+
+	@Get(':id')
+	getDoctors(@Param() param) {
+		return this.service.getDoctors(+param.id)
+	}
 
 	@Post()
 	create(
@@ -35,7 +32,6 @@ export class ClinicMedicalServicesDoctorsController {
 	}
 
 	@Delete(':id')
-	@UseGuards(JwtAuthGuard)
 	async remove(@Param() param): Promise<ClinicMedicalServiceDoctor> {
 		return this.service.remove(+param.id)
 	}

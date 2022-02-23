@@ -58,7 +58,7 @@ export class ClinicMedicalServiceController {
 	}
 
 	@Get('department/:id')
-	async getByDepartment(@Param() param): Promise<ClinicMedicalService[]> {
+	async getByDepartment(@Param() param): Promise<any> {
 		return this.service.getByDepartment(+param.id)
 	}
 

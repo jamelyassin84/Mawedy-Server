@@ -12,6 +12,8 @@ import { Clinic } from '../clinic/clinic.entity'
 import { Doctor } from '../doctor/doctor.entity'
 import { ClinicDepartment } from '../clinic-department/clinic-department.enitiy'
 import { ClinicMedicalServiceImage } from '../clinic-medical-service-image/clinic-medical-service-image.entity'
+import { ClinicDepartmentDoctor } from '../clinic-department-doctor/clinic-department-doctor.entity'
+import { ClinicMedicalServiceDoctor } from '../clinic-medical-services-doctor/clinic-medical-services-doctor.entity'
 
 @Entity()
 export class ClinicMedicalService extends BaseEntity {

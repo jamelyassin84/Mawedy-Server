@@ -1,3 +1,4 @@
+import { ClinicMedicalServiceDoctor } from './../clinic-medical-services-doctor/clinic-medical-services-doctor.entity'
 import { getRepository } from 'typeorm'
 import { ClinicMedicalServicesDoctorsService } from './../clinic-medical-services-doctor/clinic-medical-services-doctor.service'
 import { ClinicMedicalServiceDto } from './clinic-medical-service.dto'
@@ -8,6 +9,7 @@ import {
 	ServiceUnavailableException,
 } from '@nestjs/common'
 import { ClinicDepartmentDoctorService } from '../clinic-department-doctor/clinic-department-doctor.service'
+import { Doctor } from '../doctor/doctor.entity'
 
 @Injectable()
 export class ClinicMedicalServiceService {
@@ -70,11 +72,15 @@ export class ClinicMedicalServiceService {
 		body: ClinicMedicalServiceDto | any,
 	): Promise<ClinicMedicalService | any> {
 		try {
-			const data = await ClinicMedicalService.update(id, body)
+			const data = await ClinicMedicalService.update(id, {
+				name: body.name,
+				description: body.description,
+			})
 			return data
 		} catch (error) {
+			console.error(error)
 			throw new NotFoundException(
-				'Unable to update clinic account might be moved or deleted.',
+				`Something went wrong updating body.name`,
 			)
 		}
 	}
@@ -91,14 +97,17 @@ export class ClinicMedicalServiceService {
 		}
 	}
 
-	async getByDepartment(id: number): Promise<ClinicMedicalService[]> {
+	async getByDepartment(id: number): Promise<any> {
 		try {
-			return await ClinicMedicalService.find({
-				where: {
+			return await getRepository(ClinicMedicalService)
+				.createQueryBuilder('service')
+
+				.where('service.department = :department', {
 					department: id,
-				},
-				relations: ['images'],
-			})
+				})
+				.leftJoinAndSelect('service.images', 'images')
+				.orderBy('service.name', 'DESC')
+				.getMany()
 		} catch (error) {
 			return []
 		}

@@ -7,12 +7,10 @@ export enum ROUTES {
 	DEVICES = 'device',
 	LOGS = 'log',
 	NOTIFICATIONS = 'notification',
-
 	APP_IMAGES = 'app-images',
 	APP_INBOX = 'app-inbox',
 	APP_SESSIONS = 'app-session',
 	APP_TRAFFICS = 'app-traffic',
-
 	CLINICS = 'clinic',
 	CLINIC_SERVICES = 'clinic-service',
 	CLINIC_RATINGS = 'clinic-rating',
@@ -38,11 +36,9 @@ export enum ROUTES {
 	CLINIC_MEDICAL_SERVICES_IMAGES = 'clinic-medical-service-image',
 	CLINIC_MEDICAL_SERVICES_DOCTORS = 'clinic-medical-service-doctor',
 	CLINIC_DOCTORS_WORKING_SCHEDULES = 'clinic-doctors-working-schedule',
-
 	DOCTOR = 'doctor',
 	DOCTOR_RATINGS = 'doctor-ratings',
 	DOCTOR_OVERALL_RATING = 'doctor-overall-rating',
-
 	PATIENTS = 'patient',
 	PATIENT_MEDICAL_RECORDS = 'patient-medical-record',
 	PATIENT_BOOKING_LISTS = 'patient-booking-list',
