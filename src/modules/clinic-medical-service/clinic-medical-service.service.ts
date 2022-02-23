@@ -67,15 +67,27 @@ export class ClinicMedicalServiceService {
 		}
 	}
 
-	async update(
-		id: number,
-		body: ClinicMedicalServiceDto | any,
-	): Promise<ClinicMedicalService | any> {
+	async update(id: number, body: any): Promise<ClinicMedicalService | any> {
 		try {
 			const data = await ClinicMedicalService.update(id, {
 				name: body.name,
 				description: body.description,
 			})
+
+			await this.clinicMedicalServicesDoctorsService.removeByService(
+				body.id,
+			)
+
+			for (let data of body.selectedDoctor) {
+				let wew = await ClinicMedicalServiceDoctor.create({
+					clinic: body.clinic,
+					clinicDepartment: body.department,
+					clinicMedicalService: body.id,
+					doctor: data.id,
+				})
+				wew.save()
+			}
+
 			return data
 		} catch (error) {
 			console.error(error)

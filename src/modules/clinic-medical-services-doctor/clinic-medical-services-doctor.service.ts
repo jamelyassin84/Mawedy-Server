@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common'
 import { ClinicMedicalServiceDoctor } from './clinic-medical-services-doctor.entity'
 import { Doctor } from '../doctor/doctor.entity'
+import { getConnection, getRepository } from 'typeorm'
 
 @Injectable()
 export class ClinicMedicalServicesDoctorsService {
@@ -44,5 +45,14 @@ export class ClinicMedicalServicesDoctorsService {
 				'Unable to delete clinic account might be moved or deleted.',
 			)
 		}
+	}
+
+	async removeByService(id: number) {
+		return await getConnection()
+			.createQueryBuilder()
+			.delete()
+			.from(ClinicMedicalServiceDoctor)
+			.where('clinicMedicalServiceId = :id', { id: id })
+			.execute()
 	}
 }
