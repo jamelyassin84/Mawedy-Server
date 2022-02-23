@@ -41,7 +41,6 @@ export class ClinicMedicalServiceImageController {
 		@Body() body: any,
 		@UploadedFiles() files: Express.Multer.File[],
 	): Promise<void> {
-		console.log(files)
 		this.service.upload(body, files)
 	}
 

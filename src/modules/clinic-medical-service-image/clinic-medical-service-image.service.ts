@@ -1,6 +1,7 @@
 import { ClinicMedicalServiceImage } from './clinic-medical-service-image.entity'
 import { Injectable, ServiceUnavailableException } from '@nestjs/common'
 import { ROUTES } from 'src/routes/routes'
+import { getConnection } from 'typeorm'
 
 @Injectable()
 export class ClinicMedicalServiceImageService {
@@ -20,6 +21,15 @@ export class ClinicMedicalServiceImageService {
 	}
 
 	async upload(body: any, files: Express.Multer.File[] = []): Promise<void> {
+		await getConnection()
+			.createQueryBuilder()
+			.delete()
+			.from(ClinicMedicalServiceImage)
+			.where('clinicMedicalServiceId = :id', {
+				id: body.clinicMedicalServiceId,
+			})
+			.execute()
+
 		for (let file of files) {
 			await this.create({
 				clinicMedicalService: body.clinicMedicalServiceId,
