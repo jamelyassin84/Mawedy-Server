@@ -1,3 +1,7 @@
+import { ClinicPatient } from 'src/modules/clinic-patient/clinic-patient.entity'
+import { Email } from 'src/modules/email/email.entity'
+import { PatientAvatar } from 'src/modules/patient-avatar/patient-avatar.enitity'
+import { Phone } from 'src/modules/phone/phone.entity'
 import {
 	BaseEntity,
 	Column,
@@ -6,10 +10,6 @@ import {
 	PrimaryGeneratedColumn,
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
-import { ClinicPatient } from '../clinic-patient/clinic-patient.entity'
-import { Email } from '../email/email.entity'
-import { PatientAvatar } from '../patient-avatar/patient-avatar.enitity'
-import { Phone } from '../phone/phone.entity'
 
 @Entity()
 export class Patient extends BaseEntity {

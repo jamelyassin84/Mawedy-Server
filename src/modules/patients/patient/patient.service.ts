@@ -1,5 +1,4 @@
-import { getConnection, getRepository } from 'typeorm'
-import { ClinicPatientService } from './../clinic-patient/clinic-patient.service'
+import { getRepository } from 'typeorm'
 import { PatientDto } from './patient.dto'
 
 import {
@@ -8,8 +7,9 @@ import {
 	ServiceUnavailableException,
 } from '@nestjs/common'
 import { Patient } from './patient.entity'
-import { EmailsService } from '../email/email.service'
-import { PhonesService } from '../phone/phone.service'
+import { EmailsService } from 'src/modules/email/email.service'
+import { PhonesService } from 'src/modules/phone/phone.service'
+import { ClinicPatientService } from 'src/modules/clinic-patient/clinic-patient.service'
 
 @Injectable()
 export class PatientService {

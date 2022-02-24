@@ -10,7 +10,7 @@ import {
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Admin } from '../admin/admin.entity'
 import { Doctor } from '../doctor/doctor.entity'
-import { Patient } from '../patient/patient.entity'
+import { Patient } from '../patients/patient/patient.entity'
 
 @Entity()
 export class Device extends BaseEntity {

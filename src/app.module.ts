@@ -33,10 +33,8 @@ import { DevicesModule } from './modules/device/device.module'
 import { Device } from './modules/device/device.entity'
 import { Email } from './modules/email/email.entity'
 import { ClinicModule } from './modules/clinic/clinic.module'
-import { PatientModule } from './modules/patient/patient.module'
 import { DoctorModule } from './modules/doctor/doctor.module'
 import { ClinicAccountModule } from './modules/clinic-account/clinic-account.module'
-import { Patient } from './modules/patient/patient.entity'
 import { Doctor } from './modules/doctor/doctor.entity'
 import { ClinicSubscriptionsRevenueModule } from './modules/clinic-subscription-revenue/clinic-subscription-revenue.module'
 import { ClinicSubscriptionsModule } from './modules/clinic-subscription/clinic-subscription.module'
@@ -100,6 +98,8 @@ import { ServeStaticModule } from '@nestjs/serve-static/dist/serve-static.module
 import { join } from 'path/posix'
 import { ClinicPhotosModule } from './modules/clinic-photos/clinic-photos.module'
 import { ClinicPhoto } from './modules/clinic-photos/clinic-photos.entity'
+import { Patient } from './modules/patients/patient/patient.entity'
+import { PatientModule } from './modules/patients/patient/patient.module'
 
 const entities = [
 	Admin,

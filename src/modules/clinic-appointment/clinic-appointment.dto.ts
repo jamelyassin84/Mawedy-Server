@@ -1,12 +1,11 @@
 import { Doctor } from './../doctor/doctor.entity'
-import { AppointmentStatus } from './clinic-appointment.entity'
-import { PatientType } from './../patient/patient.dto'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsDefined, IsNotEmpty } from 'class-validator'
 import { Clinic } from '../clinic/clinic.entity'
 import { BaseEntity } from 'typeorm'
-import { Patient } from '../patient/patient.entity'
 import { ClinicMedicalService } from '../clinic-medical-service/clinic-medical-service.entity'
+import { PatientType } from '../patients/patient/patient.dto'
+import { Patient } from '../patients/patient/patient.entity'
 
 export class ClinicAppointmentDto extends BaseEntity {
 	@ApiProperty()

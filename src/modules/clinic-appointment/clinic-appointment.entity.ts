@@ -10,11 +10,11 @@ import {
 	PrimaryGeneratedColumn,
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
-import { Patient } from '../patient/patient.entity'
 import { Doctor } from '../doctor/doctor.entity'
 import { ClinicPromotion } from '../clinic-promotion/clinic-promotion.entity'
 import { ClinicMedicalService } from '../clinic-medical-service/clinic-medical-service.entity'
 import { PatientBookingFollowUp } from '../patient-booking-follow-up/patient-booking-follow-up.entity'
+import { Patient } from '../patients/patient/patient.entity'
 var uuid = require('uuid')
 
 @Entity()

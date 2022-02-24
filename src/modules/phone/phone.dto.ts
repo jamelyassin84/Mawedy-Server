@@ -5,7 +5,7 @@ import { ApiProperty } from '@nestjs/swagger'
 import { IsDefined, IsNotEmpty } from 'class-validator'
 import { Admin } from '../admin/admin.entity'
 import { Doctor } from '../doctor/doctor.entity'
-import { Patient } from '../patient/patient.entity'
+import { Patient } from '../patients/patient/patient.entity'
 
 export class PhoneDto {
 	@IsNotEmpty()

@@ -6,7 +6,7 @@ import {
 	PrimaryGeneratedColumn,
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
-import { Patient } from '../patient/patient.entity'
+import { Patient } from '../patients/patient/patient.entity'
 
 @Entity()
 export class PatientAvatar extends BaseEntity {

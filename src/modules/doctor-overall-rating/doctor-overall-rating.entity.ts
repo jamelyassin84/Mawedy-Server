@@ -6,9 +6,7 @@ import {
 	PrimaryGeneratedColumn,
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
-import { Clinic } from '../clinic/clinic.entity'
 import { Doctor } from '../doctor/doctor.entity'
-import { Patient } from '../patient/patient.entity'
 
 @Entity()
 export class DoctorOverAllRating extends BaseEntity {

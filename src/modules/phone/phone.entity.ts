@@ -4,14 +4,13 @@ import {
 	Column,
 	Entity,
 	ManyToOne,
-	OneToMany,
 	PrimaryGeneratedColumn,
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Admin } from '../admin/admin.entity'
 import { ClinicAccount } from '../clinic-account/clinic-account.entity'
 import { Doctor } from '../doctor/doctor.entity'
-import { Patient } from '../patient/patient.entity'
+import { Patient } from '../patients/patient/patient.entity'
 
 @Entity()
 export class Phone extends BaseEntity {

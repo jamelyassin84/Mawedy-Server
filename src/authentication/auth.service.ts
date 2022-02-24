@@ -10,11 +10,11 @@ import {
 import { JwtService } from '@nestjs/jwt'
 import { AdminService } from 'src/modules/admin/admin.service'
 import { AuthLoginDto } from './auth-login.dto'
-import { Patient } from 'src/modules/patient/patient.entity'
 import { UserType } from './auth-login.dto'
 import { Device } from 'src/modules/device/device.entity'
 import { DevicesService } from 'src/modules/device/device.service'
 import { ClinicService } from 'src/modules/clinic/clinic.service'
+import { Patient } from 'src/modules/patients/patient/patient.entity'
 
 @Injectable()
 export class AuthService {

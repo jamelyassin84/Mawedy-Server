@@ -7,7 +7,7 @@ import {
 } from 'typeorm'
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Clinic } from '../clinic/clinic.entity'
-import { Patient } from '../patient/patient.entity'
+import { Patient } from '../patients/patient/patient.entity'
 
 @Entity()
 export class ClinicRating extends BaseEntity {

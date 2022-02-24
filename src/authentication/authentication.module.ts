@@ -1,5 +1,4 @@
 import { ClinicAccountModule } from './../modules/clinic-account/clinic-account.module'
-import { PatientModule } from './../modules/patient/patient.module'
 import { ClinicModule } from './../modules/clinic/clinic.module'
 import { JwtStrategy } from './jwt.strategy'
 import { AdminModule } from './../modules/admin/admin.module'
@@ -11,6 +10,7 @@ import { AuthService } from './auth.service'
 import { AuthenticationController } from './authentication.controller'
 import { DoctorModule } from 'src/modules/doctor/doctor.module'
 import { DevicesModule } from 'src/modules/device/device.module'
+import { PatientModule } from 'src/modules/patients/patient/patient.module'
 
 @Module({
 	imports: [

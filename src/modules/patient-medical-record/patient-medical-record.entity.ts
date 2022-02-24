@@ -3,7 +3,7 @@ import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { Clinic } from '../clinic/clinic.entity'
 import { Doctor } from '../doctor/doctor.entity'
 import { PatientBookingList } from '../patient-booking-list/patient-booking-list.entity'
-import { Patient } from '../patient/patient.entity'
+import { Patient } from '../patients/patient/patient.entity'
 
 @Entity()
 export class PatientMedicalRecord extends BaseEntity {
